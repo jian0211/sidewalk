@@ -9,3 +9,74 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// Model 定義
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+    id                 Int        @id @default(autoincrement())
+    role               Role       @default(USER)
+    createdAt          DateTime   @default(now())
+    email              String     @unique
+    password           String     
+    alarmEnabled       Boolean    @default(false)
+    preferredPrice     Int        @default(0)
+    favoriteAirlines   FavoriteAirline[]
+}
+
+model Airline {
+    id                 Int        @id @default(autoincrement())
+    title              String 
+    detailTitle        String 
+    iata               String     @unique
+    icao               String     @unique
+    flight             Flight[]
+    favoriteAirlines   FavoriteAirline[]
+}
+
+model FavoriteAirline{
+    userId             Int 
+    user               User       @relation(fields: [userId],references: [id])
+    airlineId          Int
+    airline            Airline    @relation(fields: [airlineId], references: [id])
+
+    @@id([userId,airlineId])
+}
+
+model Airport {
+  id                   Int        @id @default(autoincrement()) 
+  title                String     
+  detailTitle          String   
+  iata                 String     @unique
+	icao                 String     @unique
+	latitude             String     @unique
+	longitude            String     @unique
+	cityName             String     
+	cityCode             String     @unique
+	countryName          String    
+	countryCode          String     @unique
+	address              String   
+  link                 String   
+  flightsAsDeparture   Flight[]   @relation(name: "departureAirport")
+  flightsAsArrival     Flight[]   @relation(name: "arrivalAirport")
+}
+
+model Flight {
+  id                   Int        @id @default(autoincrement())	
+	airlineId            Int 
+  airline              Airline    @relation(fields: [airlineId], references: [id])
+  departureAirport     Airport    @relation(name: "departureAirport",fields: [departureCode], references: [iata])
+	departureCode        String    
+  departureTerminal    String   
+  departureGate        String
+  departureDate        DateTime 
+  arrivalAirport       Airport    @relation(name: "arrivalAirport",fields: [arrivalCode], references: [iata])
+  arrivalCode          String
+  arrivalTerminal      String 
+  arrivalgate          String
+  arrivalDate          String
+  price                Int        @default(0)
+}
