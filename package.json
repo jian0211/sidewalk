@@ -14,14 +14,20 @@
   },
   "dependencies": {
     "@prisma/client": "^5.7.1",
+    "@stylexjs/stylex": "^0.4.1",
     "eslint-plugin-prettier": "^5.1.2",
     "next": "14.0.4",
     "prisma": "^5.7.1",
     "react": "^18",
     "react-dom": "^18",
+    "recoil": "^0.7.7",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
+    "@stylexjs/babel-plugin": "^0.4.1",
+    "@stylexjs/dev-runtime": "^0.4.1",
+    "@stylexjs/eslint-plugin": "^0.4.1",
+    "@stylexjs/nextjs-plugin": "^0.4.1",
     "@types/node": "^20.10.5",
     "@types/react": "^18",
     "@types/react-dom": "^18",
