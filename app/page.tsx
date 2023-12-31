@@ -1,13 +1,17 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import Image from 'next/image';
+import styles from './page.module.css';
+import { useRecoilValue } from 'recoil';
+import { mainTest } from '@/store/mainTest';
 
 export default function Home() {
+  const mainTestText = useRecoilValue(mainTest);
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
         <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
+          mainTestText&nbsp;
+          <code className={styles.code}>mainTestText</code>
         </p>
         <div>
           <a
@@ -91,5 +95,5 @@ export default function Home() {
         </a>
       </div>
     </main>
-  )
+  );
 }
