@@ -1,14 +1,20 @@
-{
-  "root": true,
-  "parser": "@typescript-eslint/parser",
-  "env": {
-    "browser": true,
-    "es6": true,
-    "node": true,
-    "es2021": true
+module.exports = {
+  root: true,
+  parser: "@typescript-eslint/parser",
+  env: {
+    browser: true,
+    es6: true,
+    node: true,
+    es2021: true
   },
-  "plugins": ["import", "react", "@typescript-eslint", "prettier"],
-  "extends": [
+  plugins: [
+    "import", 
+    "react", 
+    "@typescript-eslint", 
+    "prettier",
+    "@stylexjs"
+  ],
+  extends: [
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:import/recommended",
@@ -17,9 +23,11 @@
     "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
-  "rules": {
-    "no-unused-vars": "warn",
-    "react/react-in-jsx-scope": "off"
+  rules: {
+    "no-unused-vars": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@stylexjs/valid-styles": ["error", {...options}]
   },
   "settings": {
     "import/parsers": {
