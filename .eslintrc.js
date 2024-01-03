@@ -1,48 +1,43 @@
 module.exports = {
   root: true,
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   env: {
     browser: true,
     es6: true,
     node: true,
-    es2021: true
+    es2021: true,
   },
-  plugins: [
-    "import", 
-    "react", 
-    "@typescript-eslint", 
-    "prettier",
-    "@stylexjs"
-  ],
+  plugins: ['import', 'react', '@typescript-eslint', 'prettier', '@stylexjs'],
   extends: [
-    "next/core-web-vitals",
-    "eslint:recommended",
-    "plugin:import/recommended",
-    "plugin:import/typescript",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
+    'next/core-web-vitals',
+    'eslint:recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
   ],
   rules: {
-    "no-unused-vars": "off",
-    "react/react-in-jsx-scope": "off",
-    "@typescript-eslint/no-unused-vars": "off",
-    "@stylexjs/valid-styles": ["error", {...options}]
+    'no-unused-vars': 'off',
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
+    '@stylexjs/valid-styles': 'error',
   },
-  "settings": {
-    "import/parsers": {
-      "@typescript-eslint/parser": [".{ts,tsx}"]
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.{ts,tsx}'],
     },
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
-      "typescript": { "alwaysTryTypes": true }
-    }
+      typescript: { alwaysTryTypes: true },
+    },
   },
-  "parserOptions": {
-    "ecmaFeatures": { "jsx": true },
-    "ecmaVersion": "latest",
-    "sourceType": "module"
-  }
-}
+  parserOptions: {
+    ecmaFeatures: { jsx: true },
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+};
