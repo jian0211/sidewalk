@@ -1,8 +1,11 @@
+const stylexPlugin = require('@stylexjs/nextjs-plugin');
+const withNextIntl = require('next-intl/plugin')();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {};
 
-const stylexPlugin = require('@stylexjs/nextjs-plugin');
-
-module.exports = stylexPlugin({
-  rootDir: __dirname,
-})({});
+module.exports = withNextIntl(
+  stylexPlugin({
+    rootDir: __dirname,
+  })(nextConfig),
+);
