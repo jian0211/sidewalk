@@ -22,7 +22,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/no-var-requires': 'off',
-    // "@stylexjs/valid-styles": ["error", {...options}]
+    '@stylexjs/valid-styles': 'error',
   },
   settings: {
     'import/parsers': {

@@ -1,5 +1,4 @@
-import type { Metadata } from 'next';
-import { RecoilRoot } from 'recoil';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Sidewalk with flying',
@@ -7,16 +6,18 @@ export const metadata: Metadata = {
     'It is a website that visualizes and provides data from each airline so that travelers between Korea and Japan can make optimal choices according to various situations.',
 };
 
-export default function RootLayout({
-  children,
-}: {
+type LocaleProps = {
   children: React.ReactNode;
-}) {
+  params: { locale: string };
+};
+
+export default function LocaleLayout({
+  children,
+  params: { locale },
+}: LocaleProps) {
   return (
-    <RecoilRoot>
-      <html lang="en">
-        <body>{children}</body>
-      </html>
-    </RecoilRoot>
+    <html lang={locale}>
+      <body>{children}</body>
+    </html>
   );
 }
