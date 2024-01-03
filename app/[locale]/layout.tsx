@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import AppProvider from './provider';
 
 export const metadata: Metadata = {
   title: 'Sidewalk with flying',
@@ -17,7 +18,9 @@ export default function LocaleLayout({
 }: LocaleProps) {
   return (
     <html lang={locale}>
-      <body>{children}</body>
+      <body>
+        <AppProvider>{children}</AppProvider>
+      </body>
     </html>
   );
 }
