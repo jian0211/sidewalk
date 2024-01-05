@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import AppProvider from './provider';
+import '../../styles/global.css';
 
 export const metadata: Metadata = {
   title: 'Sidewalk with flying',

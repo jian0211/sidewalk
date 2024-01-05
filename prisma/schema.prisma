@@ -16,6 +16,11 @@ enum Role {
   ADMIN
 }
 
+enum Lang {
+  KO
+  JA
+} 
+
 model User {
     id                 Int        @id @default(autoincrement())
     role               Role       @default(USER)
@@ -24,6 +29,9 @@ model User {
     password           String     
     alarmEnabled       Boolean    @default(false)
     preferredPrice     Int        @default(0)
+    destination        Lang
+    displayLanguage    Lang
+    dashboardLayout    String
     favoriteAirlines   FavoriteAirline[]
 }
 
