@@ -3,6 +3,7 @@ import AppProvider from './provider';
 import '../../styles/global.css';
 import * as stylex from '@stylexjs/stylex';
 import Sidebar from '@/components/templates/Sidebar';
+import '@/hooks/useInjectStyleX';
 
 export const metadata: Metadata = {
   title: 'Sidewalk with flying',
@@ -37,6 +38,6 @@ const styles = stylex.create({
     width: '100vh',
     height: '100vh',
     display: 'flex',
-    backgroundColor: 'pink',
+    backgroundColor: '#FFFFFF',
   },
 });
