@@ -11,6 +11,7 @@ type BaseHeadingProps = {
   }>;
 };
 
+// style Propsにエラーがある確認する
 export const H1: React.FC<BaseHeadingProps> = ({
   style,
   ...props

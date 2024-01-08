@@ -12,7 +12,7 @@ const Sidebar = () => {
         <div>logo</div>
       </div>
       <div>
-        <H1 style={{ paddingBottom: '2px' }}>{t('home.title')}</H1>
+        <H1>{t('home.title')}</H1>
         <Accordion title={t('airports.title')}>
           <p>{t('airports.categories.airportsList')}</p>
           <p>{t('airports.categories.airportsSchedule')}</p>
