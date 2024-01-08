@@ -15,7 +15,7 @@ type FlatKeysWithDot<T extends object, D extends string = ''> = {
 }[keyof T];
 
 // ここの _textは String のタイプですが、ロジックが結構複雑のでAnyを使用しても構いませんでした。
-export const useTranslatedWord = <T extends keyof Messages>(text: T) => {
-  const t = useTranslations(text);
-  return <K extends FlatKeysWithDot<Messages[T]>>(_text: K) => t(_text as any);
+export const useTranslatedWord = <T extends keyof Messages>(word: T) => {
+  const t = useTranslations(word);
+  return <K extends FlatKeysWithDot<Messages[T]>>(_word: K) => t(_word as any);
 };
