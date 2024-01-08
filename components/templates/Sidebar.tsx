@@ -1,8 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
-import Accordion from '../organisms/Accordion';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
-import { H1 } from '../atoms/Heading';
 import '@/hooks/useInjectStyleX';
+import { SidebarAccordion, SidebarTitle } from '../organisms/SideBarMenu';
 
 const Sidebar = () => {
   const t = useTranslatedWord('sidebar');
@@ -12,15 +11,15 @@ const Sidebar = () => {
         <div>logo</div>
       </div>
       <div>
-        <H1>{t('home.title')}</H1>
-        <Accordion title={t('airports.title')}>
+        <SidebarTitle>{t('home.title')}</SidebarTitle>
+        <SidebarAccordion title={t('airports.title')}>
           <p>{t('airports.categories.airportsList')}</p>
           <p>{t('airports.categories.airportsSchedule')}</p>
-        </Accordion>
-        <Accordion title={t('airlines.title')}>
+        </SidebarAccordion>
+        <SidebarAccordion title={t('airlines.title')}>
           <p>{t('airlines.categories.airlinesList')}</p>
           <p>{t('airlines.categories.arilinesSchedule')}</p>
-        </Accordion>
+        </SidebarAccordion>
       </div>
       <div {...stylex.props(styles.bottomMenu)}>
         <div>Aboutme</div>
