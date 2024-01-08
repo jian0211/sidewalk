@@ -1,4 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
+import '@/hooks/useInjectStyleX';
 
 const AirlinesPage = () => {
   return (
