@@ -1,5 +1,21 @@
 {
-    "Index": {
-        "title": "タイトルです."
+    "sidebar": {
+        "home": {
+            "title": "ダッシュボード"
+        },
+        "airports": {
+            "title": "港空会社",
+            "categories": {
+                "airportsList": "港空会社リスト",
+                "airportsSchedule": "港空会社スケジュール"
+            }
+        },
+        "airlines": {
+            "title": "空港",
+            "categories": {
+                "airlinesList": "空港リスト",
+                "arilinesSchedule": "空港スケジュール"
+            }
+        }
     }
 }

@@ -1,15 +1,15 @@
 import * as stylex from '@stylexjs/stylex';
 import '@/hooks/useInjectStyleX';
 
-const AirportPage = () => {
+const AirlinesPage = () => {
   return (
     <div {...stylex.props(styles.test)}>
-      <h1>AirportPage</h1>
+      <h1>AirlinesPage</h1>
     </div>
   );
 };
 
-export default AirportPage;
+export default AirlinesPage;
 
 const styles = stylex.create({
   test: {
