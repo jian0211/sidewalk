@@ -2,8 +2,9 @@ import { Metadata } from 'next';
 import AppProvider from './provider';
 import '../../styles/global.css';
 import * as stylex from '@stylexjs/stylex';
-import Sidebar from '@/components/templates/Sidebar';
+import Sidebar from '@/components/templates/sidebar/Sidebar';
 import '@/hooks/useInjectStyleX';
+import { NextIntlClientProvider, useMessages } from 'next-intl';
 
 export const metadata: Metadata = {
   title: 'Sidewalk with flying',
@@ -20,14 +21,18 @@ export default function LocaleLayout({
   children,
   params: { locale },
 }: LocaleProps) {
+  const messages = useMessages();
+
   return (
     <html lang={locale}>
       <body {...stylex.props(styles.body)}>
-        <Sidebar />
-        <div>
-          <nav>here is nav bar</nav>
-          <AppProvider>{children}</AppProvider>
-        </div>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <Sidebar />
+          <div>
+            <nav>here is nav bar</nav>
+            <AppProvider>{children}</AppProvider>
+          </div>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
