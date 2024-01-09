@@ -12,7 +12,6 @@ import {
   SidebarTitle,
 } from '../../organisms/sidebar/SidebarMenu';
 import { useSideBarPath } from './useCurrentPath';
-import FlexBox from '@/components/molecules/box/FlexBox';
 
 const Sidebar = () => {
   const t = useTranslatedWord('sidebar');
