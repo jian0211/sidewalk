@@ -25,7 +25,12 @@ export default function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body {...stylex.props(styles.body)}>
+      <body
+        {...stylex.props(
+          styles.body,
+          locale === 'ko' ? styles.koFont : styles.jaFont,
+        )}
+      >
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Sidebar />
           <div>
@@ -44,5 +49,11 @@ const styles = stylex.create({
     height: '100vh',
     display: 'flex',
     backgroundColor: '#FFFFFF',
+  },
+  jaFont: {
+    fontFamily: 'Noto Sans JP',
+  },
+  koFont: {
+    fontFamily: 'Noto Sans KR',
   },
 });
