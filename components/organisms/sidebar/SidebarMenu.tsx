@@ -1,14 +1,15 @@
 'use client';
 
 import * as stylex from '@stylexjs/stylex';
-import { useState } from 'react';
-import Link from 'next/link';
+import { ReactNode, useState } from 'react';
+import Link, { LinkProps } from 'next/link';
 import '@/hooks/useInjectStyleX';
 
 type LogoProps = React.ComponentProps<'div'>;
 type SidebarContainerProps = React.ComponentProps<'aside'>;
 type SidebarTitleProps = React.ComponentProps<'h2'>;
 type SidebarMenuContainerProps = React.ComponentProps<'div'>;
+type AccodionMenuContainerProps = React.ComponentProps<'ul'>;
 type AccordionProps = React.ComponentProps<'div'> & {
   title: string;
   isCurrentPage: boolean;
@@ -38,9 +39,13 @@ export const SidebarAccordion = ({
   return (
     <div {...stylex.props(styles.accodion)}>
       <SidebarTitle onClick={handleClick}>{title}</SidebarTitle>
-      <ul>{children}</ul>
+      <AccodionMenuContainer>{children}</AccodionMenuContainer>
     </div>
   );
+};
+
+const AccodionMenuContainer = (props: AccodionMenuContainerProps) => {
+  return <ul {...stylex.props(styles.accordionMenuContainer)} {...props} />;
 };
 
 export const Logo = (props: LogoProps) => {
@@ -54,7 +59,9 @@ export const Logo = (props: LogoProps) => {
 export const AccordionMenu = ({ text, href }: AccordionMenuProps) => {
   return (
     <li {...stylex.props(styles.accordionMenu)}>
-      <Link href={href}>{text}</Link>
+      <Link {...stylex.props(styles.link)} href={href}>
+        {text}
+      </Link>
     </li>
   );
 };
@@ -79,6 +86,7 @@ const styles = stylex.create({
     backgroundColor: '#F5F5F9',
     display: 'flex',
     flexDirection: 'column',
+    color: '#7F8695',
   },
   logo: {
     width: '100%',
@@ -86,19 +94,19 @@ const styles = stylex.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    color: 'tomato',
   },
   accodion: {
-    // [TODO]:anmation
+    // [TODO]: height transition 追加
     backgroundColor: {
       default: 'Inherit',
       ':hover': '#F0F0F7',
     },
     height: {
       default: '4rem',
-      ':hover': 'auto',
+      ':hover': 'fit-content',
     },
     overflow: 'hidden',
-    transition: 'height 1 ease-in-out',
   },
   toggle: {
     display: 'block',
@@ -106,6 +114,7 @@ const styles = stylex.create({
   },
   title: {
     padding: `1rem 2rem`,
+    height: '4rem',
     fontSize: '1rem',
     backgroundColor: {
       default: 'Inherit',
@@ -113,11 +122,22 @@ const styles = stylex.create({
     },
   },
   accordionMenu: {
-    listStyleType: 'none',
-    padding: '0 4rem',
+    padding: '0.6rem 4rem',
+    color: {
+      default: 'red',
+      ':hover': 'pink',
+    },
   },
   menuContainer: {
     // [TODO]: scroll 追加
     height: '100%',
+  },
+  accordionMenuContainer: {},
+  link: {
+    color: {
+      default: '#9AA0AD',
+      ':hover': 'black',
+      ':active': 'black',
+    },
   },
 });
