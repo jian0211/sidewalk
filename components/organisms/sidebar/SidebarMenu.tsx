@@ -1,8 +1,7 @@
 'use client';
 
 import * as stylex from '@stylexjs/stylex';
-import { ReactNode, useState } from 'react';
-import Link, { LinkProps } from 'next/link';
+import Link from 'next/link';
 import '@/hooks/useInjectStyleX';
 
 type LogoProps = React.ComponentProps<'div'>;
@@ -12,33 +11,35 @@ type SidebarMenuContainerProps = React.ComponentProps<'div'>;
 type AccodionMenuContainerProps = React.ComponentProps<'ul'>;
 type AccordionProps = React.ComponentProps<'div'> & {
   title: string;
-  isCurrentPage: boolean;
+  current: boolean;
 };
-type AccordionMenuProps = {
+type LinkProps = React.ComponentProps<'li'> & {
   href: `${string}${
     | '/airports'
     | '/airports/schedule'
     | '/airlines'
     | '/airlines/schedule'}`;
   text: string;
+  current: boolean;
+};
+type HomeLinkProps = React.ComponentProps<'div'> & {
+  title: string;
+  current: boolean;
 };
 
 export const SidebarContainer = (props: SidebarContainerProps) => {
   return <aside {...stylex.props(styles.sidebarContainer)} {...props} />;
 };
 
-export const SidebarAccordion = ({
-  title,
-  isCurrentPage,
-  children,
-}: AccordionProps) => {
-  const [onToggle, setOnToggle] = useState(false);
-  const handleClick = () => {
-    // setOnToggle((prev) => !prev);
-  };
+export const SidebarAccordion = (props: AccordionProps) => {
+  const { current, title, children, ...rest } = props;
+
   return (
-    <div {...stylex.props(styles.accodion)}>
-      <SidebarTitle onClick={handleClick}>{title}</SidebarTitle>
+    <div
+      {...stylex.props(styles.sideAccodion, current && styles.currentPage)}
+      {...rest}
+    >
+      <SidebarTitle>{title}</SidebarTitle>
       <AccodionMenuContainer>{children}</AccodionMenuContainer>
     </div>
   );
@@ -56,13 +57,30 @@ export const Logo = (props: LogoProps) => {
   );
 };
 
-export const AccordionMenu = ({ text, href }: AccordionMenuProps) => {
+export const AccordionMenu = (props: LinkProps) => {
+  const { current, href, text, ...rest } = props;
   return (
-    <li {...stylex.props(styles.accordionMenu)}>
-      <Link {...stylex.props(styles.link)} href={href}>
+    <li {...stylex.props(styles.accordionMenu)} {...rest}>
+      <Link
+        {...stylex.props(styles.link, current && styles.currentPath)}
+        href={href}
+      >
         {text}
       </Link>
     </li>
+  );
+};
+
+export const HomeLink = (props: HomeLinkProps) => {
+  return (
+    <div {...stylex.props(styles.homeBox)}>
+      <Link
+        {...stylex.props(styles.homeLink, props.current && styles.currentPath)}
+        href="/"
+      >
+        <SidebarTitle>{props.title}</SidebarTitle>
+      </Link>
+    </div>
   );
 };
 
@@ -70,12 +88,8 @@ export const SidebarMenuContainer = (props: SidebarMenuContainerProps) => {
   return <div {...stylex.props(styles.menuContainer)} {...props} />;
 };
 
-export const SidebarTitle = ({ children, ...props }: SidebarTitleProps) => {
-  return (
-    <h2 {...stylex.props(styles.title)} {...props}>
-      {children}
-    </h2>
-  );
+export const SidebarTitle = (props: SidebarTitleProps) => {
+  return <h2 {...stylex.props(styles.title)} {...props} />;
 };
 
 const styles = stylex.create({
@@ -96,7 +110,7 @@ const styles = stylex.create({
     justifyContent: 'center',
     color: 'tomato',
   },
-  accodion: {
+  sideAccodion: {
     // [TODO]: height transition 追加
     backgroundColor: {
       default: 'Inherit',
@@ -122,7 +136,6 @@ const styles = stylex.create({
     },
   },
   accordionMenu: {
-    padding: '0.6rem 4rem',
     color: {
       default: 'red',
       ':hover': 'pink',
@@ -134,10 +147,33 @@ const styles = stylex.create({
   },
   accordionMenuContainer: {},
   link: {
+    display: 'block',
+    padding: '0.6rem 4rem',
+    width: '100%',
     color: {
       default: '#9AA0AD',
-      ':hover': 'black',
-      ':active': 'black',
+      ':hover': '#28176D',
+      ':active': '#28176D',
     },
+  },
+  currentPage: {
+    backgroundColor: '#F0F0F7',
+    height: 'fit-content',
+    overflow: 'visible',
+    color: '#28176D',
+  },
+  currentPath: {
+    color: '#28176D',
+  },
+  homeLink: {
+    display: 'block',
+    color: {
+      default: '#9AA0AD',
+      ':hover': '#28176D',
+      ':active': '#28176D',
+    },
+  },
+  homeBox: {
+    height: '4rem',
   },
 });
