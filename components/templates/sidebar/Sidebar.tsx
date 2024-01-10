@@ -9,44 +9,48 @@ import {
   SidebarAccordion,
   SidebarMenuContainer,
   SidebarContainer,
-  SidebarTitle,
+  HomeLink,
 } from '../../organisms/sidebar/SidebarMenu';
 import { useSideBarPath } from './useCurrentPath';
 
 const Sidebar = () => {
   const t = useTranslatedWord('sidebar');
   // const { locale } = useCurrentLocale();
-  const locale = '';
-  const { isCurrentPage } = useSideBarPath();
+  const locale = '/ja'; // [TODO] change
+  const { path, isCurrentPage } = useSideBarPath();
   return (
     <SidebarContainer>
       <Logo />
       <SidebarMenuContainer>
-        <SidebarTitle>{t('home.title')}</SidebarTitle>
+        <HomeLink current={path === locale} title={t('home.title')} />
         <SidebarAccordion
           title={t('airports.title')}
-          isCurrentPage={isCurrentPage('airports')}
+          current={isCurrentPage('airports')}
         >
           <AccordionMenu
             href={`${locale}/airports`}
             text={t('airports.categories.airportsList')}
+            current={path === `${locale}/airports`}
           />
           <AccordionMenu
             href={`${locale}/airports/schedule`}
             text={t('airports.categories.airportsSchedule')}
+            current={path === `${locale}/airports/schedule`}
           />
         </SidebarAccordion>
         <SidebarAccordion
           title={t('airlines.title')}
-          isCurrentPage={isCurrentPage('airlines')}
+          current={isCurrentPage('airlines')}
         >
           <AccordionMenu
             href={`${locale}/airlines`}
             text={t('airlines.categories.airlinesList')}
+            current={path === `${locale}/airlines`}
           />
           <AccordionMenu
             href={`${locale}/airlines/schedule`}
             text={t('airlines.categories.arilinesSchedule')}
+            current={path === `${locale}/airlines/schedule`}
           />
         </SidebarAccordion>
       </SidebarMenuContainer>
@@ -63,7 +67,6 @@ const styles = stylex.create({
   logo: {
     width: '100%',
     height: '5rem',
-    // border: '1px solid red',
   },
   bottomMenu: {
     width: '100%',
