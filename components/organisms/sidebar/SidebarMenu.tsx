@@ -1,52 +1,19 @@
 'use client';
 
 import * as stylex from '@stylexjs/stylex';
-import Link from 'next/link';
 import '@/hooks/useInjectStyleX';
 
 type LogoProps = React.ComponentProps<'div'>;
 type SidebarContainerProps = React.ComponentProps<'aside'>;
-type SidebarTitleProps = React.ComponentProps<'h2'>;
 type SidebarMenuContainerProps = React.ComponentProps<'div'>;
-type AccodionMenuContainerProps = React.ComponentProps<'ul'>;
-type AccordionProps = React.ComponentProps<'div'> & {
+type SidebarAccordionProps = React.ComponentProps<'div'> & {
   title: string;
-  current: boolean;
+  isCurrent: boolean;
 };
-type LinkProps = React.ComponentProps<'li'> & {
-  href: `${string}${
-    | '/airports'
-    | '/airports/schedule'
-    | '/airlines'
-    | '/airlines/schedule'}`;
-  text: string;
-  current: boolean;
-};
-type HomeLinkProps = React.ComponentProps<'div'> & {
-  title: string;
-  current: boolean;
-};
+type SidebarBottomContainerProps = React.ComponentProps<'div'>;
 
 export const SidebarContainer = (props: SidebarContainerProps) => {
   return <aside {...stylex.props(styles.sidebarContainer)} {...props} />;
-};
-
-export const SidebarAccordion = (props: AccordionProps) => {
-  const { current, title, children, ...rest } = props;
-
-  return (
-    <div
-      {...stylex.props(styles.sideAccodion, current && styles.currentPage)}
-      {...rest}
-    >
-      <SidebarTitle>{title}</SidebarTitle>
-      <AccodionMenuContainer>{children}</AccodionMenuContainer>
-    </div>
-  );
-};
-
-const AccodionMenuContainer = (props: AccodionMenuContainerProps) => {
-  return <ul {...stylex.props(styles.accordionMenuContainer)} {...props} />;
 };
 
 export const Logo = (props: LogoProps) => {
@@ -57,39 +24,31 @@ export const Logo = (props: LogoProps) => {
   );
 };
 
-export const AccordionMenu = (props: LinkProps) => {
-  const { current, href, text, ...rest } = props;
-  return (
-    <li {...stylex.props(styles.accordionMenu)} {...rest}>
-      <Link
-        {...stylex.props(styles.link, current && styles.currentPath)}
-        href={href}
-      >
-        {text}
-      </Link>
-    </li>
-  );
-};
-
-export const HomeLink = (props: HomeLinkProps) => {
-  return (
-    <div {...stylex.props(styles.homeBox)}>
-      <Link
-        {...stylex.props(styles.homeLink, props.current && styles.currentPath)}
-        href="/"
-      >
-        <SidebarTitle>{props.title}</SidebarTitle>
-      </Link>
-    </div>
-  );
-};
-
 export const SidebarMenuContainer = (props: SidebarMenuContainerProps) => {
   return <div {...stylex.props(styles.menuContainer)} {...props} />;
 };
 
-export const SidebarTitle = (props: SidebarTitleProps) => {
-  return <h2 {...stylex.props(styles.title)} {...props} />;
+export const SidebarAccordion = ({
+  isCurrent,
+  title,
+  children,
+  ...props
+}: SidebarAccordionProps) => {
+  return (
+    <div
+      {...stylex.props(styles.sideAccodion, isCurrent && styles.currentPath)}
+      {...props}
+    >
+      <h2 {...stylex.props(styles.title)} {...props}>
+        {title}
+      </h2>
+      <ul style={{ paddingBottom: '1rem' }}>{children}</ul>
+    </div>
+  );
+};
+
+export const SidebarBottomContainer = (props: SidebarBottomContainerProps) => {
+  return <div {...stylex.props(styles.bottomContainer)} {...props} />;
 };
 
 const styles = stylex.create({
@@ -121,10 +80,19 @@ const styles = stylex.create({
       ':hover': 'fit-content',
     },
     overflow: 'hidden',
-  },
-  toggle: {
-    display: 'block',
-    backgroundColor: '#F0F0F7',
+    // [TODO]:border 共通部品に移動
+    borderBottomWidth: {
+      default: 'none',
+      ':hover': '1px',
+    },
+    borderBottomStyle: {
+      default: 'none',
+      ':hover': 'solid',
+    },
+    borderBottomColor: {
+      default: 'none',
+      ':hover': '#28176D',
+    },
   },
   title: {
     padding: `1rem 2rem`,
@@ -135,45 +103,15 @@ const styles = stylex.create({
       ':hover': '#F0F0F7',
     },
   },
-  accordionMenu: {
-    color: {
-      default: 'red',
-      ':hover': 'pink',
-    },
-  },
   menuContainer: {
     // [TODO]: scroll 追加
     height: '100%',
   },
-  accordionMenuContainer: {},
-  link: {
-    display: 'block',
-    padding: '0.6rem 4rem',
+  bottomContainer: {
     width: '100%',
-    color: {
-      default: '#9AA0AD',
-      ':hover': '#28176D',
-      ':active': '#28176D',
-    },
-  },
-  currentPage: {
-    backgroundColor: '#F0F0F7',
-    height: 'fit-content',
-    overflow: 'visible',
-    color: '#28176D',
+    marginTop: 'auto',
   },
   currentPath: {
     color: '#28176D',
-  },
-  homeLink: {
-    display: 'block',
-    color: {
-      default: '#9AA0AD',
-      ':hover': '#28176D',
-      ':active': '#28176D',
-    },
-  },
-  homeBox: {
-    height: '4rem',
   },
 });

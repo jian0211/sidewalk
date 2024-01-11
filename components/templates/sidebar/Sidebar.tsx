@@ -1,78 +1,76 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
-import '@/hooks/useInjectStyleX';
 import {
-  AccordionMenu,
   Logo,
   SidebarAccordion,
   SidebarMenuContainer,
   SidebarContainer,
-  HomeLink,
+  SidebarBottomContainer,
 } from '../../organisms/sidebar/SidebarMenu';
 import { useSideBarPath } from './useCurrentPath';
+import { BasicLink } from '@/components/organisms/Link/Link';
 
 const Sidebar = () => {
   const t = useTranslatedWord('sidebar');
   // const { locale } = useCurrentLocale();
   const locale = '/ja'; // [TODO] change
-  const { path, isCurrentPage } = useSideBarPath();
+  const { isCurrentPage } = useSideBarPath();
   return (
     <SidebarContainer>
       <Logo />
       <SidebarMenuContainer>
-        <HomeLink current={path === locale} title={t('home.title')} />
+        <BasicLink title={t('home.title')} href={locale} borderHover />
         <SidebarAccordion
           title={t('airports.title')}
-          current={isCurrentPage('airports')}
+          isCurrent={isCurrentPage('airports')}
         >
-          <AccordionMenu
+          <BasicLink
+            title={t('airports.categories.airportsList')}
             href={`${locale}/airports`}
-            text={t('airports.categories.airportsList')}
-            current={path === `${locale}/airports`}
+            indent
           />
-          <AccordionMenu
+          <BasicLink
+            title={t('airports.categories.airportsSchedule')}
             href={`${locale}/airports/schedule`}
-            text={t('airports.categories.airportsSchedule')}
-            current={path === `${locale}/airports/schedule`}
+            indent
           />
         </SidebarAccordion>
         <SidebarAccordion
           title={t('airlines.title')}
-          current={isCurrentPage('airlines')}
+          isCurrent={isCurrentPage('airlines')}
         >
-          <AccordionMenu
+          <BasicLink
             href={`${locale}/airlines`}
-            text={t('airlines.categories.airlinesList')}
-            current={path === `${locale}/airlines`}
+            title={t('airlines.categories.airlinesList')}
+            indent
           />
-          <AccordionMenu
+          <BasicLink
             href={`${locale}/airlines/schedule`}
-            text={t('airlines.categories.arilinesSchedule')}
-            current={path === `${locale}/airlines/schedule`}
+            title={t('airlines.categories.arilinesSchedule')}
+            indent
           />
         </SidebarAccordion>
       </SidebarMenuContainer>
-      <div {...stylex.props(styles.bottomMenu)}>
-        <div>Aboutme</div>
-        <div>login/out</div>
-        <div>footer</div>
-      </div>
+      <SidebarBottomContainer>
+        <BasicLink
+          href={`${locale}/profile`}
+          title="profile" //{t('home.title')}
+          borderHover
+        />
+        <BasicLink
+          href={`${locale}/profile`}
+          title="login/out" //{t('home.title')}
+          borderHover
+        />
+        <div>
+          <p>email : myunggeun222@gmail.com</p>
+          <p>Notion</p>
+          <p>@2024</p>
+        </div>
+      </SidebarBottomContainer>
     </SidebarContainer>
   );
 };
-
-const styles = stylex.create({
-  logo: {
-    width: '100%',
-    height: '5rem',
-  },
-  bottomMenu: {
-    width: '100%',
-    backgroundColor: 'yellow',
-    marginTop: 'auto',
-  },
-});
 
 export default Sidebar;
