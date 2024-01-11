@@ -45,7 +45,7 @@ const styles = stylex.create({
     padding: `1rem 2rem`,
     width: '100%',
     height: '4rem',
-    fontSize: '1.1rem',
+    fontSize: '1rem',
     fontWeight: 'bold',
     color: {
       default: '#9AA0AD',

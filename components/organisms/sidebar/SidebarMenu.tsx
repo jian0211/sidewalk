@@ -97,7 +97,7 @@ const styles = stylex.create({
   title: {
     padding: `1rem 2rem`,
     height: '4rem',
-    fontSize: '1.1rem',
+    fontSize: '1rem',
     backgroundColor: {
       default: 'Inherit',
       ':hover': '#F0F0F7',
