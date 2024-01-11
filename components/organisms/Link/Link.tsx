@@ -1,5 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
-import type { StyleXStyles } from '@stylexjs/stylex';
+import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -11,7 +11,7 @@ type LinkProps = {
 };
 export type BasicLinkProps = React.ComponentPropsWithRef<'a'> &
   LinkProps & {
-    style?: StyleXStyles;
+    style?: StyleXArray<any>;
     title: string;
     borderHover?: boolean;
     indent?: boolean;
