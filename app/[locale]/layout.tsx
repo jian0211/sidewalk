@@ -17,7 +17,7 @@ type LocaleProps = {
   params: { locale: string };
 };
 
-export default function LocaleLayout({
+export default function RootLayout({
   children,
   params: { locale },
 }: LocaleProps) {

@@ -10,12 +10,10 @@ const rootDir = options.unstable_moduleResolution.rootDir ?? __dirname;
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // transpilePackages: ['@stylexjs/open-props'],
-  // pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
+  transpilePackages: ['@stylexjs/open-props'],
 };
 
-module.exports = withNextIntl(
-  stylexPlugin({
-    rootDir,
-  })(nextConfig),
-);
+module.exports = stylexPlugin({
+  rootDir,
+  useCSSLayers: true,
+})(withNextIntl(nextConfig));
