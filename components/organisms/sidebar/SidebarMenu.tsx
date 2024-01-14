@@ -67,7 +67,6 @@ const styles = stylex.create({
     color: '#7F8695',
   },
   logo: {
-    width: '100%',
     height: '7rem',
     display: 'flex',
     alignItems: 'center',

@@ -52,6 +52,11 @@ const Sidebar = () => {
             indent
           />
         </SidebarAccordion>
+        <BasicLink
+          title={t('fligths.title')}
+          href={`${locale}/fligths`}
+          borderHover
+        />
       </SidebarMenuContainer>
       <SidebarBottomContainer>
         <BasicLink

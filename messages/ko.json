@@ -17,6 +17,9 @@
                 "arilinesSchedule": "항공사 스케줄"
             }
         },
+        "fligths": {
+            "title": "항공편"
+        },
         "profile": "내정보",
         "authStatus": {
             "login": "로그인",

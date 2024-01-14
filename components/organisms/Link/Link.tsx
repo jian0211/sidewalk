@@ -5,9 +5,12 @@ import { usePathname } from 'next/navigation';
 
 // [TODO]:path のところに移動
 type LinkProps = {
-  href: `${'/ja' | '/ko'}${'' | '/airports' | '/airlines' | '/profile'}${
+  href: `${'/ja' | '/ko'}${
     | ''
-    | '/schedule'}`;
+    | '/airports'
+    | '/airlines'
+    | '/fligths'
+    | '/profile'}${'' | '/schedule'}`;
 };
 export type BasicLinkProps = React.ComponentPropsWithRef<'a'> &
   LinkProps & {
