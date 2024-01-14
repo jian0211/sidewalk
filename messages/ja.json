@@ -16,6 +16,14 @@
                 "airlinesList": "空港リスト",
                 "arilinesSchedule": "空港スケジュール"
             }
+        },
+        "fligths": {
+            "title": "フライト"
+        },
+        "profile": "プロファイル",
+        "authStatus": {
+            "login": "ログイン",
+            "logout": "ログアウト"
         }
     }
 }

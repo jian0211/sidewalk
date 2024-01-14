@@ -7,15 +7,16 @@ import {
   SidebarMenuContainer,
   SidebarContainer,
   SidebarBottomContainer,
+  SidebarFooter,
 } from '../../organisms/sidebar/SidebarMenu';
-import { useSideBarPath } from './useCurrentPath';
+import { useCurrentPath } from '@/hooks/useCurrentPath';
 import { BasicLink } from '@/components/organisms/Link/Link';
 
 const Sidebar = () => {
   const t = useTranslatedWord('sidebar');
   // const { locale } = useCurrentLocale();
   const locale = '/ja'; // [TODO] change
-  const { isCurrentPage } = useSideBarPath();
+  const { isCurrentPage } = useCurrentPath();
   return (
     <SidebarContainer>
       <Logo />
@@ -51,23 +52,26 @@ const Sidebar = () => {
             indent
           />
         </SidebarAccordion>
+        <BasicLink
+          title={t('fligths.title')}
+          href={`${locale}/fligths`}
+          borderHover
+        />
       </SidebarMenuContainer>
       <SidebarBottomContainer>
         <BasicLink
           href={`${locale}/profile`}
-          title="profile" //{t('home.title')}
+          title={t('profile')}
           borderHover
         />
         <BasicLink
           href={`${locale}/profile`}
-          title="login/out" //{t('home.title')}
+          title={t(`authStatus.${'login'}`)} // auth
           borderHover
         />
-        <div>
-          <p>email : myunggeun222@gmail.com</p>
-          <p>Notion</p>
+        <SidebarFooter>
           <p>@2024</p>
-        </div>
+        </SidebarFooter>
       </SidebarBottomContainer>
     </SidebarContainer>
   );

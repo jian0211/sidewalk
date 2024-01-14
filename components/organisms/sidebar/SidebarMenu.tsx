@@ -11,6 +11,7 @@ type SidebarAccordionProps = React.ComponentProps<'div'> & {
   isCurrent: boolean;
 };
 type SidebarBottomContainerProps = React.ComponentProps<'div'>;
+type SidebarFooterProps = React.ComponentProps<'footer'>;
 
 export const SidebarContainer = (props: SidebarContainerProps) => {
   return <aside {...stylex.props(styles.sidebarContainer)} {...props} />;
@@ -51,6 +52,10 @@ export const SidebarBottomContainer = (props: SidebarBottomContainerProps) => {
   return <div {...stylex.props(styles.bottomContainer)} {...props} />;
 };
 
+export const SidebarFooter = (props: SidebarFooterProps) => {
+  return <footer {...stylex.props(styles.footer)} {...props} />;
+};
+
 const styles = stylex.create({
   sidebarContainer: {
     width: '100%',
@@ -62,7 +67,6 @@ const styles = stylex.create({
     color: '#7F8695',
   },
   logo: {
-    width: '100%',
     height: '7rem',
     display: 'flex',
     alignItems: 'center',
@@ -113,5 +117,11 @@ const styles = stylex.create({
   },
   currentPath: {
     color: '#28176D',
+  },
+  footer: {
+    height: '7rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
