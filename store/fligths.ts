@@ -21,7 +21,7 @@ const fligthsAtom = atom<FligthsAtom>({
     departureDate: null, // today
     returnDate: null,
     flightCost: {
-      min: null,
+      min: 0,
       max: 100000,
     },
   },
