@@ -1,10 +1,11 @@
 import { Metadata } from 'next';
-import AppProvider from './provider';
 import '../../styles/global.css';
 import * as stylex from '@stylexjs/stylex';
 import Sidebar from '@/components/templates/sidebar/Sidebar';
 import '@/hooks/useInjectStyleX';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
+import { Nav } from '@/components/templates/nav/Nav';
+import { RecoilProvider } from '@/hooks/providers/RecoilPropvider';
 
 export const metadata: Metadata = {
   title: 'Sidewalk with flying',
@@ -33,9 +34,9 @@ export default function RootLayout({
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Sidebar />
-          <div>
-            <nav>here is nav bar</nav>
-            <AppProvider>{children}</AppProvider>
+          <div style={{ width: '100%' }}>
+            <Nav />
+            <RecoilProvider>{children}</RecoilProvider>
           </div>
         </NextIntlClientProvider>
       </body>
@@ -45,7 +46,7 @@ export default function RootLayout({
 
 const styles = stylex.create({
   body: {
-    width: '100vh',
+    width: '100vw',
     height: '100vh',
     display: 'flex',
     backgroundColor: '#FFFFFF',
