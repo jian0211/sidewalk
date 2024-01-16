@@ -31,6 +31,7 @@
     "@stylexjs/dev-runtime": "^0.4.1",
     "@stylexjs/eslint-plugin": "^0.4.1",
     "@stylexjs/nextjs-plugin": "^0.4.1",
+    "@svgr/webpack": "^8.1.0",
     "@types/node": "^20.10.5",
     "@types/react": "^18",
     "@types/react-dom": "^18",
