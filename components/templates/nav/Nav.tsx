@@ -3,6 +3,7 @@
 import '@/hooks/useInjectStyleX';
 import { useLocale } from '@/hooks/useLocale';
 import * as stylex from '@stylexjs/stylex';
+import { JapanFlag, KoreaFlag } from '@/components/atoms/Icon';
 
 type NavProps = React.ComponentProps<'nav'>;
 type SearchBarProps = React.ComponentProps<'div'>;
@@ -27,8 +28,10 @@ const SearchBar = (props: SearchBarProps) => {
       {/* 목적지 */}
       <div>
         <div>
-          <p>HND</p>
-          <p>도쿄</p>
+          <button>
+            <h3>HND</h3>
+            <p>도쿄</p>
+          </button>
         </div>
         <div> switch Icon </div>
         <div>
@@ -41,6 +44,9 @@ const SearchBar = (props: SearchBarProps) => {
         <span>편도</span>
       </div>
       <div>
+        <KoreaFlag />
+        <JapanFlag />
+
         <div>출발일</div>
         {/* <input type="date" defaultValue={'19930211'} /> */}
       </div>

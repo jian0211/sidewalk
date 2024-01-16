@@ -5,8 +5,9 @@ type Airport = {
   iata: string;
   icao: string;
 };
+export type AirportsIata = JapanAirportIata | KoreaAirportIata;
 
-type JapanAirLineIata =
+type JapanAirportIata =
   | 'CTS' // 札幌新千歳
   | 'AOJ' // 青森
   | 'KIJ' // 新潟
@@ -20,3 +21,10 @@ type JapanAirLineIata =
   | 'OIT' // 大分
   | 'KOJ' // 鹿児島
   | 'OKA'; // 那覇
+
+type KoreaAirportIata =
+  | 'ICN' // 仁川
+  | 'PUS' // 金海
+  | 'CJU' // 濟州
+  | 'GMP' // 金浦
+  | 'TAE'; // 大邱
