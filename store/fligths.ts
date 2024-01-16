@@ -1,11 +1,12 @@
+import { AirportsIata } from '@/types/airport';
 import { atom } from 'recoil';
 
 type FligthsAtom = {
-  from: 'From' | 'HDT'; // esle
-  to: 'To' | 'esle'; //
+  from: AirportsIata | null;
+  to: AirportsIata | null; //
   tripType: 'roundTrip' | 'oneWay';
-  departureDate: null | Date; // today
-  returnDate: null | number;
+  departureDate: Date | null;
+  returnDate: number | null;
   flightCost: {
     min: number;
     max: number;
@@ -15,8 +16,8 @@ type FligthsAtom = {
 const fligthsAtom = atom<FligthsAtom>({
   key: 'fligthsAtom',
   default: {
-    from: 'From',
-    to: 'To',
+    from: null,
+    to: null,
     tripType: 'roundTrip', // oneWay
     departureDate: null, // today
     returnDate: null,
