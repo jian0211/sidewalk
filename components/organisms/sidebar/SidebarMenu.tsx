@@ -3,15 +3,15 @@
 import * as stylex from '@stylexjs/stylex';
 import '@/hooks/useInjectStyleX';
 
-type LogoProps = React.ComponentProps<'div'>;
-type SidebarContainerProps = React.ComponentProps<'aside'>;
-type SidebarMenuContainerProps = React.ComponentProps<'div'>;
-type SidebarAccordionProps = React.ComponentProps<'div'> & {
+type LogoProps = React.ComponentPropsWithoutRef<'div'>;
+type SidebarContainerProps = React.ComponentPropsWithoutRef<'aside'>;
+type SidebarMenuContainerProps = React.ComponentPropsWithoutRef<'div'>;
+type SidebarAccordionProps = React.ComponentPropsWithoutRef<'div'> & {
   title: string;
   isCurrent: boolean;
 };
-type SidebarBottomContainerProps = React.ComponentProps<'div'>;
-type SidebarFooterProps = React.ComponentProps<'footer'>;
+type SidebarBottomContainerProps = React.ComponentPropsWithoutRef<'div'>;
+type SidebarFooterProps = React.ComponentPropsWithoutRef<'footer'>;
 
 export const SidebarContainer = (props: SidebarContainerProps) => {
   return <aside {...stylex.props(styles.sidebarContainer)} {...props} />;
