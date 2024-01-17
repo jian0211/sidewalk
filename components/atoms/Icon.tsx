@@ -1,22 +1,11 @@
-// import * as Icons from '@/public/svgs/index';
-import { IconJapanFlag, IconKoreaFlag } from '@/public/svgs/index';
+import { IconJapanFlag, IconKoreaFlag, IconSwap } from '@/public/svgs/index';
 import * as stylex from '@stylexjs/stylex';
 
-// type IconProps = React.ComponentProps<'svg'> & {
-//   iconKey: keyof typeof Icons;
-// };
-
-// const BasicIcon = ({ iconKey, ...props }: IconProps) => {
-//   const BasicIcon: React.FC<React.SVGProps<SVGElement>> = Icons[iconKey];
-
-//   return <BasicIcon {...stylex.props(styles.icon)} {...props} />;
-// };
-
-export const JapanFlag: React.FC<React.SVGProps<SVGElement>> = () => (
+export const JapanFlagIcon: React.FC<React.SVGProps<SVGElement>> = () => (
   <IconJapanFlag viewBox="0 0 900 600" {...stylex.props(styles.icon)} />
 );
 
-export const KoreaFlag: React.FC<React.SVGProps<SVGElement>> = () => (
+export const KoreaFlagIcon: React.FC<React.SVGProps<SVGElement>> = () => (
   <IconKoreaFlag
     viewBox="-45 -30 90 60"
     style={{ backgroundColor: 'white' }}
@@ -24,10 +13,17 @@ export const KoreaFlag: React.FC<React.SVGProps<SVGElement>> = () => (
   />
 );
 
+export const SwapIcon: React.FC<React.SVGProps<SVGElement>> = () => (
+  <IconSwap viewBox="0 0 44 44" {...stylex.props(styles._icon)} />
+);
+
 const styles = stylex.create({
   icon: {
     width: '4rem',
     height: 'auto',
-    borderRadius: '100vw',
+  },
+  _icon: {
+    width: '3rem',
+    height: 'auto',
   },
 });

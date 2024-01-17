@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" class="xekueh xt7dq6l" viewBox="0 0 44 44">
+  <!-- SVG 내용 (경로, 원 등) -->
+  <g fill="none" transform="translate(22 22)">
+    <!-- 가운데 정렬을 위한 변환 -->
+    <circle cx="0" cy="0" r="20" stroke="#D9DBE1"></circle>
+    <g stroke="#AAA" stroke-linecap="round" stroke-width="1.5">
+      <path d="M7.602 -5.37c-1.557 -2.485 -4.27 -4.13 -7.356 -4.13c-3.814 0 -7.057 2.512 -8.254 6.015c-0.319 0.934 -0.438 1.603 -0.438 2.65"></path>
+      <path fill="#AAA" d="M-10.5 0L-9 2.25L-7.5 0z"></path>
+      <path d="M-8.5 6.534c1.557 2.485 4.27 4.13 7.356 4.13c3.814 0 7.057 -2.511 8.253 -6.015c0.32 -0.934 0.439 -1.603 0.439 -2.649"></path>
+      <path fill="#AAA" d="M9.5 2.25L11 0L12.5 2.25z"></path>
+    </g>
+  </g>
+</svg>
