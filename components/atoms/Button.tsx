@@ -1,23 +1,31 @@
 import * as stylex from '@stylexjs/stylex';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
+import React from 'react';
 
-export type ButtonProps = React.ComponentProps<'button'> & {
+export type ButtonProps = React.ComponentPropsWithoutRef<'button'> & {
   style?: StyleXArray<any>;
   hasHoverBorder?: boolean;
+  isSelected?: boolean;
 };
 
-export const Button = ({ style, hasHoverBorder, ...props }: ButtonProps) => {
-  return (
-    <button
-      {...stylex.props(
-        styles.button,
-        hasHoverBorder && styles.hoverBorder,
-        style,
-      )}
-      {...props}
-    />
-  );
-};
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ style, hasHoverBorder, isSelected, ...props }, ref) => {
+    return (
+      <button
+        type="button"
+        ref={ref}
+        {...stylex.props(
+          styles.button,
+          hasHoverBorder && styles.hoverBorder,
+          isSelected && styles.selectedColor,
+          style,
+        )}
+        {...props}
+      />
+    );
+  },
+);
+Button.displayName = 'Button';
 
 const styles = stylex.create({
   button: {
@@ -41,5 +49,9 @@ const styles = stylex.create({
       ':hover': 'solid',
     },
     borderRadius: '1vw',
+  },
+  selectedColor: {
+    backgroundColor: '#00256C',
+    color: 'white',
   },
 });
