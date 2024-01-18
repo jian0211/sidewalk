@@ -12,12 +12,11 @@ import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 type SearchFormProps = React.ComponentPropsWithoutRef<'form'>;
 
 export const SearchForm = (props: SearchFormProps) => {
-  const t = useTranslatedWord('nav');
+  const t = useTranslatedWord('nav.search');
   const {
     states: { fligths },
     actions: { handleClickSetFligths },
   } = useSearch();
-
   const {
     register,
     handleSubmit,
@@ -46,9 +45,9 @@ export const SearchForm = (props: SearchFormProps) => {
       </div>
 
       <div {...stylex.props(styles.tripTypeBox)}>
-        {/* <TripTypeButton
+        <TripTypeButton
           {...register('tripType')}
-          name={t('search.tripType.roundTrip')}
+          name={t('tripType.roundTrip')}
           isSelected={getValues('tripType') === 'roundTrip'}
           onClick={() => {
             setValue('tripType', 'roundTrip');
@@ -57,13 +56,13 @@ export const SearchForm = (props: SearchFormProps) => {
         />
         <TripTypeButton
           {...register('tripType')}
-          name={t('search.tripType.oneWay')}
+          name={t('tripType.oneWay')}
           isSelected={getValues('tripType') === 'oneWay'}
           onClick={() => {
             setValue('tripType', 'oneWay');
             handleClickSetFligths('tripType')('oneWay');
           }}
-        /> */}
+        />
       </div>
       <div>
         <div>출발일</div>
