@@ -25,5 +25,13 @@
             "login": "ログイン",
             "logout": "ログアウト"
         }
+    },
+    "nav": {
+        "search": {
+            "tripType": {
+                "roundTrip": "往復",
+                "oneWay": "片道"
+            }
+        }
     }
 }

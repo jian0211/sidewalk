@@ -1,5 +1,6 @@
 import messages from '@/messages/ja.json';
 import { useTranslations } from 'next-intl';
+import { ArrayPath, Path } from 'react-hook-form';
 
 type Messages = typeof messages;
 

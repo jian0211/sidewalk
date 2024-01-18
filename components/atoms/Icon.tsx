@@ -23,7 +23,7 @@ const styles = stylex.create({
     height: 'auto',
   },
   _icon: {
-    width: '3rem',
+    width: '2.5rem',
     height: 'auto',
   },
 });

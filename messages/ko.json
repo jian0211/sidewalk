@@ -25,5 +25,13 @@
             "login": "로그인",
             "logout": "로그아웃"
         }
+    },
+    "nav": {
+        "search": {
+            "tripType": {
+                "roundTrip": "왕복",
+                "oneWay": "편도"
+            }
+        }
     }
 }
