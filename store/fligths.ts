@@ -1,29 +1,40 @@
 import { AirportsIata } from '@/types/airport';
-import { atom } from 'recoil';
+import { atom, useRecoilState } from 'recoil';
 
-type FligthsAtom = {
-  from: AirportsIata | null;
-  to: AirportsIata | null; //
+export type Flights = {
+  from: AirportsIata | 'FROM'; // default is FROM
+  to: AirportsIata | 'TO'; // default is TO
   tripType: 'roundTrip' | 'oneWay';
   departureDate: Date | null;
-  returnDate: number | null;
+  returnDate: Date | null;
   flightCost: {
     min: number;
     max: number;
   };
 };
 
-const fligthsAtom = atom<FligthsAtom>({
+export type FlightsKey = keyof Flights;
+
+const flightsAtom = atom<Flights>({
   key: 'fligthsAtom',
   default: {
-    from: null,
-    to: null,
-    tripType: 'roundTrip', // oneWay
-    departureDate: null, // today
+    from: 'FROM',
+    to: 'TO',
+    tripType: 'roundTrip',
+    departureDate: null,
     returnDate: null,
     flightCost: {
       min: 0,
-      max: 100000,
+      max: 0,
     },
   },
 });
+
+export const useFlights = () => {
+  const [fligths, setFligths] = useRecoilState(flightsAtom);
+
+  return {
+    fligths,
+    setFligths,
+  };
+};
