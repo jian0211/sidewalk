@@ -33,11 +33,13 @@ export default function RootLayout({
         )}
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Sidebar />
-          <div style={{ width: '100%' }}>
-            <Nav />
-            <RecoilProvider>{children}</RecoilProvider>
-          </div>
+          <RecoilProvider>
+            <Sidebar />
+            <div style={{ width: '100%' }}>
+              <Nav />
+              {children}
+            </div>
+          </RecoilProvider>
         </NextIntlClientProvider>
       </body>
     </html>
