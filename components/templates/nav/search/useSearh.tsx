@@ -1,4 +1,4 @@
-import { FlightsKey, useFlights } from '@/store/fligths';
+import { Flights, FlightsKey, useFlights } from '@/store/fligths';
 import { ValueOf } from '@/types/common';
 
 export const useSearch = () => {
@@ -14,12 +14,16 @@ export const useSearch = () => {
       }));
     };
 
+  const handleSubmitSetFligths = (fligths: Flights) => {
+    setFligths(fligths);
+  };
   return {
     states: {
       fligths,
     },
     actions: {
       handleClickSetFligths,
+      handleSubmitSetFligths,
     },
   };
 };

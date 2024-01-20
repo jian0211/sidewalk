@@ -1,13 +1,22 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as stylex from '@stylexjs/stylex';
-import {
-  BookingButton,
-  TripTypeButton,
-} from '@/components/organisms/SearchBar/Buttons';
 import { SwapIcon } from '@/components/atoms/Icon';
 import { useSearch } from './useSearh';
 import { Flights } from '@/store/fligths';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
+import { Button } from '@/components/atoms/Button';
+import {
+  BookingTravelPointDropdownButton,
+  BookingContainer,
+  BookingTravelPoint,
+  BookingTravelPointSwapperButton,
+  BookingSearchTravelPointModal,
+} from '@/components/organisms/SearchBar/bookling/Booking';
+import {
+  TripTypeButton,
+  TripTypeContainer,
+} from '@/components/organisms/SearchBar/tripType/TripType';
+import { DropdownWarpper } from '@/components/molecules/dropdown/Dropdown';
 
 type SearchFormProps = React.ComponentPropsWithoutRef<'form'>;
 
@@ -15,7 +24,7 @@ export const SearchForm = (props: SearchFormProps) => {
   const t = useTranslatedWord('nav.search');
   const {
     states: { fligths },
-    actions: { handleClickSetFligths },
+    actions: { handleClickSetFligths, handleSubmitSetFligths },
   } = useSearch();
   const {
     register,
@@ -28,6 +37,7 @@ export const SearchForm = (props: SearchFormProps) => {
   });
   const onSubmit: SubmitHandler<Flights> = (data, event) => {
     event?.preventDefault();
+    handleSubmitSetFligths(data);
     console.log(data);
   };
   console.log('getValues', getValues('tripType'));
@@ -37,33 +47,45 @@ export const SearchForm = (props: SearchFormProps) => {
       {...stylex.props(styles.searchForm)}
       onSubmit={handleSubmit(onSubmit)}
     >
-      {/* 목적지 */}
-      <div {...stylex.props(styles.bookingContainer)}>
-        <BookingButton iata="HND" name="도쿄" />
-        <SwapIcon />
-        <BookingButton iata="INC" name="인천" />
-      </div>
+      <BookingContainer>
+        <BookingTravelPointDropdownButton>
+          <BookingTravelPoint iata="HND" title="도쿄" />
+          <BookingSearchTravelPointModal title="출발선택">
+            hasdfa
+          </BookingSearchTravelPointModal>
+        </BookingTravelPointDropdownButton>
+        <BookingTravelPointSwapperButton />
+        <BookingTravelPointDropdownButton>
+          <BookingTravelPoint iata="INC" title="인천" />
+          <div>드롭다운</div>
+        </BookingTravelPointDropdownButton>
+      </BookingContainer>
 
-      <div {...stylex.props(styles.tripTypeBox)}>
+      <DropdownWarpper>
+        <div>asdasd</div>
+        <div>asdasd</div>
+      </DropdownWarpper>
+      <TripTypeContainer>
         <TripTypeButton
           {...register('tripType')}
-          name={t('tripType.roundTrip')}
           isSelected={getValues('tripType') === 'roundTrip'}
           onClick={() => {
             setValue('tripType', 'roundTrip');
-            handleClickSetFligths('tripType')('roundTrip');
           }}
-        />
+        >
+          {t('tripType.roundTrip')}
+        </TripTypeButton>
         <TripTypeButton
           {...register('tripType')}
-          name={t('tripType.oneWay')}
           isSelected={getValues('tripType') === 'oneWay'}
           onClick={() => {
             setValue('tripType', 'oneWay');
             handleClickSetFligths('tripType')('oneWay');
           }}
-        />
-      </div>
+        >
+          {t('tripType.oneWay')}
+        </TripTypeButton>
+      </TripTypeContainer>
       <div>
         <div>출발일</div>
         {/* <input type="date" defaultValue={'19930211'} /> */}
@@ -72,6 +94,7 @@ export const SearchForm = (props: SearchFormProps) => {
         <div>희망비용</div>
         {/* <input type="number" value="300" /> */}
       </div>
+      <Button type="submit">찾기 </Button>
     </form>
   );
 };
@@ -85,18 +108,5 @@ const styles = stylex.create({
     borderWidth: '1px',
     borderStyle: 'solid',
     borderColor: 'red',
-  },
-  bookingContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '16rem',
-  },
-  tripTypeBox: {
-    display: 'flex',
-    borderWidth: '1px',
-    borderStyle: 'solid',
-    borderColor: '#00256C',
-    borderRadius: '1vw',
   },
 });
