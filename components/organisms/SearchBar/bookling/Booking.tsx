@@ -86,7 +86,5 @@ const styles = stylex.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
-  bookingTravelPoint: {
-    border: '1px solid red',
-  },
+  bookingTravelPoint: {},
 });

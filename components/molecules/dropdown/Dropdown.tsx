@@ -38,13 +38,7 @@ export const DropdownWarpper = ({
 };
 
 const styles = stylex.create({
-  warpper: {
-    border: '1px solid red',
-  },
-  firstChild: {
-    border: '1px solid red',
-  },
-  secondChild: {
-    border: '1px solid red',
-  },
+  warpper: {},
+  firstChild: {},
+  secondChild: {},
 });
