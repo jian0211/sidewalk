@@ -6,13 +6,14 @@ export type ButtonProps = React.ComponentPropsWithoutRef<'button'> & {
   style?: StyleXArray<any>;
   hasHoverBorder?: boolean;
   isSelected?: boolean;
+  type?: 'button' | 'submit';
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ style, hasHoverBorder, isSelected, ...props }, ref) => {
+  ({ style, hasHoverBorder, type = 'button', isSelected, ...props }, ref) => {
     return (
       <button
-        type="button"
+        type={type}
         ref={ref}
         {...stylex.props(
           styles.button,
@@ -26,6 +27,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   },
 );
 Button.displayName = 'Button';
+
+export const CloseButton = () => {
+  return <Button>X</Button>;
+};
 
 const styles = stylex.create({
   button: {
