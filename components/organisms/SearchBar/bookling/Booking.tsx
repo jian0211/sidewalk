@@ -10,7 +10,7 @@ import {
 import * as stylex from '@stylexjs/stylex';
 
 type BookingContainerProps = React.ComponentPropsWithoutRef<'div'>;
-type BookingTravelPointButtonProps = ButtonProps;
+type BookingTravelPointDropdownProps = React.ComponentPropsWithoutRef<'div'>;
 type BookingTravelPointProps = React.ComponentPropsWithoutRef<'div'> & {
   iata: string;
   title: string;
@@ -24,14 +24,14 @@ export const BookingContainer = (props: BookingContainerProps) => {
   return <div {...stylex.props(styles.bookingContainer)} {...props} />;
 };
 
-export const BookingTravelPointDropdownButton = ({
+export const BookingTravelPointDropdown = ({
   children,
   ...props
-}: BookingTravelPointButtonProps) => {
+}: BookingTravelPointDropdownProps) => {
   return (
-    <Button hasHoverBorder style={styles.bookingTravelPointButton} {...props}>
+    <div {...stylex.props(styles.bookingTravelPointDropdown)} {...props}>
       <DropdownWarpper>{children}</DropdownWarpper>
-    </Button>
+    </div>
   );
 };
 
@@ -64,7 +64,7 @@ export const BookingSearchTravelPointModal = ({
   ...props
 }: BookingSearchTravelPointModalProps) => {
   return (
-    <ModalContainer {...props}>
+    <ModalContainer style={styles.bookingSearchTravelPointModal} {...props}>
       <ModalHeader title={title} />
       <ModalBody>{children}</ModalBody>
     </ModalContainer>
@@ -78,7 +78,7 @@ const styles = stylex.create({
     justifyContent: 'center',
     width: '16rem',
   },
-  bookingTravelPointButton: {
+  bookingTravelPointDropdown: {
     width: '5rem',
     height: '5rem',
     display: 'flex',
@@ -87,4 +87,5 @@ const styles = stylex.create({
     justifyContent: 'space-evenly',
   },
   bookingTravelPoint: {},
+  bookingSearchTravelPointModal: {},
 });
