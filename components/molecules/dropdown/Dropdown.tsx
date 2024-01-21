@@ -29,16 +29,25 @@ export const DropdownWarpper = ({
 
   return (
     <div {...stylex.props(styles.warpper, style)} ref={ref} {...props}>
-      <div style={styles.firstChild} onClick={handleClick}>
-        {firstChild}
-      </div>
-      {show && <div style={styles.secondChild}>{secondChild}</div>}
+      <div onClick={handleClick}>{firstChild}</div>
+      {show && <div {...stylex.props(styles.secondChild)}>{secondChild}</div>}
     </div>
   );
 };
 
 const styles = stylex.create({
-  warpper: {},
-  firstChild: {},
-  secondChild: {},
+  warpper: {
+    position: 'relative',
+    width: 'inherit',
+    height: 'inherit',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+  },
+  secondChild: {
+    position: 'absolute',
+    top: 'calc(100% + 1rem)',
+    left: 0,
+  },
 });

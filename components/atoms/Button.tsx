@@ -28,8 +28,27 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 Button.displayName = 'Button';
 
-export const CloseButton = () => {
-  return <Button>X</Button>;
+export const CloseButton = ({
+  style,
+  hasHoverBorder,
+  type = 'button',
+  isSelected,
+  ...props
+}: ButtonProps) => {
+  return (
+    <button
+      type={type}
+      {...stylex.props(
+        styles.button,
+        hasHoverBorder && styles.hoverBorder,
+        isSelected && styles.selectedColor,
+        style,
+      )}
+      {...props}
+    >
+      X
+    </button>
+  );
 };
 
 const styles = stylex.create({

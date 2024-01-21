@@ -1,12 +1,11 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as stylex from '@stylexjs/stylex';
-import { SwapIcon } from '@/components/atoms/Icon';
 import { useSearch } from './useSearh';
 import { Flights } from '@/store/fligths';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { Button } from '@/components/atoms/Button';
 import {
-  BookingTravelPointDropdownButton,
+  BookingTravelPointDropdown,
   BookingContainer,
   BookingTravelPoint,
   BookingTravelPointSwapperButton,
@@ -48,23 +47,19 @@ export const SearchForm = (props: SearchFormProps) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <BookingContainer>
-        <BookingTravelPointDropdownButton>
+        <BookingTravelPointDropdown>
           <BookingTravelPoint iata="HND" title="도쿄" />
-          <BookingSearchTravelPointModal title="출발선택">
+          <BookingSearchTravelPointModal title="지역과 도시 선택">
             hasdfa
           </BookingSearchTravelPointModal>
-        </BookingTravelPointDropdownButton>
+        </BookingTravelPointDropdown>
         <BookingTravelPointSwapperButton />
-        <BookingTravelPointDropdownButton>
+        <BookingTravelPointDropdown>
           <BookingTravelPoint iata="INC" title="인천" />
           <div>드롭다운</div>
-        </BookingTravelPointDropdownButton>
+        </BookingTravelPointDropdown>
       </BookingContainer>
 
-      <DropdownWarpper>
-        <div>asdasd</div>
-        <div>asdasd</div>
-      </DropdownWarpper>
       <TripTypeContainer>
         <TripTypeButton
           {...register('tripType')}
