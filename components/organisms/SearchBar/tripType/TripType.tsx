@@ -1,31 +1,68 @@
 import { Button, ButtonProps } from '@/components/atoms/Button';
 import * as stylex from '@stylexjs/stylex';
+import { forwardRef } from 'react';
 
 type TripTypeContainerProps = React.ComponentPropsWithoutRef<'div'>;
 type TripTypeButtonProps = ButtonProps & {
   name: string;
 };
+type TripTypeRadioButtonProps = React.ComponentProps<'input'> & {
+  value: string;
+};
 
 export const TripTypeContainer = (props: TripTypeContainerProps) => {
-  return <div {...stylex.props(styles.tripTypeContainer)} />;
+  return <div {...stylex.props(styles.tripTypeContainer)} {...props} />;
 };
 
-export const TripTypeButton = ({ name, ...props }: TripTypeButtonProps) => {
-  return <Button style={styles.tripTypeButton} {...props} />;
-};
+export const TripTypeRadioButton = forwardRef<
+  HTMLInputElement,
+  TripTypeRadioButtonProps
+>(({ value, children, ...props }, ref) => {
+  console.log('props.checked', props.checked);
+  return (
+    <label
+      {...stylex.props(
+        styles.tripTypeRadioLable,
+        props.checked && styles.checked,
+      )}
+      htmlFor={value}
+    >
+      <input
+        {...stylex.props(styles.tripTypeRadioButton)}
+        ref={ref}
+        id={value}
+        type="radio"
+        value={value}
+        name="tripType"
+        {...props}
+      />
+      {children}
+    </label>
+  );
+});
+TripTypeRadioButton.displayName = 'tripTypeRadioButton';
 
 const styles = stylex.create({
   tripTypeContainer: {
     display: 'flex',
-    widows: '7rem',
     borderWidth: '1px',
     borderStyle: 'solid',
     borderColor: '#00256C',
     borderRadius: '1vw',
   },
-  tripTypeButton: {
-    height: '100%',
+  tripTypeRadioLable: {
+    width: '4rem',
+    height: '3rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: '1vw',
-    padding: '0.6rem 1rem',
+  },
+  tripTypeRadioButton: {
+    display: 'none',
+  },
+  checked: {
+    color: 'white',
+    backgroundColor: '#00256C',
   },
 });
