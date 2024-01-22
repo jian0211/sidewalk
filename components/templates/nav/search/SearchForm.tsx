@@ -12,10 +12,9 @@ import {
   BookingSearchTravelPointModal,
 } from '@/components/organisms/SearchBar/bookling/Booking';
 import {
-  TripTypeButton,
   TripTypeContainer,
+  TripTypeRadioButton,
 } from '@/components/organisms/SearchBar/tripType/TripType';
-import { DropdownWarpper } from '@/components/molecules/dropdown/Dropdown';
 
 type SearchFormProps = React.ComponentPropsWithoutRef<'form'>;
 
@@ -30,8 +29,10 @@ export const SearchForm = (props: SearchFormProps) => {
     handleSubmit,
     getValues,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<Flights>({
+    mode: 'onChange',
     defaultValues: fligths,
   });
   const onSubmit: SubmitHandler<Flights> = (data, event) => {
@@ -39,7 +40,11 @@ export const SearchForm = (props: SearchFormProps) => {
     handleSubmitSetFligths(data);
     console.log(data);
   };
-  console.log('getValues', getValues('tripType'));
+  /**
+   * データの変更を監視するための使用
+   * だが、再レンダリングされるので他の方法があれば。
+   */
+  watch();
 
   return (
     <form
@@ -56,30 +61,27 @@ export const SearchForm = (props: SearchFormProps) => {
         <BookingTravelPointSwapperButton />
         <BookingTravelPointDropdown>
           <BookingTravelPoint iata="INC" title="인천" />
-          <div>드롭다운</div>
+          <BookingSearchTravelPointModal title="지역과 도시 선택">
+            hasdfa
+          </BookingSearchTravelPointModal>
         </BookingTravelPointDropdown>
       </BookingContainer>
 
       <TripTypeContainer>
-        <TripTypeButton
+        <TripTypeRadioButton
           {...register('tripType')}
-          isSelected={getValues('tripType') === 'roundTrip'}
-          onClick={() => {
-            setValue('tripType', 'roundTrip');
-          }}
+          value="roundTrip"
+          checked={getValues('tripType') === 'roundTrip'}
         >
           {t('tripType.roundTrip')}
-        </TripTypeButton>
-        <TripTypeButton
+        </TripTypeRadioButton>
+        <TripTypeRadioButton
           {...register('tripType')}
-          isSelected={getValues('tripType') === 'oneWay'}
-          onClick={() => {
-            setValue('tripType', 'oneWay');
-            handleClickSetFligths('tripType')('oneWay');
-          }}
+          value="oneWay"
+          checked={getValues('tripType') === 'oneWay'}
         >
           {t('tripType.oneWay')}
-        </TripTypeButton>
+        </TripTypeRadioButton>
       </TripTypeContainer>
       <div>
         <div>출발일</div>
