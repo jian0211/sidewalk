@@ -6,7 +6,7 @@ import ReactDatePicker, {
 import { ko, ja } from 'date-fns/locale';
 import { Control, Controller, Path } from 'react-hook-form';
 import 'react-datepicker/dist/react-datepicker.css';
-// import './datePicker.css';
+import './datePicker.css';
 import * as stylex from '@stylexjs/stylex';
 
 registerLocale('ko', ko);
