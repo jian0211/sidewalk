@@ -15,6 +15,8 @@ import {
   TripTypeContainer,
   TripTypeRadioButton,
 } from '@/components/organisms/SearchBar/tripType/TripType';
+import { DatePicker } from '@/components/organisms/SearchBar/datePicker/DatePicker';
+import { useLocale } from '@/hooks/useLocale';
 
 type SearchFormProps = React.ComponentPropsWithoutRef<'form'>;
 
@@ -25,10 +27,13 @@ export const SearchForm = (props: SearchFormProps) => {
     actions: { handleClickSetFligths, handleSubmitSetFligths },
   } = useSearch();
   const {
+    states: { locale },
+  } = useLocale();
+  const {
     register,
     handleSubmit,
     getValues,
-    setValue,
+    control,
     watch,
     formState: { errors },
   } = useForm<Flights>({
@@ -84,8 +89,14 @@ export const SearchForm = (props: SearchFormProps) => {
         </TripTypeRadioButton>
       </TripTypeContainer>
       <div>
-        <div>출발일</div>
-        {/* <input type="date" defaultValue={'19930211'} /> */}
+        <DatePicker
+          name="dateType"
+          control={control}
+          datePickerProps={{
+            placeholderText: '날짜선ㅌ',
+            locale: locale,
+          }}
+        />
       </div>
       <div>
         <div>희망비용</div>
