@@ -15,8 +15,11 @@ import {
   TripTypeContainer,
   TripTypeRadioButton,
 } from '@/components/organisms/SearchBar/tripType/TripType';
-import { DatePicker } from '@/components/organisms/SearchBar/datePicker/DatePicker';
 import { useLocale } from '@/hooks/useLocale';
+import {
+  DatePickerContainer,
+  DatePickerModal,
+} from '@/components/organisms/SearchBar/datePicker/DatePicker';
 
 type SearchFormProps = React.ComponentPropsWithoutRef<'form'>;
 
@@ -88,16 +91,16 @@ export const SearchForm = (props: SearchFormProps) => {
           {t('tripType.oneWay')}
         </TripTypeRadioButton>
       </TripTypeContainer>
-      <div>
-        <DatePicker
-          name="dateType"
-          control={control}
-          datePickerProps={{
-            placeholderText: '날짜선ㅌ',
-            locale: locale,
-          }}
-        />
-      </div>
+      <DatePickerContainer
+        name="dateType"
+        control={control}
+        datePickerProps={{
+          placeholderText: '날짜선ㅌ',
+          locale: locale,
+        }}
+      >
+        <DatePickerModal title="날짜 선택" />
+      </DatePickerContainer>
       <div>
         <div>희망비용</div>
         {/* <input type="number" value="300" /> */}
@@ -109,6 +112,7 @@ export const SearchForm = (props: SearchFormProps) => {
 
 const styles = stylex.create({
   searchForm: {
+    position: 'relative',
     flex: '3',
     display: 'flex',
     alignItems: 'center',
