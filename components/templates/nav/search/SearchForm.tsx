@@ -1,4 +1,4 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as stylex from '@stylexjs/stylex';
 import { useSearch } from './useSearh';
 import { Flights } from '@/store/fligths';
@@ -41,7 +41,7 @@ export const SearchForm = (props: SearchFormProps) => {
     formState: { errors },
   } = useForm<Flights>({
     mode: 'onChange',
-    defaultValues: fligths,
+    defaultValues: { ...fligths },
   });
   const onSubmit: SubmitHandler<Flights> = (data, event) => {
     event?.preventDefault();
@@ -53,6 +53,7 @@ export const SearchForm = (props: SearchFormProps) => {
    * だが、再レンダリングされるので他の方法があれば。
    */
   watch();
+  console.log(getValues('dateType'));
 
   return (
     <form
@@ -91,16 +92,33 @@ export const SearchForm = (props: SearchFormProps) => {
           {t('tripType.oneWay')}
         </TripTypeRadioButton>
       </TripTypeContainer>
-      <DatePickerContainer
-        name="dateType"
-        control={control}
-        datePickerProps={{
-          placeholderText: '날짜선ㅌ',
-          locale: locale,
-        }}
-      >
-        <DatePickerModal title="날짜 선택" />
-      </DatePickerContainer>
+      <div>
+        <Controller
+          control={control}
+          name="dateType"
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <DatePickerContainer
+              onChange={(dateType) => {
+                if (Array.isArray(dateType)) {
+                  const [departureDate, returnDate] = dateType;
+                  onChange({ departureDate, returnDate });
+                }
+              }}
+              onBlur={onBlur}
+              locale={locale}
+              // selected={value.departureDate}
+              startDate={value.departureDate}
+              endDate={value.returnDate}
+              placeholderText="여행 날짜를 선택해주세요"
+              //[TODO]: placeholderText에 왕복 혹은 편도일때의 경우에 따른 말 설정
+            >
+              <DatePickerModal title="날짜 선택" />
+            </DatePickerContainer>
+          )}
+        />
+      </div>
+
       <div>
         <div>희망비용</div>
         {/* <input type="number" value="300" /> */}
@@ -114,11 +132,12 @@ const styles = stylex.create({
   searchForm: {
     position: 'relative',
     flex: '3',
+    gap: '1rem',
     display: 'flex',
     alignItems: 'center',
-    borderRadius: '1vw',
-    borderWidth: '1px',
-    borderStyle: 'solid',
-    borderColor: 'red',
+    // borderRadius: '1vw',
+    // borderWidth: '1px',
+    // borderStyle: 'solid',
+    // borderColor: 'red',
   },
 });
