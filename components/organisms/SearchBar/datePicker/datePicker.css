@@ -93,3 +93,17 @@
 .react-datepicker {
   height: 100% !important;
 }
+
+.dataPickerTest {
+  border: none;
+  border-bottom: 1px solid #00256c;
+  width: 20rem;
+  height: 3rem;
+  padding: 1rem;
+  font-size: 1rem;
+
+  &:hover {
+    border: 1px solid #00256c;
+    border-radius: 0.3vw;
+  }
+}

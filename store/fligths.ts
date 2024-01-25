@@ -1,12 +1,12 @@
 import { AirportsIata } from '@/types/airport';
 import { atom, useRecoilState } from 'recoil';
 export type Flights = {
-  from: AirportsIata | 'FROM'; // default is FROM
-  to: AirportsIata | 'TO'; // default is TO
+  from: AirportsIata | 'FROM';
+  to: AirportsIata | 'TO';
   tripType: 'roundTrip' | 'oneWay';
   dateType: {
-    departureDate: Date;
-    returnDate: Date;
+    departureDate: Date | null;
+    returnDate: Date | null;
   };
   flightCost: {
     min: number;
@@ -23,8 +23,8 @@ const flightsAtom = atom<Flights>({
     to: 'TO',
     tripType: 'roundTrip',
     dateType: {
-      departureDate: new Date(),
-      returnDate: new Date(),
+      departureDate: null,
+      returnDate: null,
     },
     flightCost: {
       min: 0,
