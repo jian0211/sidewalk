@@ -31,6 +31,15 @@
             "tripType": {
                 "roundTrip": "往復",
                 "oneWay": "片道"
+            },
+            "booking": {
+                "travelPoint": {
+                    "HND": "東京"
+                }
+            },
+            "datePicker": {
+                "plaseHolder": "旅行の日を選択してください。",
+                "modalTitle": "日々選択"
             }
         }
     }

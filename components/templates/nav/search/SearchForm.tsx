@@ -15,11 +15,11 @@ import {
   TripTypeContainer,
   TripTypeRadioButton,
 } from '@/components/organisms/SearchBar/tripType/TripType';
-import { useLocale } from '@/hooks/useLocale';
 import {
   DatePickerContainer,
   DatePickerModal,
 } from '@/components/organisms/SearchBar/datePicker/DatePicker';
+import { useDatePicker } from './useDatePicker';
 
 type SearchFormProps = React.ComponentPropsWithoutRef<'form'>;
 
@@ -29,16 +29,14 @@ export const SearchForm = (props: SearchFormProps) => {
     states: { fligths },
     actions: { handleClickSetFligths, handleSubmitSetFligths },
   } = useSearch();
-  const {
-    states: { locale },
-  } = useLocale();
+  const { datePickerSetting } = useDatePicker();
   const {
     register,
     handleSubmit,
     getValues,
+    setValue,
     control,
-    watch,
-    formState: { errors },
+    formState: { errors, dirtyFields },
   } = useForm<Flights>({
     mode: 'onChange',
     defaultValues: { ...fligths },
@@ -48,17 +46,17 @@ export const SearchForm = (props: SearchFormProps) => {
     handleSubmitSetFligths(data);
     console.log(data);
   };
-  /**
-   * データの変更を監視するための使用
-   * だが、再レンダリングされるので他の方法があれば。
-   */
-  watch();
-  console.log(getValues('dateType'));
 
+  console.log('dirtyFields', dirtyFields.tripType);
+
+  if (dirtyFields.tripType) {
+    setValue('dateType.returnDate', null);
+  }
   return (
     <form
       {...stylex.props(styles.searchForm)}
       onSubmit={handleSubmit(onSubmit)}
+      {...props}
     >
       <BookingContainer>
         <BookingTravelPointDropdown>
@@ -99,21 +97,23 @@ export const SearchForm = (props: SearchFormProps) => {
           rules={{ required: true }}
           render={({ field: { onChange, onBlur, value } }) => (
             <DatePickerContainer
+              {...datePickerSetting}
               onChange={(dateType) => {
+                // 편도일 때 날짜를 클릭 시 기존 날짜가 변경되지 않음.
+                // TODO : 관련하여 onChange처리를 해야함
                 if (Array.isArray(dateType)) {
                   const [departureDate, returnDate] = dateType;
                   onChange({ departureDate, returnDate });
                 }
               }}
               onBlur={onBlur}
-              locale={locale}
-              // selected={value.departureDate}
+              placeholderText={t('datePicker.plaseHolder') + ''}
               startDate={value.departureDate}
-              endDate={value.returnDate}
-              placeholderText="여행 날짜를 선택해주세요"
-              //[TODO]: placeholderText에 왕복 혹은 편도일때의 경우에 따른 말 설정
+              {...(getValues('tripType') === 'roundTrip'
+                ? ({ endDate: value.returnDate, selectsRange: true } as any)
+                : { selected: value.departureDate })}
             >
-              <DatePickerModal title="날짜 선택" />
+              <DatePickerModal title={t('datePicker.modalTitle') + ''} />
             </DatePickerContainer>
           )}
         />

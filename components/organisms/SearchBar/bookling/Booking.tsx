@@ -65,7 +65,7 @@ export const BookingSearchTravelPointModal = ({
 }: BookingSearchTravelPointModalProps) => {
   return (
     <ModalContainer style={styles.bookingSearchTravelPointModal} {...props}>
-      <ModalHeader title={title} />
+      <ModalHeader hasCloseButton title={title} />
       <ModalBody>{children}</ModalBody>
     </ModalContainer>
   );

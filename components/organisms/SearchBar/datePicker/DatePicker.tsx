@@ -35,19 +35,20 @@ export const DatePickerContainer = ({
   children,
   ...props
 }: DatePickerContainerProps) => {
+  const throwDatePickerContainerError = () => {
+    throw new Error(
+      'The Children Component type of this component must be the reactNode type.',
+    );
+  };
   return (
     <ReactDatePicker
-      className="dataPickerTest" // [TODO]: CSS修正
+      className="dataPickerBox"
       onChange={onChange}
-      dateFormat="yyyy-MM-dd HH:mm" // [TODO]: format修正
-      monthsShown={2}
       calendarContainer={(props) =>
         React.isValidElement(children)
           ? React.cloneElement(children, props)
-          : null
+          : throwDatePickerContainerError()
       }
-      selectsRange
-      closeOnScroll
       {...props}
     />
   );
@@ -62,7 +63,7 @@ export const DatePickerModal = ({
   return (
     <ModalContainer style={styles.datePickerModal}>
       <CalendarContainer className={className}>
-        <ModalHeader title={title} />
+        <ModalHeader title={title} style={styles.datePickerModalHeader} />
         <div {...stylex.props(styles.calendarContainer)}>{children}</div>
       </CalendarContainer>
     </ModalContainer>
@@ -73,11 +74,17 @@ const styles = stylex.create({
   datePickerModal: {
     width: '100%',
     zIndex: 1,
+    backgroundColor: 'white',
     height: '40rem',
+  },
+  datePickerModalHeader: {
+    padding: '1.5rem',
+    fontSize: '1.2rem',
   },
   calendarContainer: {
     display: 'flex',
     position: 'relative',
     height: '100%',
+    fontSize: '1.1rem',
   },
 });
