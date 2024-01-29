@@ -7,6 +7,8 @@ export type ModalContainerProps = React.ComponentPropsWithoutRef<'div'> & {
 };
 type ModalHeaderProps = React.ComponentPropsWithoutRef<'header'> & {
   title: string;
+  style?: StyleXArray<any>;
+  hasCloseButton?: boolean;
 };
 type ModaleBodyProps = React.ComponentPropsWithoutRef<'section'>;
 type ModalFooterProps = React.ComponentPropsWithoutRef<'footer'>;
@@ -15,11 +17,16 @@ export const ModalContainer = ({ style, ...props }: ModalContainerProps) => {
   return <div {...stylex.props(styles.modalContainer, style)} {...props} />;
 };
 
-export const ModalHeader = ({ title, ...props }: ModalHeaderProps) => {
+export const ModalHeader = ({
+  title,
+  style,
+  hasCloseButton,
+  ...props
+}: ModalHeaderProps) => {
   return (
-    <header {...stylex.props(styles.modalHeader)} {...props}>
+    <header {...stylex.props(styles.modalHeader, style)} {...props}>
       <h3>{title}</h3>
-      <CloseButton />
+      {hasCloseButton && <CloseButton />}
     </header>
   );
 };
