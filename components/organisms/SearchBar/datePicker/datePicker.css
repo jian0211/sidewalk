@@ -87,14 +87,15 @@
   width: 100%;
 }
 .react-datepicker__navigation {
-  transform: translateY(450%);
+  transform: translateY(550%);
 }
 
 .react-datepicker {
   height: 100% !important;
+  border: none !important;
 }
 
-.dataPickerTest {
+.dataPickerBox {
   border: none;
   border-bottom: 1px solid #00256c;
   width: 20rem;
@@ -106,4 +107,16 @@
     border: 1px solid #00256c;
     border-radius: 0.3vw;
   }
+}
+
+.react-datepicker__month-container {
+  flex: 1;
+}
+
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+  width: 3rem;
+  line-height: 3rem;
+  margin: 0.5rem;
 }
