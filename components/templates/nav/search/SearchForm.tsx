@@ -20,6 +20,13 @@ import {
   DatePickerModal,
 } from '@/components/organisms/SearchBar/datePicker/DatePicker';
 import { useDatePicker } from './useDatePicker';
+import {
+  LabelBox,
+  PriceContent,
+  PriceRangeSlider,
+  PriceRangeSliderContainer,
+  Title,
+} from '@/components/organisms/SearchBar/PriceRangeSlider/PriceRangeSlider';
 
 type SearchFormProps = React.ComponentPropsWithoutRef<'form'>;
 
@@ -90,39 +97,40 @@ export const SearchForm = (props: SearchFormProps) => {
           {t('tripType.oneWay')}
         </TripTypeRadioButton>
       </TripTypeContainer>
-      <div>
-        <Controller
-          control={control}
-          name="dateType"
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <DatePickerContainer
-              {...datePickerSetting}
-              onChange={(dateType) => {
-                // 편도일 때 날짜를 클릭 시 기존 날짜가 변경되지 않음.
-                // TODO : 관련하여 onChange처리를 해야함
-                if (Array.isArray(dateType)) {
-                  const [departureDate, returnDate] = dateType;
-                  onChange({ departureDate, returnDate });
-                }
-              }}
-              onBlur={onBlur}
-              placeholderText={t('datePicker.plaseHolder') + ''}
-              startDate={value.departureDate}
-              {...(getValues('tripType') === 'roundTrip'
-                ? ({ endDate: value.returnDate, selectsRange: true } as any)
-                : { selected: value.departureDate })}
-            >
-              <DatePickerModal title={t('datePicker.modalTitle') + ''} />
-            </DatePickerContainer>
-          )}
-        />
-      </div>
-
-      <div>
-        <div>희망비용</div>
-        {/* <input type="number" value="300" /> */}
-      </div>
+      <Controller
+        control={control}
+        name="dateType"
+        rules={{ required: true }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <DatePickerContainer
+            {...datePickerSetting}
+            onChange={(dateType) => {
+              // 편도일 때 날짜를 클릭 시 기존 날짜가 변경되지 않음.
+              // TODO : 관련하여 onChange처리를 해야함
+              if (Array.isArray(dateType)) {
+                const [departureDate, returnDate] = dateType;
+                onChange({ departureDate, returnDate });
+              }
+            }}
+            onBlur={onBlur}
+            placeholderText={t('datePicker.plaseHolder') + ''}
+            startDate={value.departureDate}
+            {...(getValues('tripType') === 'roundTrip'
+              ? ({ endDate: value.returnDate, selectsRange: true } as any)
+              : { selected: value.departureDate })}
+          >
+            <DatePickerModal title={t('datePicker.modalTitle') + ''} />
+          </DatePickerContainer>
+        )}
+      />
+      <PriceRangeSliderContainer>
+        <PriceContent>
+          <LabelBox rangeType="min">50</LabelBox>
+          <Title>희망가격</Title>
+          <LabelBox rangeType="max">100</LabelBox>
+        </PriceContent>
+        <PriceRangeSlider></PriceRangeSlider>
+      </PriceRangeSliderContainer>
       <Button type="submit">찾기 </Button>
     </form>
   );
