@@ -15,7 +15,10 @@ export type Flights = {
 };
 
 export type FlightsKey = keyof Flights;
-
+export const FLIGHT_COST = {
+  min: 0,
+  max: 100000,
+};
 const flightsAtom = atom<Flights>({
   key: 'fligthsAtom',
   default: {
@@ -26,10 +29,7 @@ const flightsAtom = atom<Flights>({
       departureDate: null,
       returnDate: null,
     },
-    flightCost: {
-      min: 0,
-      max: 0,
-    },
+    flightCost: FLIGHT_COST,
   },
 });
 
