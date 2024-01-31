@@ -1,7 +1,7 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as stylex from '@stylexjs/stylex';
 import { useSearch } from './useSearh';
-import { Flights } from '@/store/fligths';
+import { FLIGHT_COST, Flights } from '@/store/fligths';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { Button } from '@/components/atoms/Button';
 import {
@@ -25,6 +25,8 @@ import {
   PriceContent,
   PriceRangeSlider,
   PriceRangeSliderContainer,
+  PriceRangeSliderInput,
+  RangeFillBox,
   Title,
 } from '@/components/organisms/SearchBar/PriceRangeSlider/PriceRangeSlider';
 
@@ -34,7 +36,7 @@ export const SearchForm = (props: SearchFormProps) => {
   const t = useTranslatedWord('nav.search');
   const {
     states: { fligths },
-    actions: { handleClickSetFligths, handleSubmitSetFligths },
+    actions: { handleClickSetFligths, handleSubmitSetFligths, toLocaleString },
   } = useSearch();
   const { datePickerSetting } = useDatePicker();
   const {
@@ -43,7 +45,8 @@ export const SearchForm = (props: SearchFormProps) => {
     getValues,
     setValue,
     control,
-    formState: { errors, dirtyFields },
+    watch,
+    formState: { dirtyFields },
   } = useForm<Flights>({
     mode: 'onChange',
     defaultValues: { ...fligths },
@@ -53,8 +56,7 @@ export const SearchForm = (props: SearchFormProps) => {
     handleSubmitSetFligths(data);
     console.log(data);
   };
-
-  console.log('dirtyFields', dirtyFields.tripType);
+  watch();
 
   if (dirtyFields.tripType) {
     setValue('dateType.returnDate', null);
@@ -125,11 +127,35 @@ export const SearchForm = (props: SearchFormProps) => {
       />
       <PriceRangeSliderContainer>
         <PriceContent>
-          <LabelBox rangeType="min">50</LabelBox>
+          <LabelBox rangeType="min">
+            {toLocaleString(getValues('flightCost.min'))}
+          </LabelBox>
           <Title>희망가격</Title>
-          <LabelBox rangeType="max">100</LabelBox>
+          <LabelBox rangeType="max">
+            {toLocaleString(getValues('flightCost.max'))}
+          </LabelBox>
         </PriceContent>
-        <PriceRangeSlider></PriceRangeSlider>
+        <PriceRangeSlider>
+          <RangeFillBox flightCost={getValues('flightCost')} />
+          <PriceRangeSliderInput
+            {...register('flightCost.min', {
+              onChange: (min) => {
+                if (Number(min.target.value) > getValues('flightCost.max')) {
+                  setValue('flightCost.min', getValues('flightCost.max'));
+                }
+              },
+            })}
+          />
+          <PriceRangeSliderInput
+            {...register('flightCost.max', {
+              onChange: (max) => {
+                if (Number(max.target.value) < getValues('flightCost.min')) {
+                  setValue('flightCost.max', getValues('flightCost.min'));
+                }
+              },
+            })}
+          />
+        </PriceRangeSlider>
       </PriceRangeSliderContainer>
       <Button type="submit">찾기 </Button>
     </form>
