@@ -1,11 +1,7 @@
-import { Button, ButtonProps } from '@/components/atoms/Button';
 import * as stylex from '@stylexjs/stylex';
 import { forwardRef } from 'react';
 
 type TripTypeContainerProps = React.ComponentPropsWithoutRef<'div'>;
-type TripTypeButtonProps = ButtonProps & {
-  name: string;
-};
 type TripTypeRadioButtonProps = React.ComponentProps<'input'> & {
   value: string;
 };
@@ -18,7 +14,6 @@ export const TripTypeRadioButton = forwardRef<
   HTMLInputElement,
   TripTypeRadioButtonProps
 >(({ value, children, ...props }, ref) => {
-  console.log('props.checked', props.checked);
   return (
     <label
       {...stylex.props(
@@ -57,6 +52,7 @@ const styles = stylex.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: '1vw',
+    cursor: 'pointer',
   },
   tripTypeRadioButton: {
     display: 'none',

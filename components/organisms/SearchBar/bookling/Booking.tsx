@@ -76,7 +76,7 @@ const styles = stylex.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '16rem',
+    width: '12.5rem',
   },
   bookingTravelPointDropdown: {
     width: '5rem',

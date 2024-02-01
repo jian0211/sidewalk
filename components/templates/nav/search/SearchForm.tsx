@@ -1,9 +1,9 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as stylex from '@stylexjs/stylex';
 import { useSearch } from './useSearh';
-import { FLIGHT_COST, Flights } from '@/store/fligths';
+import { Flights } from '@/store/fligths';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
-import { Button } from '@/components/atoms/Button';
+import { SearchButton } from '@/components/atoms/Button';
 import {
   BookingTravelPointDropdown,
   BookingContainer,
@@ -56,7 +56,7 @@ export const SearchForm = (props: SearchFormProps) => {
     handleSubmitSetFligths(data);
     console.log(data);
   };
-  watch();
+  // ;
 
   if (dirtyFields.tripType) {
     setValue('dateType.returnDate', null);
@@ -136,7 +136,7 @@ export const SearchForm = (props: SearchFormProps) => {
           </LabelBox>
         </PriceContent>
         <PriceRangeSlider>
-          <RangeFillBox flightCost={getValues('flightCost')} />
+          <RangeFillBox flightCost={watch('flightCost')} />
           <PriceRangeSliderInput
             {...register('flightCost.min', {
               onChange: (min) => {
@@ -157,7 +157,7 @@ export const SearchForm = (props: SearchFormProps) => {
           />
         </PriceRangeSlider>
       </PriceRangeSliderContainer>
-      <Button type="submit">찾기 </Button>
+      <SearchButton />
     </form>
   );
 };
@@ -169,6 +169,7 @@ const styles = stylex.create({
     gap: '1rem',
     display: 'flex',
     alignItems: 'center',
+    padding: '0 1rem',
     // borderRadius: '1vw',
     // borderWidth: '1px',
     // borderStyle: 'solid',
