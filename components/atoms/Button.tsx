@@ -1,6 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 import React from 'react';
+import { FindIcon } from '@/components/atoms/Icon';
 
 export type ButtonProps = React.ComponentPropsWithoutRef<'button'> & {
   style?: StyleXArray<any>;
@@ -51,6 +52,27 @@ export const CloseButton = ({
   );
 };
 
+export const SearchButton = ({
+  style,
+  hasHoverBorder,
+  type = 'submit',
+  ...props
+}: ButtonProps) => {
+  return (
+    <button
+      type={type}
+      {...stylex.props(
+        styles.button,
+        hasHoverBorder && styles.hoverBorder,
+        style,
+      )}
+      {...props}
+    >
+      <FindIcon />
+    </button>
+  );
+};
+
 const styles = stylex.create({
   button: {
     padding: 0,
@@ -58,6 +80,7 @@ const styles = stylex.create({
     borderWidth: 'none',
     borderStyle: 'none',
     background: 'none',
+    cursor: 'pointer',
   },
   hoverBorder: {
     borderColor: {
