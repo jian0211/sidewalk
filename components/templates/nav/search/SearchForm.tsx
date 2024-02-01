@@ -107,11 +107,11 @@ export const SearchForm = (props: SearchFormProps) => {
           <DatePickerContainer
             {...datePickerSetting}
             onChange={(dateType) => {
-              // 편도일 때 날짜를 클릭 시 기존 날짜가 변경되지 않음.
-              // TODO : 관련하여 onChange처리를 해야함
               if (Array.isArray(dateType)) {
-                const [departureDate, returnDate] = dateType;
+                const [departureDate, returnDate] = dateType; //片道
                 onChange({ departureDate, returnDate });
+              } else {
+                onChange({ departureDate: dateType, returnDate: null }); //両道
               }
             }}
             onBlur={onBlur}
