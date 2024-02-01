@@ -54,17 +54,10 @@ export const RangeFillBox = ({
   flightCost: { min, max },
   ...props
 }: RangeFillBoxProps) => {
-  return (
-    // 범위 색칠 구현하기
-    <div
-      style={{
-        left: min + ''.replace(/0/g, '') + 'rem',
-        right: max + ''.replace(/0/g, '') + 'rem',
-      }}
-      {...stylex.props(styles.rangeFill)}
-      {...props}
-    />
-  );
+  // fill range
+  const left = ((min / FLIGHT_COST.max) * 21).toFixed(2) + 'rem';
+  const right = ((1 - max / FLIGHT_COST.max) * 21).toFixed(2) + 'rem';
+  return <div {...stylex.props(styles.rangeFill(left, right))} {...props} />;
 };
 
 export const PriceRangeSliderInput = React.forwardRef<
@@ -93,6 +86,7 @@ const styles = stylex.create({
     padding: '1rem',
   },
   title: {
+    flex: '1',
     textAlign: 'center',
     color: '#000',
   },
@@ -100,10 +94,12 @@ const styles = stylex.create({
     fontSize: '0.9rem',
     fontWeight: 500,
     display: 'flex',
+    gap: '1rem',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   labelBox: {
+    flex: '1',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -115,11 +111,13 @@ const styles = stylex.create({
     position: 'relative',
     margin: '1rem 0',
   },
-  rangeFill: {
+  rangeFill: (left, right) => ({
+    left,
+    right,
     height: '6px',
-    backgroundColor: '#36b37e',
+    backgroundColor: '#00256C',
     position: 'absolute',
     zIndex: 1,
-    width: '100%',
-  },
+    width: 'auto',
+  }),
 });
