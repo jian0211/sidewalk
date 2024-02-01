@@ -130,7 +130,7 @@ export const SearchForm = (props: SearchFormProps) => {
           <LabelBox rangeType="min">
             {toLocaleString(getValues('flightCost.min'))}
           </LabelBox>
-          <Title>희망가격</Title>
+          <Title>{t('priceRangeSlider.title')}</Title>
           <LabelBox rangeType="max">
             {toLocaleString(getValues('flightCost.max'))}
           </LabelBox>
