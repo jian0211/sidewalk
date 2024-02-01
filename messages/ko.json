@@ -40,6 +40,9 @@
             "datePicker": {
                 "plaseHolder": "여행 날짜를 선택해주세요.",
                 "modalTitle": "날짜 선택"
+            },
+            "priceRangeSlider": {
+                "title": "희망가격"
             }
         }
     }

@@ -40,6 +40,9 @@
             "datePicker": {
                 "plaseHolder": "旅行の日を選択してください。",
                 "modalTitle": "日々選択"
+            },
+            "priceRangeSlider": {
+                "title": "希望価格"
             }
         }
     }
