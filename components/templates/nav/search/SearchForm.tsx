@@ -10,6 +10,8 @@ import {
   BookingTravelPoint,
   BookingTravelPointSwapperButton,
   BookingSearchTravelPointModal,
+  BookingTravelPointList,
+  FlightIconWithText,
 } from '@/components/organisms/SearchBar/bookling/Booking';
 import {
   TripTypeContainer,
@@ -29,13 +31,14 @@ import {
   RangeFillBox,
   Title,
 } from '@/components/organisms/SearchBar/PriceRangeSlider/PriceRangeSlider';
+import { useAiportsList } from '@/store/airports';
 
 type SearchFormProps = React.ComponentPropsWithoutRef<'form'>;
 
 export const SearchForm = (props: SearchFormProps) => {
   const t = useTranslatedWord('nav.search');
   const {
-    states: { fligths },
+    states: { flights },
     actions: { handleClickSetFligths, handleSubmitSetFligths, toLocaleString },
   } = useSearch();
   const { datePickerSetting } = useDatePicker();
@@ -49,18 +52,23 @@ export const SearchForm = (props: SearchFormProps) => {
     formState: { dirtyFields },
   } = useForm<Flights>({
     mode: 'onChange',
-    defaultValues: { ...fligths },
+    defaultValues: { ...flights },
   });
+
+  const { airportsList } = useAiportsList(); // dummy
+
   const onSubmit: SubmitHandler<Flights> = (data, event) => {
     event?.preventDefault();
     handleSubmitSetFligths(data);
     console.log(data);
   };
-  // ;
 
   if (dirtyFields.tripType) {
     setValue('dateType.returnDate', null);
   }
+
+  // [TODO]: Error の場合
+  // SearchButton 押す時、データが全部入っているか
   return (
     <form
       {...stylex.props(styles.searchForm)}
@@ -69,9 +77,27 @@ export const SearchForm = (props: SearchFormProps) => {
     >
       <BookingContainer>
         <BookingTravelPointDropdown>
-          <BookingTravelPoint iata="HND" title="도쿄" />
+          <BookingTravelPoint iata={getValues('from')} title="도쿄" />
           <BookingSearchTravelPointModal title="지역과 도시 선택">
-            hasdfa
+            <div>
+              <div>
+                <label>일본</label>
+              </div>
+              <div>
+                <label>대한민국</label>
+              </div>
+            </div>
+            <BookingTravelPointList>
+              {airportsList.korea_airports.map(
+                ({ iata, ja_name, ko_name }, i) => (
+                  <FlightIconWithText
+                    key={i}
+                    iata={iata.toLocaleUpperCase()}
+                    name={ja_name}
+                  />
+                ),
+              )}
+            </BookingTravelPointList>
           </BookingSearchTravelPointModal>
         </BookingTravelPointDropdown>
         <BookingTravelPointSwapperButton />
@@ -108,10 +134,10 @@ export const SearchForm = (props: SearchFormProps) => {
             {...datePickerSetting}
             onChange={(dateType) => {
               if (Array.isArray(dateType)) {
-                const [departureDate, returnDate] = dateType; //片道
+                const [departureDate, returnDate] = dateType; //両道
                 onChange({ departureDate, returnDate });
               } else {
-                onChange({ departureDate: dateType, returnDate: null }); //両道
+                onChange({ departureDate: dateType, returnDate: null }); //片道
               }
             }}
             onBlur={onBlur}

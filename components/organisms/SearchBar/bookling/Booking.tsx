@@ -1,5 +1,5 @@
 import { Button, ButtonProps } from '@/components/atoms/Button';
-import { SwapIcon } from '@/components/atoms/Icon';
+import { DepartureFlightIcon, SwapIcon } from '@/components/atoms/Icon';
 import { Dropdown } from '@/components/molecules/dropdown/Dropdown';
 import {
   ModalBody,
@@ -9,6 +9,7 @@ import {
 } from '@/components/molecules/modal/Modal';
 import { useDropdown } from '@/hooks/providers/ModalOpenControllProvider';
 import * as stylex from '@stylexjs/stylex';
+import React from 'react';
 
 type BookingContainerProps = React.ComponentPropsWithoutRef<'div'>;
 type BookingTravelPointDropdownProps = React.ComponentPropsWithoutRef<'div'>;
@@ -20,6 +21,11 @@ type BookingTravelPointSwapperButtonProps = ButtonProps;
 type BookingSearchTravelPointModalProps = ModalContainerProps & {
   title: string;
 };
+type FlightIconWithTextProps = React.ComponentPropsWithoutRef<'li'> & {
+  iata: string;
+  name: string;
+};
+type BookingTravelPointListProps = React.ComponentPropsWithoutRef<'ul'>;
 
 export const BookingContainer = (props: BookingContainerProps) => {
   return <div {...stylex.props(styles.bookingContainer)} {...props} />;
@@ -77,6 +83,24 @@ export const BookingSearchTravelPointModal = ({
   );
 };
 
+export const BookingTravelPointList = (props: BookingTravelPointListProps) => {
+  return <ul {...props} />;
+};
+
+export const FlightIconWithText = ({
+  children,
+  iata,
+  name,
+  ...props
+}: FlightIconWithTextProps) => {
+  return (
+    <li {...stylex.props(styles.bookingTravelPointInput)} {...props}>
+      <DepartureFlightIcon />
+      <h3>{iata}</h3>
+      <label>{name}</label>
+    </li>
+  );
+};
 const styles = stylex.create({
   bookingContainer: {
     display: 'flex',
@@ -94,4 +118,26 @@ const styles = stylex.create({
   },
   bookingTravelPoint: {},
   bookingSearchTravelPointModal: {},
+  flightIconWithText: {},
+  bookingTravelPointInput: {
+    fontWeight: 500,
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1rem',
+    padding: '0.5rem 2rem',
+    borderColor: {
+      default: 'none',
+      ':hover': '#00256C',
+    },
+    borderWidth: {
+      default: 'none',
+      ':hover': '1px',
+    },
+    borderStyle: {
+      default: 'none',
+      ':hover': 'solid',
+    },
+    borderRadius: '1vw',
+    cursor: 'pointer',
+  },
 });

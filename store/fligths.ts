@@ -34,10 +34,10 @@ const flightsAtom = atom<Flights>({
 });
 
 export const useFlights = () => {
-  const [fligths, setFligths] = useRecoilState(flightsAtom);
+  const [flights, setFligths] = useRecoilState(flightsAtom);
 
   return {
-    fligths,
+    flights,
     setFligths,
   };
 };

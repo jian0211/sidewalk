@@ -3,7 +3,7 @@ import { ValueOf } from '@/types/common';
 import { useLocale } from 'next-intl';
 
 export const useSearch = () => {
-  const { fligths, setFligths } = useFlights();
+  const { flights, setFligths } = useFlights();
   const locale = useLocale();
 
   const handleClickSetFligths =
@@ -27,7 +27,7 @@ export const useSearch = () => {
 
   return {
     states: {
-      fligths,
+      flights,
     },
     actions: {
       handleClickSetFligths,

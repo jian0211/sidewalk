@@ -1,5 +1,4 @@
 import { CloseButton } from '@/components/atoms/Button';
-import { useDropdown } from '@/hooks/providers/ModalOpenControllProvider';
 import * as stylex from '@stylexjs/stylex';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 
@@ -13,7 +12,9 @@ type ModalHeaderProps = React.ComponentPropsWithoutRef<'header'> & {
     | { hasCloseButton: true; handleClose: () => void }
     | { hasCloseButton?: false; handleClose?: never }
   );
-type ModaleBodyProps = React.ComponentPropsWithoutRef<'section'>;
+type ModaleBodyProps = React.ComponentPropsWithoutRef<'section'> & {
+  style?: StyleXArray<any>;
+};
 type ModalFooterProps = React.ComponentPropsWithoutRef<'footer'>;
 
 export const ModalContainer = ({ style, ...props }: ModalContainerProps) => {
@@ -34,8 +35,8 @@ export const ModalHeader = ({
     </header>
   );
 };
-export const ModalBody = (props: ModaleBodyProps) => {
-  return <section {...props} />;
+export const ModalBody = ({ style, ...props }: ModaleBodyProps) => {
+  return <section {...stylex.props(styles.modalBody, style)} {...props} />;
 };
 
 export const ModalFooter = (props: ModalFooterProps) => {
@@ -60,5 +61,8 @@ const styles = stylex.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  modalBody: {
+    display: 'flex',
   },
 });
