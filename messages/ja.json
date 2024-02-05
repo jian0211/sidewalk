@@ -4,10 +4,10 @@
             "title": "ダッシュボード"
         },
         "airports": {
-            "title": "港空会社",
+            "title": "航空会社",
             "categories": {
-                "airportsList": "港空会社リスト",
-                "airportsSchedule": "港空会社スケジュール"
+                "airportsList": "航空会社リスト",
+                "airportsSchedule": "航空会社スケジュール"
             }
         },
         "airlines": {

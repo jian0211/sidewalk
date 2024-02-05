@@ -1,12 +1,13 @@
 import { Button, ButtonProps } from '@/components/atoms/Button';
 import { SwapIcon } from '@/components/atoms/Icon';
-import { DropdownWarpper } from '@/components/molecules/dropdown/Dropdown';
+import { Dropdown } from '@/components/molecules/dropdown/Dropdown';
 import {
   ModalBody,
   ModalContainer,
   ModalContainerProps,
   ModalHeader,
 } from '@/components/molecules/modal/Modal';
+import { useDropdown } from '@/hooks/providers/ModalOpenControllProvider';
 import * as stylex from '@stylexjs/stylex';
 
 type BookingContainerProps = React.ComponentPropsWithoutRef<'div'>;
@@ -30,7 +31,7 @@ export const BookingTravelPointDropdown = ({
 }: BookingTravelPointDropdownProps) => {
   return (
     <div {...stylex.props(styles.bookingTravelPointDropdown)} {...props}>
-      <DropdownWarpper>{children}</DropdownWarpper>
+      <Dropdown>{children}</Dropdown>
     </div>
   );
 };
@@ -42,7 +43,7 @@ export const BookingTravelPoint = ({
 }: BookingTravelPointProps) => {
   return (
     <div {...stylex.props(styles.bookingTravelPoint)} {...props}>
-      <h3>{iata}</h3>
+      <label>{iata}</label>
       <p>{title}</p>
     </div>
   );
@@ -63,9 +64,14 @@ export const BookingSearchTravelPointModal = ({
   title,
   ...props
 }: BookingSearchTravelPointModalProps) => {
+  const { setIsShow } = useDropdown();
   return (
     <ModalContainer style={styles.bookingSearchTravelPointModal} {...props}>
-      <ModalHeader hasCloseButton title={title} />
+      <ModalHeader
+        title={title}
+        hasCloseButton
+        handleClose={() => setIsShow(false)}
+      />
       <ModalBody>{children}</ModalBody>
     </ModalContainer>
   );
