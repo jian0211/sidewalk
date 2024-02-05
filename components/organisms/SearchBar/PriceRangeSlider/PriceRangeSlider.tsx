@@ -55,8 +55,9 @@ export const RangeFillBox = ({
   ...props
 }: RangeFillBoxProps) => {
   // fill range
-  const left = ((min / FLIGHT_COST.max) * 21).toFixed(2) + 'rem';
-  const right = ((1 - max / FLIGHT_COST.max) * 21).toFixed(2) + 'rem';
+  const TOTAL_WIDTH = 21;
+  const left = ((min / FLIGHT_COST.max) * TOTAL_WIDTH).toFixed(2) + 'rem';
+  const right = ((1 - max / FLIGHT_COST.max) * TOTAL_WIDTH).toFixed(2) + 'rem';
   return <div {...stylex.props(styles.rangeFill(left, right))} {...props} />;
 };
 
@@ -65,12 +66,15 @@ export const PriceRangeSliderInput = React.forwardRef<
   PriceRangeSliderInputProps
 >((props, ref) => {
   const locale = useLocale();
-
+  const stepOfLocale: Record<string, string> = {
+    ja: '1000',
+    ko: '10000',
+  };
   return (
     <input
       ref={ref}
       type="range"
-      step={locale === 'ja' ? '1000' : '10000'}
+      step={stepOfLocale[locale]}
       min={FLIGHT_COST.min}
       max={FLIGHT_COST.max}
       {...props}
@@ -97,6 +101,7 @@ const styles = stylex.create({
     gap: '1rem',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginBottom: '0.5rem',
   },
   labelBox: {
     flex: '1',
@@ -109,7 +114,6 @@ const styles = stylex.create({
   p: {},
   rangeSlider: {
     position: 'relative',
-    margin: '1rem 0',
   },
   rangeFill: (left, right) => ({
     left,

@@ -3,6 +3,7 @@ import {
   IconKoreaFlag,
   IconSwap,
   IconFind,
+  IconDepartureFlight,
 } from '@/public/svgs/index';
 import * as stylex from '@stylexjs/stylex';
 
@@ -31,6 +32,10 @@ export const FindIcon: React.FC<React.SVGProps<SVGElement>> = (props) => (
   <IconFind {...stylex.props(styles._icon)} {...props} />
 );
 
+export const DepartureFlightIcon: React.FC<React.SVGProps<SVGElement>> = (
+  props,
+) => <IconDepartureFlight {...stylex.props(styles.__icon)} {...props} />;
+
 const styles = stylex.create({
   icon: {
     width: '4rem',
@@ -38,6 +43,10 @@ const styles = stylex.create({
   },
   _icon: {
     width: '2.5rem',
+    height: 'auto',
+  },
+  __icon: {
+    width: '1rem',
     height: 'auto',
   },
 });

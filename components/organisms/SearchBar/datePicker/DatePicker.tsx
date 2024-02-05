@@ -62,7 +62,7 @@ export const DatePickerModal = ({
 }: DatePickerModalProps) => {
   return (
     <ModalContainer style={styles.datePickerModal}>
-      <CalendarContainer className={className}>
+      <CalendarContainer className={className} {...props}>
         <ModalHeader title={title} style={styles.datePickerModalHeader} />
         <div {...stylex.props(styles.calendarContainer)}>{children}</div>
       </CalendarContainer>

@@ -8,9 +8,13 @@ export type ModalContainerProps = React.ComponentPropsWithoutRef<'div'> & {
 type ModalHeaderProps = React.ComponentPropsWithoutRef<'header'> & {
   title: string;
   style?: StyleXArray<any>;
-  hasCloseButton?: boolean;
+} & (
+    | { hasCloseButton: true; handleClose: () => void }
+    | { hasCloseButton?: false; handleClose?: never }
+  );
+type ModaleBodyProps = React.ComponentPropsWithoutRef<'section'> & {
+  style?: StyleXArray<any>;
 };
-type ModaleBodyProps = React.ComponentPropsWithoutRef<'section'>;
 type ModalFooterProps = React.ComponentPropsWithoutRef<'footer'>;
 
 export const ModalContainer = ({ style, ...props }: ModalContainerProps) => {
@@ -21,17 +25,18 @@ export const ModalHeader = ({
   title,
   style,
   hasCloseButton,
+  handleClose,
   ...props
 }: ModalHeaderProps) => {
   return (
     <header {...stylex.props(styles.modalHeader, style)} {...props}>
       <h3>{title}</h3>
-      {hasCloseButton && <CloseButton />}
+      {hasCloseButton && <CloseButton onClick={handleClose} />}
     </header>
   );
 };
-export const ModalBody = (props: ModaleBodyProps) => {
-  return <section {...props} />;
+export const ModalBody = ({ style, ...props }: ModaleBodyProps) => {
+  return <section {...stylex.props(styles.modalBody, style)} {...props} />;
 };
 
 export const ModalFooter = (props: ModalFooterProps) => {
@@ -56,5 +61,8 @@ const styles = stylex.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  modalBody: {
+    display: 'flex',
   },
 });
