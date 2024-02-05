@@ -1,4 +1,5 @@
 import { CloseButton } from '@/components/atoms/Button';
+import { useDropdown } from '@/hooks/providers/ModalOpenControllProvider';
 import * as stylex from '@stylexjs/stylex';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 
@@ -8,8 +9,10 @@ export type ModalContainerProps = React.ComponentPropsWithoutRef<'div'> & {
 type ModalHeaderProps = React.ComponentPropsWithoutRef<'header'> & {
   title: string;
   style?: StyleXArray<any>;
-  hasCloseButton?: boolean;
-};
+} & (
+    | { hasCloseButton: true; handleClose: () => void }
+    | { hasCloseButton?: false; handleClose?: never }
+  );
 type ModaleBodyProps = React.ComponentPropsWithoutRef<'section'>;
 type ModalFooterProps = React.ComponentPropsWithoutRef<'footer'>;
 
@@ -21,12 +24,13 @@ export const ModalHeader = ({
   title,
   style,
   hasCloseButton,
+  handleClose,
   ...props
 }: ModalHeaderProps) => {
   return (
     <header {...stylex.props(styles.modalHeader, style)} {...props}>
       <h3>{title}</h3>
-      {hasCloseButton && <CloseButton />}
+      {hasCloseButton && <CloseButton onClick={handleClose} />}
     </header>
   );
 };
