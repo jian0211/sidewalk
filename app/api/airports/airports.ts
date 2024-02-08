@@ -1,4 +1,17 @@
-export const DUMMY_AIRPORTS_DATA = {
+import { Flights } from '@/store/fligths';
+
+export const DUMMY_AIRPORTS_DATA: {
+  japan_airports: {
+    iata: Flights['from'];
+    ja_name: string;
+    ko_name: string;
+  }[];
+  korea_airports: {
+    iata: Flights['from'];
+    ja_name: string;
+    ko_name: string;
+  }[];
+} = {
   japan_airports: [
     {
       iata: 'CTS',
