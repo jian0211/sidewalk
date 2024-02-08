@@ -8,6 +8,7 @@ import {
   ModalHeader,
 } from '@/components/molecules/modal/Modal';
 import { useDropdown } from '@/hooks/providers/ModalOpenControllProvider';
+import { AirportsIataWithDefault, Flights } from '@/store/fligths';
 import * as stylex from '@stylexjs/stylex';
 import React from 'react';
 
@@ -22,10 +23,15 @@ type BookingSearchTravelPointModalProps = ModalContainerProps & {
   title: string;
 };
 type FlightIconWithTextProps = React.ComponentPropsWithoutRef<'li'> & {
-  iata: string;
+  iata: AirportsIataWithDefault;
   name: string;
+  // onChange: (...event: any[]) => void;
 };
 type BookingTravelPointListProps = React.ComponentPropsWithoutRef<'ul'>;
+type BookingTravelCountryInputProps =
+  React.ComponentPropsWithoutRef<'input'> & {
+    value: string;
+  };
 
 export const BookingContainer = (props: BookingContainerProps) => {
   return <div {...stylex.props(styles.bookingContainer)} {...props} />;
@@ -78,13 +84,46 @@ export const BookingSearchTravelPointModal = ({
         hasCloseButton
         handleClose={() => setIsShow(false)}
       />
-      <ModalBody>{children}</ModalBody>
+      <ModalBody style={styles.bookingSearchTravelPointModalBody}>
+        {children}
+      </ModalBody>
     </ModalContainer>
   );
 };
 
+type BookingTravelCountryBoxProps = React.ComponentPropsWithoutRef<'div'>;
+export const BookingTravelCountryBox = (
+  props: BookingTravelCountryBoxProps,
+) => <div {...stylex.props(styles.bookingTravelCountryBox)} {...props} />;
+
+export const BookingTravelCountryInput = React.forwardRef<
+  HTMLInputElement,
+  BookingTravelCountryInputProps
+>(({ value, ...props }, ref) => {
+  return (
+    <label
+      {...stylex.props(
+        styles.bookingRadioLable,
+        props!.checked && styles.checked,
+      )}
+      htmlFor={value}
+    >
+      <input
+        {...stylex.props(styles.bookingTravelCountryInput)}
+        id={value}
+        name="travelCountry"
+        type="radio"
+        ref={ref}
+        {...props}
+      />
+      {value}
+    </label>
+  );
+});
+BookingTravelCountryInput.displayName = 'BookingTravelCountryInput';
+
 export const BookingTravelPointList = (props: BookingTravelPointListProps) => {
-  return <ul {...props} />;
+  return <ul {...stylex.props(styles.bookingTravelPointList)} {...props} />;
 };
 
 export const FlightIconWithText = ({
@@ -118,16 +157,15 @@ const styles = stylex.create({
   },
   bookingTravelPoint: {},
   bookingSearchTravelPointModal: {},
-  flightIconWithText: {},
   bookingTravelPointInput: {
     fontWeight: 500,
     display: 'flex',
     alignItems: 'center',
     gap: '1rem',
-    padding: '0.5rem 2rem',
+    padding: '0.5rem 1.5rem',
     borderColor: {
       default: 'none',
-      ':hover': '#00256C',
+      ':hover': '#49cbff',
     },
     borderWidth: {
       default: 'none',
@@ -137,7 +175,51 @@ const styles = stylex.create({
       default: 'none',
       ':hover': 'solid',
     },
-    borderRadius: '1vw',
+    borderRadius: '0.3vw',
     cursor: 'pointer',
+    fontSize: '0.9rem',
+  },
+  bookingSearchTravelPointModalBody: {
+    marginTop: '1rem',
+  },
+  bookingTravelCountryInput: {
+    display: 'none',
+  },
+  bookingRadioLable: {
+    width: '100%',
+    height: '3rem',
+    display: 'flex',
+    paddingLeft: '1rem',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    cursor: 'pointer',
+    borderRadius: '0.5vw',
+    borderColor: {
+      default: 'none',
+      ':hover': '#49cbff',
+    },
+    borderWidth: {
+      default: 'none',
+      ':hover': '1px',
+    },
+    borderStyle: {
+      default: 'none',
+      ':hover': 'solid',
+    },
+  },
+  checked: {
+    backgroundColor: 'white',
+  },
+  bookingTravelCountryBox: {
+    backgroundColor: '#f0f0f0',
+    flex: '1',
+    padding: '0.3rem',
+    borderBlockWidth: '1px',
+    borderColor: '#f0f0f0',
+    borderStyle: 'solid',
+    borderRadius: '0.5vw',
+  },
+  bookingTravelPointList: {
+    flex: '2',
   },
 });
