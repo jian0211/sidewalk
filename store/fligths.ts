@@ -1,8 +1,10 @@
 import { AirportsIata } from '@/types/airport';
 import { atom, useRecoilState } from 'recoil';
+
+export type AirportsIataWithDefault = AirportsIata | 'FROM' | 'TO';
 export type Flights = {
-  from: AirportsIata | 'FROM';
-  to: AirportsIata | 'TO';
+  from: Exclude<AirportsIataWithDefault, 'TO'>;
+  to: Exclude<AirportsIataWithDefault, 'FROM'>;
   tripType: 'roundTrip' | 'oneWay';
   dateType: {
     departureDate: Date | null;

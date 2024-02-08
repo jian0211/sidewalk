@@ -12,6 +12,8 @@ import {
   BookingSearchTravelPointModal,
   BookingTravelPointList,
   FlightIconWithText,
+  BookingTravelCountryInput,
+  BookingTravelCountryBox,
 } from '@/components/organisms/SearchBar/bookling/Booking';
 import {
   TripTypeContainer,
@@ -32,6 +34,8 @@ import {
   Title,
 } from '@/components/organisms/SearchBar/PriceRangeSlider/PriceRangeSlider';
 import { useAiportsList } from '@/store/airports';
+import { useBooking } from './useBooking';
+import { useLocale } from '@/hooks/useLocale';
 
 type SearchFormProps = React.ComponentPropsWithoutRef<'form'>;
 
@@ -55,7 +59,19 @@ export const SearchForm = (props: SearchFormProps) => {
     defaultValues: { ...flights },
   });
 
-  const { airportsList } = useAiportsList(); // dummy
+  const {
+    states: { locale },
+  } = useLocale();
+
+  console.log('getValues', getValues('from'));
+
+  const {
+    states: { airportsList },
+    actions: { getBookingTitle },
+  } = useAiportsList(); // dummy
+  const {
+    actions: { checkedTravelCountry },
+  } = useBooking();
 
   const onSubmit: SubmitHandler<Flights> = (data, event) => {
     event?.preventDefault();
@@ -66,7 +82,6 @@ export const SearchForm = (props: SearchFormProps) => {
   if (dirtyFields.tripType) {
     setValue('dateType.returnDate', null);
   }
-
   // [TODO]: Error の場合
   // SearchButton 押す時、データが全部入っているか
   return (
@@ -77,23 +92,37 @@ export const SearchForm = (props: SearchFormProps) => {
     >
       <BookingContainer>
         <BookingTravelPointDropdown>
-          <BookingTravelPoint iata={getValues('from')} title="도쿄" />
-          <BookingSearchTravelPointModal title="지역과 도시 선택">
-            <div>
-              <div>
-                <label>일본</label>
-              </div>
-              <div>
-                <label>대한민국</label>
-              </div>
-            </div>
+          <BookingTravelPoint
+            iata={watch('from')}
+            title={getBookingTitle(getValues('from'), locale)}
+          />
+          <BookingSearchTravelPointModal title={t('booking.modalTitle')}>
+            <BookingTravelCountryBox>
+              <BookingTravelCountryInput
+                {...register('from')}
+                value="japan"
+                checked={checkedTravelCountry(getValues('from')) === 'japan'}
+                onClick={(data) => {
+                  console.log('data', data.currentTarget.value);
+                }}
+              />
+              <BookingTravelCountryInput
+                {...register('to')}
+                value="korea"
+                checked={checkedTravelCountry(getValues('to')) === 'korea'}
+                onClick={(data) => {
+                  console.log('data', data.currentTarget.value);
+                }}
+              />
+            </BookingTravelCountryBox>
             <BookingTravelPointList>
               {airportsList.korea_airports.map(
                 ({ iata, ja_name, ko_name }, i) => (
                   <FlightIconWithText
                     key={i}
-                    iata={iata.toLocaleUpperCase()}
-                    name={ja_name}
+                    iata={iata}
+                    name={locale === 'ja' ? ja_name : ko_name}
+                    onClick={() => setValue('from', iata)}
                   />
                 ),
               )}
@@ -102,7 +131,10 @@ export const SearchForm = (props: SearchFormProps) => {
         </BookingTravelPointDropdown>
         <BookingTravelPointSwapperButton />
         <BookingTravelPointDropdown>
-          <BookingTravelPoint iata="INC" title="인천" />
+          <BookingTravelPoint
+            iata={watch('to')}
+            title={getBookingTitle(getValues('to'), locale)}
+          />
           <BookingSearchTravelPointModal title="지역과 도시 선택">
             hasdfa
           </BookingSearchTravelPointModal>

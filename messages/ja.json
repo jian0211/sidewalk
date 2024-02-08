@@ -35,7 +35,8 @@
             "booking": {
                 "travelPoint": {
                     "HND": "東京"
-                }
+                },
+                "modalTitle": "地域と都市の選択"
             },
             "datePicker": {
                 "plaseHolder": "旅行の日を選択してください。",
