@@ -25,7 +25,6 @@ type BookingSearchTravelPointModalProps = ModalContainerProps & {
 type FlightIconWithTextProps = React.ComponentPropsWithoutRef<'li'> & {
   iata: AirportsIataWithDefault;
   name: string;
-  // onChange: (...event: any[]) => void;
 };
 type BookingTravelPointListProps = React.ComponentPropsWithoutRef<'ul'>;
 type BookingTravelCountryInputProps =
@@ -130,16 +129,29 @@ export const FlightIconWithText = ({
   children,
   iata,
   name,
+  onClick,
   ...props
 }: FlightIconWithTextProps) => {
+  const { setIsShow } = useDropdown();
   return (
-    <li {...stylex.props(styles.bookingTravelPointInput)} {...props}>
+    <li
+      {...stylex.props(
+        styles.bookingTravelPointInput,
+        props?.['aria-selected'] && styles.selected,
+      )}
+      {...props}
+      onClick={(e) => {
+        onClick?.(e);
+        setIsShow(false);
+      }}
+    >
       <DepartureFlightIcon />
       <h3>{iata}</h3>
       <label>{name}</label>
     </li>
   );
 };
+
 const styles = stylex.create({
   bookingContainer: {
     display: 'flex',
@@ -178,6 +190,9 @@ const styles = stylex.create({
     borderRadius: '0.3vw',
     cursor: 'pointer',
     fontSize: '0.9rem',
+  },
+  selected: {
+    backgroundColor: '#49cbff',
   },
   bookingSearchTravelPointModalBody: {
     marginTop: '1rem',
