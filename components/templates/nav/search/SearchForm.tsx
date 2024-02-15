@@ -58,19 +58,17 @@ export const SearchForm = (props: SearchFormProps) => {
     mode: 'onChange',
     defaultValues: { ...flights },
   });
-
   const {
     states: { locale },
   } = useLocale();
-
-  console.log('getValues', getValues('from'));
 
   const {
     states: { airportsList },
     actions: { getBookingTitle },
   } = useAiportsList(); // dummy
   const {
-    actions: { checkedTravelCountry },
+    states: { selectCountry },
+    actions: { handleSelectCountry },
   } = useBooking();
 
   const onSubmit: SubmitHandler<Flights> = (data, event) => {
@@ -94,38 +92,50 @@ export const SearchForm = (props: SearchFormProps) => {
         <BookingTravelPointDropdown>
           <BookingTravelPoint
             iata={watch('from')}
-            title={getBookingTitle(getValues('from'), locale)}
+            title={getBookingTitle(getValues('from'))}
           />
           <BookingSearchTravelPointModal title={t('booking.modalTitle')}>
             <BookingTravelCountryBox>
               <BookingTravelCountryInput
-                {...register('from')}
                 value="japan"
-                checked={checkedTravelCountry(getValues('from')) === 'japan'}
-                onClick={(data) => {
-                  console.log('data', data.currentTarget.value);
-                }}
+                checked={selectCountry === 'japan'}
+                onClick={() => handleSelectCountry('japan')}
               />
               <BookingTravelCountryInput
-                {...register('to')}
                 value="korea"
-                checked={checkedTravelCountry(getValues('to')) === 'korea'}
-                onClick={(data) => {
-                  console.log('data', data.currentTarget.value);
-                }}
+                checked={selectCountry === 'korea'}
+                onClick={() => handleSelectCountry('korea')}
               />
             </BookingTravelCountryBox>
             <BookingTravelPointList>
-              {airportsList.korea_airports.map(
-                ({ iata, ja_name, ko_name }, i) => (
-                  <FlightIconWithText
-                    key={i}
-                    iata={iata}
-                    name={locale === 'ja' ? ja_name : ko_name}
-                    onClick={() => setValue('from', iata)}
-                  />
-                ),
-              )}
+              {selectCountry === 'korea'
+                ? airportsList.korea_airports.map(
+                    ({ iata, ja_name, ko_name }, i) => (
+                      <FlightIconWithText
+                        // formState 추가해보기
+                        key={i}
+                        iata={iata}
+                        name={locale === 'ja' ? ja_name : ko_name}
+                        onClick={() => {
+                          setValue('from', iata as any);
+                        }}
+                        aria-selected={iata === getValues('from')}
+                      />
+                    ),
+                  )
+                : airportsList.japan_airports.map(
+                    ({ iata, ja_name, ko_name }, i) => (
+                      <FlightIconWithText
+                        key={i}
+                        iata={iata}
+                        name={locale === 'ja' ? ja_name : ko_name}
+                        onClick={() => {
+                          setValue('from', iata as any);
+                        }}
+                        aria-selected={iata === getValues('from')}
+                      />
+                    ),
+                  )}
             </BookingTravelPointList>
           </BookingSearchTravelPointModal>
         </BookingTravelPointDropdown>
@@ -133,7 +143,7 @@ export const SearchForm = (props: SearchFormProps) => {
         <BookingTravelPointDropdown>
           <BookingTravelPoint
             iata={watch('to')}
-            title={getBookingTitle(getValues('to'), locale)}
+            title={getBookingTitle(getValues('to'))}
           />
           <BookingSearchTravelPointModal title="지역과 도시 선택">
             hasdfa

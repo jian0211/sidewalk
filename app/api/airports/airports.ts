@@ -1,13 +1,13 @@
-import { Flights } from '@/store/fligths';
+import { AirportsIataWithDefault } from '@/store/fligths';
 
 export const DUMMY_AIRPORTS_DATA: {
   japan_airports: {
-    iata: Flights['from'];
+    iata: AirportsIataWithDefault;
     ja_name: string;
     ko_name: string;
   }[];
   korea_airports: {
-    iata: Flights['from'];
+    iata: AirportsIataWithDefault;
     ja_name: string;
     ko_name: string;
   }[];

@@ -2,6 +2,7 @@ import { DUMMY_AIRPORTS_DATA } from '@/app/api/airports/airports';
 import { atom, useRecoilValue } from 'recoil';
 import { AirportsIataWithDefault, Flights } from './fligths';
 import { Locales } from '@/types/locale';
+import { useLocale } from 'next-intl';
 
 type AirportsList = typeof DUMMY_AIRPORTS_DATA;
 
@@ -24,6 +25,7 @@ const DEFAULT_LOCATIONS: Pick<AirportObjType, 'FROM' | 'TO'> = {
 };
 
 export const useAiportsList = () => {
+  const locale = useLocale() as Locales;
   const airportsList = useRecoilValue(airportsListAtom);
 
   const airportsObj: AirportObjType = {
@@ -39,12 +41,8 @@ export const useAiportsList = () => {
     ),
     ...DEFAULT_LOCATIONS,
   };
-  const getBookingTitle = (
-    iata: AirportsIataWithDefault = 'NRT',
-    locale: Locales = 'ja',
-  ) => {
-    return airportsObj[iata][locale];
-  };
+  const getBookingTitle = (iata: AirportsIataWithDefault = 'NRT') =>
+    airportsObj[iata][locale];
   return {
     states: { airportsList },
     actions: { getBookingTitle },
