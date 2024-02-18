@@ -97,12 +97,12 @@ export const SearchForm = (props: SearchFormProps) => {
           <BookingSearchTravelPointModal title={t('booking.modalTitle')}>
             <BookingTravelCountryBox>
               <BookingTravelCountryInput
-                value="japan"
+                value={t('booking.country.japan')}
                 checked={selectCountry === 'japan'}
                 onClick={() => handleSelectCountry('japan')}
               />
               <BookingTravelCountryInput
-                value="korea"
+                value={t('booking.country.korea')}
                 checked={selectCountry === 'korea'}
                 onClick={() => handleSelectCountry('korea')}
               />
@@ -112,7 +112,6 @@ export const SearchForm = (props: SearchFormProps) => {
                 ? airportsList.korea_airports.map(
                     ({ iata, ja_name, ko_name }, i) => (
                       <FlightIconWithText
-                        // formState 추가해보기
                         key={i}
                         iata={iata}
                         name={locale === 'ja' ? ja_name : ko_name}
