@@ -36,7 +36,11 @@
                 "travelPoint": {
                     "HND": "東京"
                 },
-                "modalTitle": "地域と都市の選択"
+                "modalTitle": "地域と都市の選択",
+                "country": {
+                    "japan": "日本",
+                    "korea": "韓国"
+                }
             },
             "datePicker": {
                 "plaseHolder": "旅行の日を選択してください。",
