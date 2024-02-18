@@ -68,7 +68,7 @@ export const SearchForm = (props: SearchFormProps) => {
   } = useAiportsList(); // dummy
   const {
     states: { selectCountry },
-    actions: { handleSelectCountry },
+    actions: { handleSelectCountry, isDisabled, isCurrentCountry },
   } = useBooking();
 
   const onSubmit: SubmitHandler<Flights> = (data, event) => {
@@ -144,8 +144,50 @@ export const SearchForm = (props: SearchFormProps) => {
             iata={watch('to')}
             title={getBookingTitle(getValues('to'))}
           />
-          <BookingSearchTravelPointModal title="지역과 도시 선택">
-            hasdfa
+          <BookingSearchTravelPointModal title={t('booking.modalTitle')}>
+            <BookingTravelCountryBox>
+              <BookingTravelCountryInput
+                value={t('booking.country.japan')}
+                checked={!isCurrentCountry('japan')}
+                onClick={() => handleSelectCountry('japan')}
+                aria-disabled={isDisabled(getValues('from'), 'japan')}
+              />
+              <BookingTravelCountryInput
+                value={t('booking.country.korea')}
+                checked={!isCurrentCountry('korea')}
+                onClick={() => handleSelectCountry('korea')}
+                aria-disabled={isDisabled(getValues('from'), 'korea')}
+              />
+            </BookingTravelCountryBox>
+            <BookingTravelPointList>
+              {!isCurrentCountry('korea')
+                ? airportsList.korea_airports.map(
+                    ({ iata, ja_name, ko_name }, i) => (
+                      <FlightIconWithText
+                        key={i}
+                        iata={iata}
+                        name={locale === 'ja' ? ja_name : ko_name}
+                        onClick={() => {
+                          setValue('to', iata as any);
+                        }}
+                        aria-selected={iata === getValues('to')}
+                      />
+                    ),
+                  )
+                : airportsList.japan_airports.map(
+                    ({ iata, ja_name, ko_name }, i) => (
+                      <FlightIconWithText
+                        key={i}
+                        iata={iata}
+                        name={locale === 'ja' ? ja_name : ko_name}
+                        onClick={() => {
+                          setValue('to', iata as any);
+                        }}
+                        aria-selected={iata === getValues('to')}
+                      />
+                    ),
+                  )}
+            </BookingTravelPointList>
           </BookingSearchTravelPointModal>
         </BookingTravelPointDropdown>
       </BookingContainer>
