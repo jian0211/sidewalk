@@ -68,7 +68,12 @@ export const SearchForm = (props: SearchFormProps) => {
   } = useAiportsList(); // dummy
   const {
     states: { selectCountry },
-    actions: { handleSelectCountry, isDisabled, isCurrentCountry },
+    actions: {
+      handleSelectCountry,
+      isDisabled,
+      isCurrentCountry,
+      getSwapFromTo,
+    },
   } = useBooking();
 
   const onSubmit: SubmitHandler<Flights> = (data, event) => {
@@ -100,11 +105,13 @@ export const SearchForm = (props: SearchFormProps) => {
                 value={t('booking.country.japan')}
                 checked={selectCountry === 'japan'}
                 onClick={() => handleSelectCountry('japan')}
+                aria-disabled={isDisabled(getValues('to'), 'japan')}
               />
               <BookingTravelCountryInput
                 value={t('booking.country.korea')}
                 checked={selectCountry === 'korea'}
                 onClick={() => handleSelectCountry('korea')}
+                aria-disabled={isDisabled(getValues('to'), 'korea')}
               />
             </BookingTravelCountryBox>
             <BookingTravelPointList>
@@ -138,7 +145,13 @@ export const SearchForm = (props: SearchFormProps) => {
             </BookingTravelPointList>
           </BookingSearchTravelPointModal>
         </BookingTravelPointDropdown>
-        <BookingTravelPointSwapperButton />
+        <BookingTravelPointSwapperButton
+          onClick={() => {
+            const { from, to } = getSwapFromTo(getValues());
+            setValue('from', from);
+            setValue('to', to);
+          }}
+        />
         <BookingTravelPointDropdown>
           <BookingTravelPoint
             iata={watch('to')}
