@@ -103,7 +103,8 @@ export const BookingTravelCountryInput = React.forwardRef<
     <label
       {...stylex.props(
         styles.bookingRadioLable,
-        props!.checked && styles.checked,
+        props.checked && styles.checked,
+        props['aria-disabled'] && styles.disable,
       )}
       htmlFor={value}
     >
@@ -224,6 +225,10 @@ const styles = stylex.create({
   },
   checked: {
     backgroundColor: 'white',
+  },
+  disable: {
+    pointerEvents: 'none',
+    opacity: 0.5,
   },
   bookingTravelCountryBox: {
     backgroundColor: '#f0f0f0',

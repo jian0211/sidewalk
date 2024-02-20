@@ -1,5 +1,3 @@
-const JAPAN_AIR_PORTS = {} as const;
-
 type Airport = {
   name: string;
   iata: string;
@@ -7,24 +5,23 @@ type Airport = {
 };
 export type AirportsIata = JapanAirportIata | KoreaAirportIata;
 
-export type JapanAirportIata =
-  | 'CTS' // 札幌新千歳
-  | 'AOJ' // 青森
-  | 'KIJ' // 新潟
-  | 'NRT' // 成田
-  | 'HND' // 羽田
-  | 'NGO' // 名古屋
-  | 'KMQ' // 小松
-  | 'KIX' // 大阪
-  | 'OKJ' // 岡山
-  | 'FUK' // 福岡
-  | 'OIT' // 大分
-  | 'KOJ' // 鹿児島
-  | 'OKA'; // 那覇
+export const JAPAN_AIR_PORTS = [
+  'CTS',
+  'AOJ',
+  'KIJ',
+  'NRT',
+  'HND',
+  'NGO',
+  'KMQ',
+  'KIX',
+  'OKJ',
+  'FUK',
+  'OIT',
+  'KOJ',
+  'OKA',
+] as const;
 
-export type KoreaAirportIata =
-  | 'ICN' // 仁川
-  | 'PUS' // 金海
-  | 'CJU' // 濟州
-  | 'GMP' // 金浦
-  | 'TAE'; // 大邱
+export const KOREA_AIR_PORTS = ['ICN', 'PUS', 'CJU', 'GMP', 'TAE'] as const;
+
+export type JapanAirportIata = (typeof JAPAN_AIR_PORTS)[number];
+export type KoreaAirportIata = (typeof KOREA_AIR_PORTS)[number];

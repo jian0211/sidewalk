@@ -4,6 +4,7 @@ import '@/hooks/useInjectStyleX';
 import * as stylex from '@stylexjs/stylex';
 import { SearchForm } from './search/SearchForm';
 import { LocaleSwitcher } from './localeConvert/LocaleSwitcher';
+import { EditIcon, NotificationIcon } from '@/components/atoms/Icon';
 
 type NavProps = React.ComponentPropsWithoutRef<'nav'>;
 type NavGlobalEditBoxProps = React.ComponentPropsWithoutRef<'div'>;
@@ -21,11 +22,19 @@ export const Nav = (props: NavProps) => {
 };
 
 const NavGlobalEditBox = (props: NavGlobalEditBoxProps) => {
-  return <div>Global Edit Button</div>;
+  return (
+    <div {...props}>
+      <EditIcon />
+    </div>
+  );
 };
 
 const NotificationBox = (props: NotificationBoxProps) => {
-  return <div>notification Box</div>;
+  return (
+    <div {...props}>
+      <NotificationIcon />
+    </div>
+  );
 };
 
 const styles = stylex.create({
@@ -34,6 +43,7 @@ const styles = stylex.create({
     height: '7rem',
     display: 'flex',
     alignItems: 'center',
-    padding: '0 1rem',
+    padding: '0 3rem 0 2rem',
+    gap: '1rem',
   },
 });

@@ -64,5 +64,7 @@ const styles = stylex.create({
   },
   modalBody: {
     display: 'flex',
+    maxHeight: '20rem',
+    minHeight: '20rem',
   },
 });
