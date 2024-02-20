@@ -3,9 +3,7 @@ import { JapanFlagIcon, KoreaFlagIcon } from '@/components/atoms/Icon';
 import { Button } from '@/components/atoms/Button';
 import * as stylex from '@stylexjs/stylex';
 
-type LocaleSwitcherProps = React.ComponentPropsWithoutRef<'button'>;
-
-export const LocaleSwitcher = (props: LocaleSwitcherProps) => {
+export const LocaleSwitcher = () => {
   const {
     states: { locale },
     actions: { handleChangeLocale },
@@ -17,13 +15,13 @@ export const LocaleSwitcher = (props: LocaleSwitcherProps) => {
     >
       {locale === 'ja' ? (
         <>
-          <JapanFlagIcon />
-          <p>日本語</p>
+          <KoreaFlagIcon />
+          <p>韓国語</p>
         </>
       ) : (
         <>
-          <KoreaFlagIcon />
-          <p>한국어</p>
+          <JapanFlagIcon />
+          <p>일본어</p>
         </>
       )}
     </Button>
@@ -32,7 +30,6 @@ export const LocaleSwitcher = (props: LocaleSwitcherProps) => {
 
 const styles = stylex.create({
   localeSwitcher: {
-    // width: '10rem',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
