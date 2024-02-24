@@ -39,7 +39,7 @@ const styles = stylex.create({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    border: '1px solid red',
+    // border: '1px solid red',
     gap: '0.5rem',
   },
   header: {},
@@ -49,7 +49,7 @@ const styles = stylex.create({
     justifyContent: 'center',
   },
   column: {
-    border: '1px solid red',
+    // border: '1px solid red',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
