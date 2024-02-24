@@ -50,7 +50,7 @@ const Sidebar = () => {
           />
           <BasicLink
             href={`/${locale}/airlines/schedule`}
-            title={t('airlines.categories.arilinesSchedule')}
+            title={t('airlines.categories.airlinesSchedule')}
             indent
           />
         </SidebarAccordion>
