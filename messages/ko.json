@@ -14,7 +14,7 @@
             "title": "항공",
             "categories": {
                 "airlinesList": "항공사 목록",
-                "arilinesSchedule": "항공사 스케줄"
+                "airlinesSchedule": "항공사 스케줄"
             }
         },
         "fligths": {

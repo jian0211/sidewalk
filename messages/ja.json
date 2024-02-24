@@ -14,7 +14,7 @@
             "title": "空港",
             "categories": {
                 "airlinesList": "空港リスト",
-                "arilinesSchedule": "空港スケジュール"
+                "airlinesSchedule": "空港スケジュール"
             }
         },
         "fligths": {
