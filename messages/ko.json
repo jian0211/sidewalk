@@ -49,6 +49,10 @@
             "priceRangeSlider": {
                 "title": "희망가격"
             }
+        },
+        "pageTitle": {
+            "airports": "일본 또는 한국의 공항 정보",
+            "airlines": "일본 또는 한국의 항공사 정보"
         }
     }
 }
