@@ -1,9 +1,9 @@
-const AirportPage = () => {
-  return (
-    <div>
-      <h1>AirportPage</h1>
-    </div>
-  );
+import Airport from '@/components/templates/airport/Airport';
+
+type AirportPageProps = React.ComponentPropsWithoutRef<'section'>;
+
+const AirportPage = (props: AirportPageProps) => {
+  return <Airport {...props} />;
 };
 
 export default AirportPage;

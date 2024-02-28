@@ -54,5 +54,13 @@
             "airports": "일본 또는 한국의 공항 정보",
             "airlines": "일본 또는 한국의 항공사 정보"
         }
+    },
+    "airports": {
+        "info": {
+            "japan": "일본의 공항정보",
+            "korea": "한국의 공항정보",
+            "count": "공항 수",
+            "updatedAt": "갱신일"
+        }
     }
 }
