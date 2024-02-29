@@ -6,6 +6,7 @@ import '@/hooks/useInjectStyleX';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import { Nav } from '@/components/templates/nav/Nav';
 import { RecoilProvider } from '@/hooks/providers/RecoilPropvider';
+import { Locales } from '@/types/locale';
 
 export const metadata: Metadata = {
   title: 'Sidewalk with flying',
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
 
 type LocaleProps = {
   children: React.ReactNode;
-  params: { locale: string };
+  params: { locale: Locales };
 };
 
 export default function RootLayout({
