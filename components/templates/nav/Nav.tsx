@@ -1,12 +1,8 @@
-'use client';
-
 import '@/hooks/useInjectStyleX';
 import * as stylex from '@stylexjs/stylex';
 import { SearchForm } from './search/SearchForm';
 import { LocaleSwitcher } from './localeConvert/LocaleSwitcher';
 import { EditIcon, NotificationIcon } from '@/components/atoms/Icon';
-import { useCurrentPath } from '@/hooks/useCurrentPath';
-import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { ComponentPropsWithoutRef } from 'react';
 
 type NavProps = React.ComponentPropsWithoutRef<'nav'>;
@@ -15,26 +11,14 @@ type NavGlobalEditBoxProps = React.ComponentPropsWithoutRef<'div'>;
 type NotificationBoxProps = React.ComponentPropsWithoutRef<'div'>;
 
 export const Nav = (props: NavProps) => {
-  const { isCurrentPage } = useCurrentPath();
-  const t = useTranslatedWord('nav');
   return (
     <nav {...stylex.props(styles.nav)}>
-      {isCurrentPage('airports') ? (
-        <PageTitle>{t('pageTitle.airports')}</PageTitle>
-      ) : isCurrentPage('airlines') ? (
-        <PageTitle>{t('pageTitle.airlines')}</PageTitle>
-      ) : (
-        <SearchForm />
-      )}
+      <SearchForm />
       <LocaleSwitcher />
       <NavGlobalEditBox />
       <NotificationBox />
     </nav>
   );
-};
-
-const PageTitle = (props: PageTitleProps) => {
-  return <h1 {...stylex.props(styles.pageTitle)} {...props} />;
 };
 
 const NavGlobalEditBox = (props: NavGlobalEditBoxProps) => {
@@ -61,9 +45,5 @@ const styles = stylex.create({
     alignItems: 'center',
     padding: '0 3rem 0 2rem',
     gap: '1rem',
-  },
-  pageTitle: {
-    flex: 'auto',
-    fontSize: '2rem',
   },
 });
