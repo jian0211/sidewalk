@@ -56,15 +56,20 @@ model FavoriteAirline{
 
 model Airport {
   id                   Int        @id @default(autoincrement()) 
-  title                String     
-  detailTitle          String   
+  titleEn              String     
+  titleJa              String
+  titleKo              String
   iata                 String     @unique
 	icao                 String     @unique
-	latitude             String     @unique
-	longitude            String     @unique
-	cityName             String     
+	latitude             String
+	longitude            String
+	cityNameEn           String     
+	cityNameJa           String     
+	cityNameKo           String     
 	cityCode             String     @unique
-	countryName          String    
+	countryNameEn        String    
+	countryNameJa        String    
+	countryNameKo        String    
 	countryCode          String     @unique
 	address              String   
   link                 String   
