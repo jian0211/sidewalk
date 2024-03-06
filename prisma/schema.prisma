@@ -20,6 +20,10 @@ enum Lang {
   KO
   JA
 } 
+enum ContryCode {
+  KO
+  JP
+}
 
 model User {
     id                 Int        @id @default(autoincrement())
@@ -39,8 +43,8 @@ model Airline {
     id                 Int        @id @default(autoincrement())
     title              String 
     detailTitle        String 
-    iata               String     @unique
-    icao               String     @unique
+    iata               String
+    icao               String
     flight             Flight[]
     favoriteAirlines   FavoriteAirline[]
 }
@@ -59,18 +63,17 @@ model Airport {
   titleEn              String     
   titleJa              String
   titleKo              String
-  iata                 String     @unique
-	icao                 String     @unique
+  iata                 String
+	icao                 String
 	latitude             String
 	longitude            String
 	cityNameEn           String     
 	cityNameJa           String     
 	cityNameKo           String     
-	cityCode             String     @unique
 	countryNameEn        String    
 	countryNameJa        String    
 	countryNameKo        String    
-	countryCode          String     @unique
+	countryCode          ContryCode
 	address              String   
   link                 String   
   flightsAsDeparture   Flight[]   @relation(name: "departureAirport")
@@ -81,13 +84,13 @@ model Flight {
   id                   Int        @id @default(autoincrement())	
 	airlineId            Int 
   airline              Airline    @relation(fields: [airlineId], references: [id])
-  departureAirport     Airport    @relation(name: "departureAirport",fields: [departureCode], references: [iata])
-	departureCode        String    
+  departureAirport     Airport    @relation(name: "departureAirport",fields: [departureAirportId], references: [id])
+	departureAirportId   Int    
   departureTerminal    String   
   departureGate        String
   departureDate        DateTime 
-  arrivalAirport       Airport    @relation(name: "arrivalAirport",fields: [arrivalCode], references: [iata])
-  arrivalCode          String
+  arrivalAirport       Airport    @relation(name: "arrivalAirport",fields: [arrivalAirportId], references: [id])
+  arrivalAirportId     Int
   arrivalTerminal      String 
   arrivalgate          String
   arrivalDate          String
