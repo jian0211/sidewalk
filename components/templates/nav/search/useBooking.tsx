@@ -1,3 +1,4 @@
+'use client';
 import { AirportsIataWithDefault, Flights } from '@/store/fligths';
 import { AirportsIata, JAPAN_AIR_PORTS } from '@/types/airport';
 import { useState } from 'react';

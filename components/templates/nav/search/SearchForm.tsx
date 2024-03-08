@@ -1,3 +1,4 @@
+'use client';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as stylex from '@stylexjs/stylex';
 import { useSearch } from './useSearh';
