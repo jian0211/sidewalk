@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: 'Airports | Sidewalk',
 };
 
-export const AirportsPage = async () => {
+export const AirportsPage = () => {
   return (
     <Suspense fallback={'loading'}>
       <Airport />
