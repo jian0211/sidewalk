@@ -1,6 +1,8 @@
-import { KOREA_AIRPORTS_DUMMY } from '@/prisma/dummy/airports';
 import { AirportsIataWithDefault } from '@/store/fligths';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+const prisma = new PrismaClient();
 
 export const DUMMY_AIRPORTS_DATA: {
   japan_airports: {
@@ -74,17 +76,11 @@ export const DUMMY_AIRPORTS_DATA: {
     },
   ],
 };
-export const getAirportsList = () => {
-  return DUMMY_AIRPORTS_DATA;
-};
-
-import type { NextApiRequest, NextApiResponse } from 'next';
 
 export async function GET(req: NextApiRequest, res: NextApiResponse) {
-  const prisma = new PrismaClient();
-
   try {
-    const airportsData = await prisma.airport.findMany();
+    const airportsData: Prisma.AirportCreateInput[] =
+      await prisma.airport.findMany();
     return Response.json(airportsData);
   } catch (err) {
     console.log('err', err);
