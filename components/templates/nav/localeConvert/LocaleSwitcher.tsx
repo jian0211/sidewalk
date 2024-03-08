@@ -1,3 +1,5 @@
+'use client';
+
 import { useLocale } from '@/hooks/useLocale';
 import { JapanFlagIcon, KoreaFlagIcon } from '@/components/atoms/Icon';
 import { Button } from '@/components/atoms/Button';
