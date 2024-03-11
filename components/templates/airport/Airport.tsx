@@ -1,9 +1,9 @@
-import { getAirports } from '@/app/api/airports/route';
 import { Table } from '@/components/molecules/table/Table';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { Prisma } from '@prisma/client';
 import * as stylex from '@stylexjs/stylex';
-import { ComponentPropsWithoutRef } from 'react';
+import { ComponentPropsWithoutRef, Suspense } from 'react';
+import { useAirport } from './useAirport';
 
 type AirportsContainerProps = object;
 type TitleWithAirportsInfoProps = ComponentPropsWithoutRef<'div'> & {
@@ -14,7 +14,6 @@ type AirportListProps = {
 };
 
 /**
- *  해당 컴포넌트 분리
  *  날씨 API 작성
  *  일반 페이지에 스크롤 css 작성
  *  한국 일본 나누는 버튼 작성. 레이아웃에 작성
@@ -22,28 +21,17 @@ type AirportListProps = {
  *
  */
 export const Airports = async () => {
-  const airports = await getAirports();
-  const { japanAirports, koreaAirprots } = airports.reduce<{
-    japanAirports: Prisma.AirportCreateInput[];
-    koreaAirprots: Prisma.AirportCreateInput[];
-  }>(
-    (combinedAirports, airport) => {
-      const airportKey =
-        airport.countryCode === 'JP' ? 'japanAirports' : 'koreaAirprots';
-      combinedAirports[airportKey].push(airport);
-      return combinedAirports;
-    },
-    {
-      japanAirports: [],
-      koreaAirprots: [],
-    },
-  );
+  const { koreaAirport, japanAirport } = await useAirport();
   return (
     <AirportsContainer>
-      <TitleWithAirportsInfo airportsCount={japanAirports.length} />
-      <AirportList airportsList={japanAirports} />
-      <TitleWithAirportsInfo airportsCount={koreaAirprots.length} />
-      <AirportList airportsList={koreaAirprots} />
+      <Suspense fallback={'japan loading'}>
+        <TitleWithAirportsInfo airportsCount={japanAirport.count} />
+        <AirportList airportsList={japanAirport.list} />
+      </Suspense>
+      <Suspense fallback={'korea loading'}>
+        <TitleWithAirportsInfo airportsCount={koreaAirport.count} />
+        <AirportList airportsList={koreaAirport.list} />
+      </Suspense>
     </AirportsContainer>
   );
 };
