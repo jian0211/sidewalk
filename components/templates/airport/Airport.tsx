@@ -4,6 +4,7 @@ import { Prisma } from '@prisma/client';
 import * as stylex from '@stylexjs/stylex';
 import { ComponentPropsWithoutRef, Suspense } from 'react';
 import { useAirport } from './useAirport';
+import Link, { LinkProps } from 'next/link';
 
 type AirportsContainerProps = object;
 type TitleWithAirportsInfoProps = ComponentPropsWithoutRef<'div'> & {
@@ -11,6 +12,9 @@ type TitleWithAirportsInfoProps = ComponentPropsWithoutRef<'div'> & {
 };
 type AirportListProps = {
   airportsList: Prisma.AirportCreateInput[];
+};
+type AirportsLayoutLinkProps = LinkProps & {
+  title: string;
 };
 
 /**
@@ -87,8 +91,18 @@ export const TitleWithAirportsInfo = ({
   );
 };
 
+export const AirportsLayoutContainer: React.FC<object> = (props) => {
+  return <div {...stylex.props(styles.airportsLayoutContainer)} {...props} />;
+};
 export const AirportsLayoutTitle: React.FC<object> = (props) => {
-  return <h1 {...stylex.props(styles.airportsLayoutTitle)} {...props} />;
+  return <h2 {...stylex.props(styles.airportsLayoutTitle)} {...props} />;
+};
+
+export const AirportsLayoutLink = ({
+  title,
+  ...props
+}: AirportsLayoutLinkProps) => {
+  return <Link {...props}>{title}</Link>;
 };
 
 const styles = stylex.create({
@@ -105,5 +119,9 @@ const styles = stylex.create({
   },
   airportsLayoutTitle: {
     padding: '1rem',
+  },
+  airportsLayoutContainer: {
+    display: 'flex',
+    alignItems: 'center',
   },
 });
