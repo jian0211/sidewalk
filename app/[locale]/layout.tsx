@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     'It is a website that visualizes and provides data from each airline so that travelers between Korea and Japan can make optimal choices according to various situations.',
 };
 
-type LocaleProps = {
+export type LayoutProps = {
   children: React.ReactNode;
   params: { locale: Locales };
 };
@@ -22,7 +22,7 @@ type LocaleProps = {
 export default function RootLayout({
   children,
   params: { locale },
-}: LocaleProps) {
+}: LayoutProps) {
   const messages = useMessages();
 
   return (
