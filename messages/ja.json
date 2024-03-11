@@ -61,6 +61,15 @@
             "korea": "韓国の空港情報",
             "count": "空港の数",
             "updatedAt": "更新日"
+        },
+        "header": {
+            "category": {
+                "title": "空港名",
+                "identifyingCharacter": "IATA / ICAO",
+                "address": "住所",
+                "location": "ロケーション",
+                "link": "リンク"
+            }
         }
     }
 }
