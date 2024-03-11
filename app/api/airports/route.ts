@@ -87,3 +87,9 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
     res.status(500).send({ error: 'Failed to fetch data' });
   }
 }
+
+export const getAirports = async (): Promise<Prisma.AirportCreateInput[]> => {
+  const url = `${process.env.DEV_API_BASE_URL}/airports`;
+  const airportsOfJapanAndKorea = await fetch(url);
+  return airportsOfJapanAndKorea.json();
+};

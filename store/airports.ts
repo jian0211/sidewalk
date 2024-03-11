@@ -1,4 +1,4 @@
-import { DUMMY_AIRPORTS_DATA } from '@/app/api/airports/airports';
+import { DUMMY_AIRPORTS_DATA } from '@/app/api/airports/route';
 import { atom, useRecoilValue } from 'recoil';
 import { AirportsIataWithDefault, Flights } from './fligths';
 import { Locales } from '@/types/locale';
