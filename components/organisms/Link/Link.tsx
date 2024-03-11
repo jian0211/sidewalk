@@ -4,10 +4,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 // [TODO]:path のところに移動
-type LinkProps = {
+export type LinkProps = {
   href: `${'/ja' | '/ko'}${
     | ''
     | '/airports'
+    | '/airports/jp'
+    | '/airports/ko'
     | '/airlines'
     | '/fligths'
     | '/profile'}${'' | '/schedule'}`;
