@@ -1,62 +1,109 @@
-'use Client';
-
 import { Table } from '@/components/molecules/table/Table';
+import { useTranslatedWord } from '@/hooks/useTranslatedWord';
+import { Prisma } from '@prisma/client';
 import * as stylex from '@stylexjs/stylex';
+import { ComponentPropsWithoutRef, Suspense } from 'react';
+import { useAirport } from './useAirport';
 
-type AirportProps = React.ComponentPropsWithoutRef<'section'>;
+type AirportsContainerProps = object;
+type TitleWithAirportsInfoProps = ComponentPropsWithoutRef<'div'> & {
+  airportsCount?: number;
+};
+type AirportListProps = {
+  airportsList: Prisma.AirportCreateInput[];
+};
 
-const Airport = (props: AirportProps) => {
+/**
+ *  날씨 API 작성
+ *  일반 페이지에 스크롤 css 작성
+ *  한국 일본 나누는 버튼 작성. 레이아웃에 작성
+ *  해당 페이지 css작성
+ *
+ */
+export const Airports = async () => {
+  const { koreaAirport, japanAirport } = await useAirport();
   return (
-    <section {...stylex.props(styles.airportContainer)} {...props}>
-      <h1>일본 또는 한국으로 가는 공항정보입니다</h1>
-      <h1>일본 공항정보</h1>
-      <h1>한국 공항정보</h1>
-      <div>
-        <span>공항 수</span>
-        <span>갱신 날짜</span>
-      </div>
-      <Table.Container>
-        <Table.Header>
-          <Table.Column flex="1">공항이미지</Table.Column>
-          <Table.Column flex="2">공항이름</Table.Column>
-          <Table.Column flex="1">IATA</Table.Column>
-          <Table.Column flex="1">ICAO</Table.Column>
-          <Table.Column flex="3">위치</Table.Column>
-          <Table.Column flex="3">링크</Table.Column>
-        </Table.Header>
-        <Table.Row>
-          <Table.Column flex="1">인천공항이미지</Table.Column>
-          <Table.Column flex="2">인천국제공항</Table.Column>
-          <Table.Column flex="1">ICN</Table.Column>
-          <Table.Column flex="1">RKSI</Table.Column>
-          <Table.Column flex="3">인천광역시 중구 제 1여객터미널</Table.Column>
-          <Table.Column flex="3">링크</Table.Column>
-        </Table.Row>
-        <Table.Row>
-          <Table.Column flex="1">인천공항이미지</Table.Column>
-          <Table.Column flex="2">인천국제공항</Table.Column>
-          <Table.Column flex="1">ICN</Table.Column>
-          <Table.Column flex="1">RKSI</Table.Column>
-          <Table.Column flex="3">인천광역시 중구 제 1여객터미널</Table.Column>
-          <Table.Column flex="3">링크</Table.Column>
-        </Table.Row>
-        <Table.Row>
-          <Table.Column flex="1">인천공항이미지</Table.Column>
-          <Table.Column flex="2">인천국제공항</Table.Column>
-          <Table.Column flex="1">ICN</Table.Column>
-          <Table.Column flex="1">RKSI</Table.Column>
-          <Table.Column flex="3">인천광역시 중구 제 1여객터미널</Table.Column>
-          <Table.Column flex="3">링크</Table.Column>
-        </Table.Row>
-      </Table.Container>
-      <h1>일본 공항</h1>
-      <div>asdasd</div>
-    </section>
+    <AirportsContainer>
+      <Suspense fallback={'japan loading'}>
+        <TitleWithAirportsInfo airportsCount={japanAirport.count} />
+        <AirportList airportsList={japanAirport.list} />
+      </Suspense>
+      <Suspense fallback={'korea loading'}>
+        <TitleWithAirportsInfo airportsCount={koreaAirport.count} />
+        <AirportList airportsList={koreaAirport.list} />
+      </Suspense>
+    </AirportsContainer>
   );
 };
 
-export default Airport;
+export const AirportList = ({ airportsList }: AirportListProps) => {
+  const t = useTranslatedWord('airports.header');
+  return (
+    <Table.Container>
+      <Table.Header>
+        <Table.Column flex="2">{t('category.title')}</Table.Column>
+        <Table.Column flex="2">
+          {t('category.identifyingCharacter')}
+        </Table.Column>
+        <Table.Column flex="3">{t('category.address')}</Table.Column>
+        <Table.Column flex="3">{t('category.location')}</Table.Column>
+        <Table.Column flex="3">{t('category.link')}</Table.Column>
+      </Table.Header>
+      {airportsList.map((airport, i) => (
+        <Table.Row key={i}>
+          <Table.Column flex="1">
+            <div>{airport.titleJa}</div>
+            <div>{airport.titleKo}</div>
+          </Table.Column>
+          <Table.Column flex="1">
+            {airport.iata + ' / ' + airport.icao}
+          </Table.Column>
+          <Table.Column flex="3">{airport.address}</Table.Column>
+          <Table.Column flex="3">인천광역시 중구 제 1여객터미널</Table.Column>
+          <Table.Column flex="3">{airport.link}</Table.Column>
+        </Table.Row>
+      ))}
+    </Table.Container>
+  );
+};
+
+export const AirportsContainer: React.FC<AirportsContainerProps> = (props) => {
+  return <section {...stylex.props(styles.airportContainer)} {...props} />;
+};
+
+export const TitleWithAirportsInfo = ({
+  airportsCount = 0,
+  ...props
+}: TitleWithAirportsInfoProps) => {
+  const t = useTranslatedWord('airports.info');
+  return (
+    <div {...stylex.props(styles.titleWithAirportsInfo)} {...props}>
+      <h2>{t('japan')}</h2>
+      <span>
+        {t('count')}:{airportsCount}
+      </span>
+      <span>{t('updatedAt')}:2024/2/11</span>
+    </div>
+  );
+};
+
+export const AirportsLayoutTitle: React.FC<object> = (props) => {
+  return <h1 {...stylex.props(styles.airportsLayoutTitle)} {...props} />;
+};
 
 const styles = stylex.create({
-  airportContainer: {},
+  airportContainer: {
+    padding: '1rem',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  titleWithAirportsInfo: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1rem',
+    padding: '1rem',
+  },
+  airportsLayoutTitle: {
+    padding: '1rem',
+  },
 });

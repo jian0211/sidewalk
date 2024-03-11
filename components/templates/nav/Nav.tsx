@@ -1,12 +1,12 @@
-'use client';
-
 import '@/hooks/useInjectStyleX';
 import * as stylex from '@stylexjs/stylex';
 import { SearchForm } from './search/SearchForm';
 import { LocaleSwitcher } from './localeConvert/LocaleSwitcher';
 import { EditIcon, NotificationIcon } from '@/components/atoms/Icon';
+import { ComponentPropsWithoutRef } from 'react';
 
 type NavProps = React.ComponentPropsWithoutRef<'nav'>;
+type PageTitleProps = ComponentPropsWithoutRef<'h1'>;
 type NavGlobalEditBoxProps = React.ComponentPropsWithoutRef<'div'>;
 type NotificationBoxProps = React.ComponentPropsWithoutRef<'div'>;
 
