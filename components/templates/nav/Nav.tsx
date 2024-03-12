@@ -7,13 +7,10 @@ import { LocaleSwitcher } from './localeConvert/LocaleSwitcher';
 import { EditIcon, NotificationIcon } from '@/components/atoms/Icon';
 import { ComponentPropsWithoutRef } from 'react';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
-import Link from 'next/link';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
-import { Country } from '@/types/country';
-import { path } from '@/types/path';
 
 type NavProps = React.ComponentPropsWithoutRef<'nav'>;
-type AirportsLayoutContainerProps = ComponentPropsWithoutRef<'div'>;
+type AirportsLayoutContainerProps = ComponentPropsWithoutRef<'h1'>;
 type NavGlobalEditBoxProps = React.ComponentPropsWithoutRef<'div'>;
 type NotificationBoxProps = React.ComponentPropsWithoutRef<'div'>;
 
@@ -38,14 +35,10 @@ export const Nav = (props: NavProps) => {
 
 const AirportsLayoutContainer = (props: AirportsLayoutContainerProps) => {
   const t = useTranslatedWord('nav.airports');
-  const getUrl = (country: Country) => `${path.airports}/${country}`;
-
   return (
-    <div {...stylex.props(styles.airportsLayoutContainer)} {...props}>
-      <h2 {...stylex.props(styles.airportsLayoutTitle)}>{t('title')}</h2>
-      <Link href={getUrl('jp')}>{t('japan')}</Link>
-      <Link href={getUrl('ko')}>{t('korea')}</Link>
-    </div>
+    <h1 {...stylex.props(styles.airportsLayoutTitle)} {...props}>
+      {t('title')}
+    </h1>
   );
 };
 
@@ -74,12 +67,8 @@ const styles = stylex.create({
     padding: '0 3rem 0 2rem',
     gap: '1rem',
   },
-  airportsLayoutContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    flex: '1',
-  },
   airportsLayoutTitle: {
-    padding: '1.1rem',
+    flex: '1',
+    fontSize: '2rem',
   },
 });
