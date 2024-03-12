@@ -4,7 +4,7 @@ import {
   AirportsLayoutTitle,
 } from '@/components/templates/airport/Airport';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
-import { LayoutProps } from '../../layout';
+import { LayoutProps } from '../../../layout';
 import { path } from '@/types/path';
 import { Country } from '@/types/country';
 
@@ -23,9 +23,3 @@ export default function Layout({ children, params }: LayoutProps) {
     </>
   );
 }
-
-/**
- * 한국 / 일본 선택하는 버튼 추가
- * url 변경 default is jp
- * ex : /airports/jp
- */
