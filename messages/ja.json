@@ -50,9 +50,13 @@
                 "title": "希望価格"
             }
         },
-        "pageTitle": {
-            "airports": "日本及び韓国の空港情報",
-            "airlines": "日本及び韓国の航空会社情報"
+        "airports": {
+            "title": "日本及び韓国の空港情報",
+            "japan": "日本",
+            "korea": "韓国"
+        },
+        "airlines": {
+            "title": "日本及び韓国の航空会社情報"
         }
     },
     "airports": {
