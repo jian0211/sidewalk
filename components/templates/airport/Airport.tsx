@@ -42,7 +42,7 @@ export const Airports = async (props: PageProps) => {
 export const AirportList = ({ airportsList }: AirportListProps) => {
   const t = useTranslatedWord('airports.header');
   return (
-    <Table.Container>
+    <Table.Container useScroll>
       <Table.Header>
         <Table.Column flex="2">{t('category.title')}</Table.Column>
         <Table.Column flex="2">
@@ -90,13 +90,6 @@ export const TitleWithAirportsInfo = ({
   );
 };
 
-export const AirportsLayoutContainer: React.FC<object> = (props) => {
-  return <div {...stylex.props(styles.airportsLayoutContainer)} {...props} />;
-};
-export const AirportsLayoutTitle: React.FC<object> = (props) => {
-  return <h2 {...stylex.props(styles.airportsLayoutTitle)} {...props} />;
-};
-
 export const AirportsLayoutLink = ({
   title,
   ...props
@@ -109,18 +102,13 @@ const styles = stylex.create({
     padding: '1rem',
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
+    height: '100vh',
   },
   titleWithAirportsInfo: {
     display: 'flex',
     alignItems: 'center',
     gap: '1rem',
     padding: '1rem',
-  },
-  airportsLayoutTitle: {
-    padding: '1rem',
-  },
-  airportsLayoutContainer: {
-    display: 'flex',
-    alignItems: 'center',
   },
 });
