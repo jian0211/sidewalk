@@ -17,7 +17,7 @@
                 "airlinesSchedule": "空港スケジュール"
             }
         },
-        "fligths": {
+        "flights": {
             "title": "フライト"
         },
         "profile": "プロファイル",

@@ -17,7 +17,7 @@
                 "airlinesSchedule": "항공사 스케줄"
             }
         },
-        "fligths": {
+        "flights": {
             "title": "항공편"
         },
         "profile": "내정보",
