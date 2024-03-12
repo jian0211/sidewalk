@@ -3,8 +3,9 @@ import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { Prisma } from '@prisma/client';
 import * as stylex from '@stylexjs/stylex';
 import { ComponentPropsWithoutRef, Suspense } from 'react';
-import { useAirport } from './useAirport';
+import { useAirports } from './useAirport';
 import Link, { LinkProps } from 'next/link';
+import { PageProps } from '@/app/[locale]/(airports)/airports/[country]/page';
 
 type AirportsContainerProps = object;
 type TitleWithAirportsInfoProps = ComponentPropsWithoutRef<'div'> & {
@@ -24,17 +25,15 @@ type AirportsLayoutLinkProps = LinkProps & {
  *  해당 페이지 css작성
  *
  */
-export const Airports = async () => {
-  const { koreaAirport, japanAirport } = await useAirport();
+export const Airports = async (props: PageProps) => {
+  const { country } = props.params;
+  const { actions } = useAirports();
+  const airports = await actions.getAirports(country);
   return (
     <AirportsContainer>
-      <Suspense fallback={'japan loading'}>
-        <TitleWithAirportsInfo airportsCount={japanAirport.count} />
-        <AirportList airportsList={japanAirport.list} />
-      </Suspense>
-      <Suspense fallback={'korea loading'}>
-        <TitleWithAirportsInfo airportsCount={koreaAirport.count} />
-        <AirportList airportsList={koreaAirport.list} />
+      <Suspense fallback={`${country} loading...`}>
+        <TitleWithAirportsInfo airportsCount={airports.length} />
+        <AirportList airportsList={airports} />
       </Suspense>
     </AirportsContainer>
   );

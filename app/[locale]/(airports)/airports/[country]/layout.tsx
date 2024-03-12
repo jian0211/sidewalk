@@ -8,7 +8,7 @@ import { LayoutProps } from '../../../layout';
 import { path } from '@/types/path';
 import { Country } from '@/types/country';
 
-export default function Layout({ children, params }: LayoutProps) {
+export default function Layout({ children }: LayoutProps) {
   const t = useTranslatedWord('nav.pageTitle');
   const getUrl = (country: Country) => `${path.airports}/${country}`;
 
