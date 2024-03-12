@@ -3,7 +3,9 @@ import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { Prisma } from '@prisma/client';
 import * as stylex from '@stylexjs/stylex';
 import { ComponentPropsWithoutRef, Suspense } from 'react';
-import { useAirport } from './useAirport';
+import { useAirports } from './useAirport';
+import Link, { LinkProps } from 'next/link';
+import { PageProps } from '@/app/[locale]/(airports)/airports/[country]/page';
 
 type AirportsContainerProps = object;
 type TitleWithAirportsInfoProps = ComponentPropsWithoutRef<'div'> & {
@@ -11,6 +13,9 @@ type TitleWithAirportsInfoProps = ComponentPropsWithoutRef<'div'> & {
 };
 type AirportListProps = {
   airportsList: Prisma.AirportCreateInput[];
+};
+type AirportsLayoutLinkProps = LinkProps & {
+  title: string;
 };
 
 /**
@@ -20,17 +25,15 @@ type AirportListProps = {
  *  해당 페이지 css작성
  *
  */
-export const Airports = async () => {
-  const { koreaAirport, japanAirport } = await useAirport();
+export const Airports = async (props: PageProps) => {
+  const { country } = props.params;
+  const { actions } = useAirports();
+  const airports = await actions.getAirports(country);
   return (
     <AirportsContainer>
-      <Suspense fallback={'japan loading'}>
-        <TitleWithAirportsInfo airportsCount={japanAirport.count} />
-        <AirportList airportsList={japanAirport.list} />
-      </Suspense>
-      <Suspense fallback={'korea loading'}>
-        <TitleWithAirportsInfo airportsCount={koreaAirport.count} />
-        <AirportList airportsList={koreaAirport.list} />
+      <Suspense fallback={`${country} loading...`}>
+        <TitleWithAirportsInfo airportsCount={airports.length} />
+        <AirportList airportsList={airports} />
       </Suspense>
     </AirportsContainer>
   );
@@ -39,7 +42,7 @@ export const Airports = async () => {
 export const AirportList = ({ airportsList }: AirportListProps) => {
   const t = useTranslatedWord('airports.header');
   return (
-    <Table.Container>
+    <Table.Container useScroll>
       <Table.Header>
         <Table.Column flex="2">{t('category.title')}</Table.Column>
         <Table.Column flex="2">
@@ -87,8 +90,11 @@ export const TitleWithAirportsInfo = ({
   );
 };
 
-export const AirportsLayoutTitle: React.FC<object> = (props) => {
-  return <h1 {...stylex.props(styles.airportsLayoutTitle)} {...props} />;
+export const AirportsLayoutLink = ({
+  title,
+  ...props
+}: AirportsLayoutLinkProps) => {
+  return <Link {...props}>{title}</Link>;
 };
 
 const styles = stylex.create({
@@ -96,14 +102,13 @@ const styles = stylex.create({
     padding: '1rem',
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
+    height: '100vh',
   },
   titleWithAirportsInfo: {
     display: 'flex',
     alignItems: 'center',
     gap: '1rem',
-    padding: '1rem',
-  },
-  airportsLayoutTitle: {
     padding: '1rem',
   },
 });

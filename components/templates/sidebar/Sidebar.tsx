@@ -30,7 +30,7 @@ const Sidebar = () => {
         >
           <BasicLink
             title={t('airports.categories.airportsList')}
-            href={`/${locale}/airports`}
+            href={`/${locale}/airports/jp`}
             indent
           />
           <BasicLink
@@ -55,8 +55,8 @@ const Sidebar = () => {
           />
         </SidebarAccordion>
         <BasicLink
-          title={t('fligths.title')}
-          href={`/${locale}/fligths`}
+          title={t('flights.title')}
+          href={`/${locale}/flights`}
           borderHover
         />
       </SidebarMenuContainer>

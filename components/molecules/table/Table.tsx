@@ -1,7 +1,9 @@
 import { ComponentPropsWithoutRef } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
-type TableProps = ComponentPropsWithoutRef<'ul'>;
+type TableProps = ComponentPropsWithoutRef<'ul'> & {
+  useScroll?: boolean;
+};
 type RowProps = ComponentPropsWithoutRef<'li'>;
 type HeaderProps = ComponentPropsWithoutRef<'li'>;
 type ColumnProps = ComponentPropsWithoutRef<'div'> & {
@@ -9,21 +11,26 @@ type ColumnProps = ComponentPropsWithoutRef<'div'> & {
 };
 type FlexLevel = 'auto' | '1' | '2' | '3' | '4' | '5';
 
-const Container = (props: TableProps) => {
-  return <ul {...stylex.props(styles.container)} {...props} />;
+const Container = ({ useScroll, ...props }: TableProps) => {
+  return (
+    <ul
+      {...props}
+      {...stylex.props(styles.container, useScroll && styles.useScroll)}
+    />
+  );
 };
 
 const Header = (props: HeaderProps) => {
-  return <li {...stylex.props(styles.row, styles.header)} {...props} />;
+  return <li {...props} {...stylex.props(styles.row, styles.header)} />;
 };
 
 const Row = (props: RowProps) => {
-  return <li {...stylex.props(styles.row)} {...props} />;
+  return <li {...props} {...stylex.props(styles.row)} />;
 };
 
 const Column = ({ flex = 'auto', ...props }: ColumnProps) => {
   return (
-    <div {...stylex.props(styles.column, styles.flexLevel(flex))} {...props} />
+    <div {...props} {...stylex.props(styles.column, styles.flexLevel(flex))} />
   );
 };
 
@@ -64,4 +71,7 @@ const styles = stylex.create({
   flexLevel: (level: FlexLevel) => ({
     flex: level,
   }),
+  useScroll: {
+    overflow: 'scroll',
+  },
 });

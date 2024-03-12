@@ -1,17 +1,9 @@
+import { LinkProps } from '@/types/path';
 import * as stylex from '@stylexjs/stylex';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-// [TODO]:path のところに移動
-type LinkProps = {
-  href: `${'/ja' | '/ko'}${
-    | ''
-    | '/airports'
-    | '/airlines'
-    | '/fligths'
-    | '/profile'}${'' | '/schedule'}`;
-};
 export type BasicLinkProps = React.ComponentPropsWithRef<'a'> &
   LinkProps & {
     style?: StyleXArray<any>;

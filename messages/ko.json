@@ -17,7 +17,7 @@
                 "airlinesSchedule": "항공사 스케줄"
             }
         },
-        "fligths": {
+        "flights": {
             "title": "항공편"
         },
         "profile": "내정보",
@@ -50,9 +50,13 @@
                 "title": "희망가격"
             }
         },
-        "pageTitle": {
-            "airports": "일본 또는 한국의 공항 정보",
-            "airlines": "일본 또는 한국의 항공사 정보"
+        "airports": {
+            "title": "일본 및 한국 공항정보 ",
+            "japan": "일본",
+            "korea": "한국"
+        },
+        "airlines": {
+            "title": "日本及び韓国の航空会社情報"
         }
     },
     "airports": {

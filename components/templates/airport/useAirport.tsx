@@ -1,3 +1,4 @@
+import { Country } from '@/types/country';
 import { Prisma } from '@prisma/client';
 
 type Airports = `${'japan' | 'korea'}Airports`;
@@ -5,34 +6,18 @@ type CombinedAirports = {
   [k in Airports]: Prisma.AirportCreateInput[];
 };
 
-export const useAirport = async () => {
-  const airports = await getAirports();
-  const { japanAirports, koreaAirports } = airports.reduce<CombinedAirports>(
-    (combinedAirports, airport) => {
-      const airportKey: Airports =
-        airport.countryCode === 'JP' ? 'japanAirports' : 'koreaAirports';
-      combinedAirports[airportKey].push(airport);
-      return combinedAirports;
-    },
-    {
-      japanAirports: [],
-      koreaAirports: [],
-    },
-  );
+export const useAirports = () => {
+  const getAirports = async (
+    country: Country,
+  ): Promise<Prisma.AirportCreateInput[]> => {
+    const url = `${process.env.DEV_API_BASE_URL}/airports/${country}`;
+    const airportsOfCountry = await fetch(url);
+    return airportsOfCountry.json();
+  };
+
   return {
-    japanAirport: {
-      list: japanAirports,
-      count: japanAirports.length,
-    },
-    koreaAirport: {
-      list: koreaAirports,
-      count: koreaAirports.length,
+    actions: {
+      getAirports,
     },
   };
-};
-
-const getAirports = async (): Promise<Prisma.AirportCreateInput[]> => {
-  const url = `${process.env.DEV_API_BASE_URL}/airports`;
-  const airportsOfJapanAndKorea = await fetch(url);
-  return airportsOfJapanAndKorea.json();
 };
