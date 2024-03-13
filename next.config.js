@@ -12,6 +12,14 @@ const rootDir = options.unstable_moduleResolution.rootDir ?? __dirname;
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ['@stylexjs/open-props'],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'openweathermap.org',
+      },
+    ],
+  },
 };
 
 module.exports = stylexPlugin({

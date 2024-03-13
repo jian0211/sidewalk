@@ -8,6 +8,7 @@ type RowProps = ComponentPropsWithoutRef<'li'>;
 type HeaderProps = ComponentPropsWithoutRef<'li'>;
 type ColumnProps = ComponentPropsWithoutRef<'div'> & {
   flex?: FlexLevel;
+  columnFlexDirection?: boolean;
 };
 type FlexLevel = 'auto' | '1' | '2' | '3' | '4' | '5';
 
@@ -28,9 +29,20 @@ const Row = (props: RowProps) => {
   return <li {...props} {...stylex.props(styles.row)} />;
 };
 
-const Column = ({ flex = 'auto', ...props }: ColumnProps) => {
+const Column = ({
+  flex = 'auto',
+  columnFlexDirection,
+  ...props
+}: ColumnProps) => {
   return (
-    <div {...props} {...stylex.props(styles.column, styles.flexLevel(flex))} />
+    <div
+      {...props}
+      {...stylex.props(
+        styles.column,
+        styles.flexLevel(flex),
+        columnFlexDirection && styles.useColumnFlexDirection,
+      )}
+    />
   );
 };
 
@@ -73,5 +85,9 @@ const styles = stylex.create({
   }),
   useScroll: {
     overflow: 'scroll',
+  },
+  useColumnFlexDirection: {
+    flexDirection: 'column',
+    gap: '0.5rem',
   },
 });

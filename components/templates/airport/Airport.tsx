@@ -6,6 +6,8 @@ import { ComponentPropsWithoutRef, Suspense } from 'react';
 import { useAirports } from './useAirport';
 import Link, { LinkProps } from 'next/link';
 import { PageProps } from '@/app/[locale]/(airports)/airports/[country]/page';
+import { LinkIcon } from '@/components/atoms/Icon';
+import { WeatherIcon } from '../weather/Weather';
 
 type AirportsContainerProps = object;
 type TitleWithAirportsInfoProps = ComponentPropsWithoutRef<'div'> & {
@@ -29,6 +31,7 @@ export const Airports = async (props: PageProps) => {
   const { country } = props.params;
   const { actions } = useAirports();
   const airports = await actions.getAirports(country);
+
   return (
     <AirportsContainer>
       <Suspense fallback={`${country} loading...`}>
@@ -40,30 +43,37 @@ export const Airports = async (props: PageProps) => {
 };
 
 export const AirportList = ({ airportsList }: AirportListProps) => {
-  const t = useTranslatedWord('airports.header');
+  const t = useTranslatedWord('airports.header.category');
   return (
     <Table.Container useScroll>
       <Table.Header>
-        <Table.Column flex="2">{t('category.title')}</Table.Column>
-        <Table.Column flex="2">
-          {t('category.identifyingCharacter')}
-        </Table.Column>
-        <Table.Column flex="3">{t('category.address')}</Table.Column>
-        <Table.Column flex="3">{t('category.location')}</Table.Column>
-        <Table.Column flex="3">{t('category.link')}</Table.Column>
+        <Table.Column flex="auto">No</Table.Column>
+        <Table.Column flex="1">{t('title')}</Table.Column>
+        <Table.Column flex="2">{t('identifyingCharacter')}</Table.Column>
+        <Table.Column flex="3">{t('address')}</Table.Column>
+        <Table.Column flex="3">{t('location')}</Table.Column>{' '}
+        {/* 수정 텍스트랑 */}
+        <Table.Column flex="3">{t('link')}</Table.Column>
       </Table.Header>
       {airportsList.map((airport, i) => (
         <Table.Row key={i}>
-          <Table.Column flex="1">
+          <Table.Column flex="auto">{i + 1}</Table.Column>
+          <Table.Column flex="1" columnFlexDirection>
             <div>{airport.titleJa}</div>
             <div>{airport.titleKo}</div>
           </Table.Column>
-          <Table.Column flex="1">
-            {airport.iata + ' / ' + airport.icao}
-          </Table.Column>
+          <Table.Column flex="1">{airport.iata ?? airport.icao}</Table.Column>
           <Table.Column flex="3">{airport.address}</Table.Column>
-          <Table.Column flex="3">인천광역시 중구 제 1여객터미널</Table.Column>
-          <Table.Column flex="3">{airport.link}</Table.Column>
+          <Table.Column flex="3">
+            <Suspense fallback={'loadding... getting weather'}>
+              <WeatherIcon lat={airport.latitude} lon={airport.longitude} />
+            </Suspense>
+          </Table.Column>
+          <Table.Column flex="3">
+            <Link href={airport.link} target="_blank" rel="noopener noreferrer">
+              <LinkIcon />
+            </Link>
+          </Table.Column>
         </Table.Row>
       ))}
     </Table.Container>
