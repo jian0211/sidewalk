@@ -6,6 +6,7 @@ import IconFind from './find.svg';
 import IconDepartureFlight from './departures-flight.svg';
 import IconEdit from './editing.svg';
 import IconNotification from './notificatioin.svg';
+import IconLink from './external-link-svgrepo-com.svg';
 
 export {
   IconJapanFlag,
@@ -15,4 +16,5 @@ export {
   IconDepartureFlight,
   IconEdit,
   IconNotification,
+  IconLink,
 };

@@ -1,5 +1,4 @@
 import * as Icon from '@/public/svgs/index';
-import * as stylex from '@stylexjs/stylex';
 import Image from 'next/image';
 
 export const JapanFlagIcon = () => (
@@ -24,33 +23,4 @@ export const NotificationIcon = () => (
   <Image src={Icon.IconNotification} width={30} alt="" />
 );
 
-// const styles = stylex.create({
-//   xs: {
-//     width: '0.75rem',
-//     height: 'auto',
-//   },
-//   sm: {
-//     width: '1rem',
-//     height: 'auto',
-//   },
-//   md: {
-//     width: '1.5rem',
-//     height: 'auto',
-//   },
-//   lg: {
-//     width: '2rem',
-//     height: 'auto',
-//   },
-//   lx: {
-//     width: '2.5rem',
-//     height: 'auto',
-//   },
-//   lx2: {
-//     width: '3rem',
-//     height: 'auto',
-//   },
-//   lx3: {
-//     width: '4rem',
-//     height: 'auto',
-//   },
-// });
+export const LinkIcon = () => <Image src={Icon.IconLink} width={30} alt="" />;
