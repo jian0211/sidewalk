@@ -8,6 +8,7 @@ import Link, { LinkProps } from 'next/link';
 import { PageProps } from '@/app/[locale]/(airports)/airports/[country]/page';
 import { LinkIcon } from '@/components/atoms/Icon';
 import { WeatherIcon } from '../weather/Weather';
+import { EllipsisLoading } from '@/components/molecules/loading/EllipsisLoading';
 
 type AirportsContainerProps = object;
 type TitleWithAirportsInfoProps = ComponentPropsWithoutRef<'div'> & {
@@ -47,13 +48,12 @@ export const AirportList = ({ airportsList }: AirportListProps) => {
   return (
     <Table.Container useScroll>
       <Table.Header>
-        <Table.Column flex="auto">No</Table.Column>
+        <Table.Column>No</Table.Column>
         <Table.Column flex="1">{t('title')}</Table.Column>
-        <Table.Column flex="2">{t('identifyingCharacter')}</Table.Column>
-        <Table.Column flex="3">{t('address')}</Table.Column>
-        <Table.Column flex="3">{t('location')}</Table.Column>{' '}
-        {/* 수정 텍스트랑 */}
-        <Table.Column flex="3">{t('link')}</Table.Column>
+        <Table.Column flex="1">{t('identifyingCharacter')}</Table.Column>
+        <Table.Column flex="5">{t('address')}</Table.Column>
+        <Table.Column flex="1">{t('location')}</Table.Column>{' '}
+        <Table.Column flex="1">{t('link')}</Table.Column>
       </Table.Header>
       {airportsList.map((airport, i) => (
         <Table.Row key={i}>
@@ -65,7 +65,7 @@ export const AirportList = ({ airportsList }: AirportListProps) => {
           <Table.Column flex="1">{airport.iata ?? airport.icao}</Table.Column>
           <Table.Column flex="3">{airport.address}</Table.Column>
           <Table.Column flex="3">
-            <Suspense fallback={'loadding... getting weather'}>
+            <Suspense fallback={<EllipsisLoading />}>
               <WeatherIcon lat={airport.latitude} lon={airport.longitude} />
             </Suspense>
           </Table.Column>
