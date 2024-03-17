@@ -36,10 +36,10 @@ export default function RootLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <RecoilProvider>
             <Sidebar />
-            <div style={{ width: '100%' }}>
+            <main {...stylex.props(styles.main)}>
               <Nav />
               {children}
-            </div>
+            </main>
           </RecoilProvider>
         </NextIntlClientProvider>
       </body>
@@ -49,10 +49,14 @@ export default function RootLayout({
 
 const styles = stylex.create({
   body: {
-    width: '100vw',
+    width: '100%',
     height: '100vh',
     display: 'flex',
     backgroundColor: '#FFFFFF',
+  },
+  main: {
+    width: 'inherit',
+    height: 'inherit',
   },
   jaFont: {
     fontFamily: 'Noto Sans JP',

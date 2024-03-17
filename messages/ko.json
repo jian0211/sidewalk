@@ -51,9 +51,7 @@
             }
         },
         "airports": {
-            "title": "일본 및 한국 공항정보 ",
-            "japan": "일본",
-            "korea": "한국"
+            "title": "일본 및 한국 공항정보 "
         },
         "airlines": {
             "title": "日本及び韓国の航空会社情報"
@@ -61,8 +59,9 @@
     },
     "airports": {
         "info": {
-            "japan": "일본의 공항정보",
-            "korea": "한국의 공항정보",
+            "japan": "일본",
+            "korea": "한국",
+            "info": "공항정보",
             "count": "공항 수",
             "updatedAt": "갱신일"
         },
@@ -71,7 +70,7 @@
                 "title": "공항명",
                 "identifyingCharacter": "IATA / ICAO",
                 "address": "주소",
-                "location": "위치",
+                "weather": "날씨",
                 "link": "링크"
             }
         }
