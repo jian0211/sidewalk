@@ -6,13 +6,15 @@ export const path = {
 } as const;
 
 export type LinkProps = {
-  href: `${'/ja' | '/ko'}${
-    | ''
-    | '/airports'
-    | '/airports/jp'
-    | '/airports/ko'
-    | '/airlines'
-    | '/flights'
-    | '/profile'}${'' | '/schedule'}`;
+  href:
+    | `${'/ja' | '/ko'}${
+        | ''
+        | '/airports'
+        | '/airports/jp'
+        | '/airports/ko'
+        | '/airlines'
+        | '/flights'
+        | '/profile'}${'' | '/schedule'}`
+    | string;
 };
 export type PathName = keyof typeof path;
