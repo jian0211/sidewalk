@@ -1,36 +1,38 @@
 import { ComponentPropsWithoutRef } from 'react';
 import * as stylex from '@stylexjs/stylex';
+import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 
 type TableProps = ComponentPropsWithoutRef<'ul'> & {
-  useScroll?: boolean;
+  style?: StyleXArray<any>;
 };
 type RowProps = ComponentPropsWithoutRef<'li'>;
 type HeaderProps = ComponentPropsWithoutRef<'li'>;
+type BodyProps = ComponentPropsWithoutRef<'div'> & {
+  useScroll?: boolean;
+};
 type ColumnProps = ComponentPropsWithoutRef<'div'> & {
   flex?: FlexLevel;
   columnFlexDirection?: boolean;
+  width?: WidthLevel;
 };
 type FlexLevel = 'auto' | '1' | '2' | '3' | '4' | '5';
+type WidthLevel = '100' | '200' | '300' | '400';
 
-const Container = ({ useScroll, ...props }: TableProps) => {
-  return (
-    <ul
-      {...props}
-      {...stylex.props(styles.container, useScroll && styles.useScroll)}
-    />
-  );
-};
+const Container = ({ style, ...props }: TableProps) => (
+  <ul {...props} {...stylex.props(styles.container, style)} />
+);
 
-const Header = (props: HeaderProps) => {
-  return <li {...props} {...stylex.props(styles.row, styles.header)} />;
-};
+const Header = (props: HeaderProps) => (
+  <li {...props} {...stylex.props(styles.row, styles.header)} />
+);
 
-const Row = (props: RowProps) => {
-  return <li {...props} {...stylex.props(styles.row)} />;
-};
+const Row = (props: RowProps) => (
+  <li {...props} {...stylex.props(styles.row)} />
+);
 
 const Column = ({
-  flex = 'auto',
+  flex,
+  width,
   columnFlexDirection,
   ...props
 }: ColumnProps) => {
@@ -39,9 +41,19 @@ const Column = ({
       {...props}
       {...stylex.props(
         styles.column,
-        styles.flexLevel(flex),
+        flex && styles.flexLevel(flex),
+        width && styles.widthLevel(width),
         columnFlexDirection && styles.useColumnFlexDirection,
       )}
+    />
+  );
+};
+
+const Body = ({ useScroll, ...props }: BodyProps) => {
+  return (
+    <div
+      {...props}
+      {...stylex.props(styles.body, useScroll && styles.useScroll)}
     />
   );
 };
@@ -51,6 +63,7 @@ export const Table = {
   Header,
   Row,
   Column,
+  Body,
 };
 
 const styles = stylex.create({
@@ -65,6 +78,9 @@ const styles = stylex.create({
     color: 'white',
     fontWeight: 500,
   },
+  body: {
+    height: '100%',
+  },
   row: {
     display: 'flex',
     alignItems: 'center',
@@ -74,6 +90,11 @@ const styles = stylex.create({
     borderBottomColor: '#848797',
     borderBottomStyle: 'solid',
     borderBottomWidth: '1px',
+    backgroundColor: {
+      default: 'none',
+      ':hover': 'skyblue',
+    },
+    cursor: 'pointer',
   },
   column: {
     display: 'flex',
@@ -83,8 +104,12 @@ const styles = stylex.create({
   flexLevel: (level: FlexLevel) => ({
     flex: level,
   }),
+  widthLevel: (width: WidthLevel) => ({
+    width: width + 'px',
+  }),
   useScroll: {
-    overflow: 'scroll',
+    overflowY: 'scroll',
+    overflowX: 'hidden',
   },
   useColumnFlexDirection: {
     flexDirection: 'column',

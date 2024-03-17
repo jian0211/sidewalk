@@ -5,30 +5,29 @@ import * as stylex from '@stylexjs/stylex';
 import { ComponentPropsWithoutRef, Suspense } from 'react';
 import { useAirports } from './useAirport';
 import Link, { LinkProps } from 'next/link';
-import { PageProps } from '@/app/[locale]/(airports)/airports/[country]/page';
 import { LinkIcon } from '@/components/atoms/Icon';
 import { WeatherIcon } from '../weather/Weather';
 import { EllipsisLoading } from '@/components/molecules/loading/EllipsisLoading';
+import { path } from '@/types/path';
+import { Country } from '@/types/country';
+import { Locales } from '@/types/locale';
 
+type AirportsProps = {
+  params: { locale: Locales; country: Country };
+};
 type AirportsContainerProps = object;
 type TitleWithAirportsInfoProps = ComponentPropsWithoutRef<'div'> & {
   airportsCount?: number;
 };
 type AirportListProps = {
   airportsList: Prisma.AirportCreateInput[];
+  country: Country;
 };
 type AirportsLayoutLinkProps = LinkProps & {
-  title: string;
+  children: React.ReactNode;
 };
 
-/**
- *  날씨 API 작성
- *  일반 페이지에 스크롤 css 작성
- *  한국 일본 나누는 버튼 작성. 레이아웃에 작성
- *  해당 페이지 css작성
- *
- */
-export const Airports = async (props: PageProps) => {
+export const Airports = async (props: AirportsProps) => {
   const { country } = props.params;
   const { actions } = useAirports();
   const airports = await actions.getAirports(country);
@@ -37,45 +36,57 @@ export const Airports = async (props: PageProps) => {
     <AirportsContainer>
       <Suspense fallback={`${country} loading...`}>
         <TitleWithAirportsInfo airportsCount={airports.length} />
-        <AirportList airportsList={airports} />
+        <AirportList airportsList={airports} country={country} />
       </Suspense>
     </AirportsContainer>
   );
 };
 
-export const AirportList = ({ airportsList }: AirportListProps) => {
+export const AirportList = ({ airportsList, country }: AirportListProps) => {
   const t = useTranslatedWord('airports.header.category');
   return (
-    <Table.Container useScroll>
+    <Table.Container style={styles.listContainer}>
       <Table.Header>
-        <Table.Column>No</Table.Column>
-        <Table.Column flex="1">{t('title')}</Table.Column>
-        <Table.Column flex="1">{t('identifyingCharacter')}</Table.Column>
-        <Table.Column flex="5">{t('address')}</Table.Column>
-        <Table.Column flex="1">{t('location')}</Table.Column>{' '}
-        <Table.Column flex="1">{t('link')}</Table.Column>
+        <Table.Column width="100">No</Table.Column>
+        <Table.Column width="200">{t('title')}</Table.Column>
+        <Table.Column width="100">{t('identifyingCharacter')}</Table.Column>
+        <Table.Column flex="auto">{t('address')}</Table.Column>
+        <Table.Column width="100">{t('weather')}</Table.Column>
+        <Table.Column width="100">{t('link')}</Table.Column>
       </Table.Header>
-      {airportsList.map((airport, i) => (
-        <Table.Row key={i}>
-          <Table.Column flex="auto">{i + 1}</Table.Column>
-          <Table.Column flex="1" columnFlexDirection>
-            <div>{airport.titleJa}</div>
-            <div>{airport.titleKo}</div>
-          </Table.Column>
-          <Table.Column flex="1">{airport.iata ?? airport.icao}</Table.Column>
-          <Table.Column flex="3">{airport.address}</Table.Column>
-          <Table.Column flex="3">
-            <Suspense fallback={<EllipsisLoading />}>
-              <WeatherIcon lat={airport.latitude} lon={airport.longitude} />
-            </Suspense>
-          </Table.Column>
-          <Table.Column flex="3">
-            <Link href={airport.link} target="_blank" rel="noopener noreferrer">
-              <LinkIcon />
-            </Link>
-          </Table.Column>
-        </Table.Row>
-      ))}
+      <Table.Body useScroll>
+        {airportsList.map((airport, i) => (
+          <Table.Row key={i}>
+            <Table.Column width="100">{i + 1}</Table.Column>
+            <Table.Column width="200">
+              <AirportsDetailLink
+                href={(airport.iata || airport.icao).toLowerCase()}
+              >
+                <div>{airport.titleJa}</div>
+                <div>{airport.titleKo}</div>
+              </AirportsDetailLink>
+            </Table.Column>
+            <Table.Column width="100">
+              {airport.iata || airport.icao}
+            </Table.Column>
+            <Table.Column flex="auto">{airport.address}</Table.Column>
+            <Table.Column width="100">
+              <Suspense fallback={<EllipsisLoading />}>
+                <WeatherIcon lat={airport.latitude} lon={airport.longitude} />
+              </Suspense>
+            </Table.Column>
+            <Table.Column width="100">
+              <Link
+                href={airport.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <LinkIcon />
+              </Link>
+            </Table.Column>
+          </Table.Row>
+        ))}
+      </Table.Body>
     </Table.Container>
   );
 };
@@ -89,9 +100,17 @@ export const TitleWithAirportsInfo = ({
   ...props
 }: TitleWithAirportsInfoProps) => {
   const t = useTranslatedWord('airports.info');
+  const getUrl = (country: Country) => `${path.airports}/${country}`;
+
   return (
     <div {...stylex.props(styles.titleWithAirportsInfo)} {...props}>
-      <h2>{t('japan')}</h2>
+      <Link href={getUrl('jp')} {...stylex.props(styles.airportsSelectButton)}>
+        {t('japan')}
+      </Link>
+      <Link href={getUrl('ko')} {...stylex.props(styles.airportsSelectButton)}>
+        {t('korea')}
+      </Link>
+      <h2>{t('info')}</h2>
       <span>
         {t('count')}:{airportsCount}
       </span>
@@ -100,11 +119,15 @@ export const TitleWithAirportsInfo = ({
   );
 };
 
-export const AirportsLayoutLink = ({
-  title,
+export const AirportsDetailLink = ({
+  children,
   ...props
 }: AirportsLayoutLinkProps) => {
-  return <Link {...props}>{title}</Link>;
+  return (
+    <Link {...props} {...stylex.props(styles.airportsDetailLink)}>
+      {children}
+    </Link>
+  );
 };
 
 const styles = stylex.create({
@@ -113,12 +136,27 @@ const styles = stylex.create({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    height: '100vh',
   },
   titleWithAirportsInfo: {
     display: 'flex',
     alignItems: 'center',
     gap: '1rem',
     padding: '1rem',
+  },
+  listContainer: {
+    height: '72vh',
+  },
+  airportsSelectButton: {
+    fontSize: '1.5rem',
+    textDecoration: 'none',
+    color: 'black',
+  },
+  airportsDetailLink: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textDecoration: 'none',
+    color: 'black',
   },
 });
