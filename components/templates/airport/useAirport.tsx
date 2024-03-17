@@ -1,11 +1,6 @@
 import { Country } from '@/types/country';
 import { Prisma } from '@prisma/client';
 
-type Airports = `${'japan' | 'korea'}Airports`;
-type CombinedAirports = {
-  [k in Airports]: Prisma.AirportCreateInput[];
-};
-
 export const useAirports = () => {
   const getAirports = async (
     country: Country,
