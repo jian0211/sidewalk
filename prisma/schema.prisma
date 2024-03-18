@@ -47,8 +47,9 @@ enum AirlineSeviceType {
 }
 model Airline {
     id                 Int        @id @default(autoincrement())
-    title              String 
-    detailTitle        String 
+    titleEn            String     
+    titleJa            String
+    titleKo            String
     iata               String
     icao               String
     seviceType         AirlineSeviceType
