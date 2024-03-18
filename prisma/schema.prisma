@@ -54,6 +54,7 @@ model Airline {
     icao               String
     nationality        String
     seviceType         AirlineSeviceType
+    link               String
     flight             Flight[]
     favoriteAirlines   FavoriteAirline[]
 }
