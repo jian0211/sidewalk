@@ -55,6 +55,7 @@ model Airline {
     nationality        String
     seviceType         AirlineSeviceType
     link               String
+    imgTitle           String
     flight             Flight[]
     favoriteAirlines   FavoriteAirline[]
 }
