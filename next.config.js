@@ -2,7 +2,7 @@ const withNextIntl = require('next-intl/plugin')();
 const stylexPlugin = require('@stylexjs/nextjs-plugin');
 const path = require('path');
 
-const babelrc = require('./babelrc.js');
+const babelrc = require('./.babelrc.js');
 const plugins = babelrc.plugins;
 const [_name, options] = plugins.find(
   (plugin) => Array.isArray(plugin) && plugin[0] === '@stylexjs/babel-plugin',
