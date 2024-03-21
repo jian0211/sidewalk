@@ -1,8 +1,6 @@
 'use client';
 
 import * as stylex from '@stylexjs/stylex';
-import '@/hooks/useInjectStyleX';
-
 type LogoProps = React.ComponentPropsWithoutRef<'div'>;
 type SidebarContainerProps = React.ComponentPropsWithoutRef<'aside'>;
 type SidebarMenuContainerProps = React.ComponentPropsWithoutRef<'div'>;
