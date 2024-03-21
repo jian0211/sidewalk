@@ -1,6 +1,5 @@
 'use client';
 
-import '@/hooks/useInjectStyleX';
 import * as stylex from '@stylexjs/stylex';
 import { SearchForm } from './search/SearchForm';
 import { LocaleSwitcher } from './localeConvert/LocaleSwitcher';
