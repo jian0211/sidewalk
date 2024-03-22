@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import '../../styles/global.css';
 import * as stylex from '@stylexjs/stylex';
 import Sidebar from '@/components/templates/sidebar/Sidebar';
-import '@/hooks/useInjectStyleX';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import { Nav } from '@/components/templates/nav/Nav';
 import { RecoilProvider } from '@/hooks/providers/RecoilPropvider';

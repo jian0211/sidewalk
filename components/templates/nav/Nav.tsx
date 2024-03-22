@@ -1,6 +1,5 @@
 'use client';
 
-import '@/hooks/useInjectStyleX';
 import * as stylex from '@stylexjs/stylex';
 import { SearchForm } from './search/SearchForm';
 import { LocaleSwitcher } from './localeConvert/LocaleSwitcher';
@@ -11,6 +10,7 @@ import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 
 type NavProps = React.ComponentPropsWithoutRef<'nav'>;
 type AirportsLayoutContainerProps = ComponentPropsWithoutRef<'h1'>;
+type AirlinesLayoutContainerProps = ComponentPropsWithoutRef<'h1'>;
 type NavGlobalEditBoxProps = React.ComponentPropsWithoutRef<'div'>;
 type NotificationBoxProps = React.ComponentPropsWithoutRef<'div'>;
 
@@ -24,7 +24,7 @@ export const Nav = (props: NavProps) => {
       ) : isAirportPath ? (
         <AirportsLayoutContainer />
       ) : isAirlinePath ? (
-        'airline'
+        <AirlinesLayoutContainer />
       ) : undefined}
       <LocaleSwitcher />
       <NavGlobalEditBox />
@@ -35,6 +35,15 @@ export const Nav = (props: NavProps) => {
 
 const AirportsLayoutContainer = (props: AirportsLayoutContainerProps) => {
   const t = useTranslatedWord('nav.airports');
+  return (
+    <h1 {...stylex.props(styles.airportsLayoutTitle)} {...props}>
+      {t('title')}
+    </h1>
+  );
+};
+
+const AirlinesLayoutContainer = (props: AirlinesLayoutContainerProps) => {
+  const t = useTranslatedWord('nav.airlines');
   return (
     <h1 {...stylex.props(styles.airportsLayoutTitle)} {...props}>
       {t('title')}
@@ -70,5 +79,6 @@ const styles = stylex.create({
   airportsLayoutTitle: {
     flex: '1',
     fontSize: '2rem',
+    fontWeight: 400,
   },
 });
