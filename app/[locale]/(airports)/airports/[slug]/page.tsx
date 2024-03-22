@@ -7,7 +7,7 @@ type Iata = string;
 export type PageProps = {
   params: { locale: Locales; slug: Country | Iata };
 };
-const AirportsListOfCountryPage = ({ params }: PageProps) => {
+const AirportsListOfCountryPage = async ({ params }: PageProps) => {
   if (params.slug === 'jp' || params.slug === 'ko')
     return (
       <Airports params={{ locale: params.locale, country: params.slug }} />

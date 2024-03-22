@@ -1,34 +1,37 @@
-import { Button, ButtonProps } from '@/components/atoms/Button';
-import * as stylex from '@stylexjs/stylex';
+'use client';
 
-type CategoryContainerProps = React.ComponentPropsWithoutRef<'div'>;
+import { Prisma } from '@prisma/client';
+import { useAirline } from './useAirline';
+import { Airlines } from './components';
+import { Locales } from '@/types/locale';
 
-const CategoryContainer = (props: CategoryContainerProps) => {
-  return <div {...props} {...stylex.props(styles.airlineCategoryContainer)} />;
+type AirlineProps = {
+  airlineList: Prisma.AirlineCreateInput[];
+  locale: Locales;
 };
 
-const CategoryButton = (props: ButtonProps) => {
+export const Airline = ({ airlineList, locale }: AirlineProps) => {
+  const { actions } = useAirline();
+  const airlines = actions.filterAirlineType(airlineList);
+
   return (
-    <Button
-      {...props}
-      paddingLevel={{ paddingLeft: '20px', paddingRight: '20px' }}
-      hasHoverBorder
-    />
+    <Airlines.Body>
+      <h1>AirlinesPage</h1>
+      <div>
+        {airlines.map((airline, i) => (
+          <Airlines.FeaturePanel key={i}>
+            <Airlines.CompanyImage imageTitle={airline.imgTitle} />
+            <div>
+              <div>{airline.titleEn}</div>
+              <div>{locale === 'ja' ? airline.titleJa : airline.titleKo}</div>
+              <div>{airline.iata + ' ' + airline.icao}</div>
+              <div>{airline.link}</div>
+              <div>{airline.seviceType}</div>
+              <div>{airline.nationality}</div>
+            </div>
+          </Airlines.FeaturePanel>
+        ))}
+      </div>
+    </Airlines.Body>
   );
 };
-
-export const Airline = {
-  CategoryContainer,
-  CategoryButton,
-};
-
-const styles = stylex.create({
-  airlineCategoryContainer: {
-    display: 'flex',
-    width: '100%',
-    height: 'fit-content',
-    gap: '1rem',
-    alignItems: 'center',
-    padding: '0 2rem',
-  },
-});

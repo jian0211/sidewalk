@@ -1,6 +1,6 @@
 'use client';
 
-import { Airline } from '@/components/templates/airline/Airline';
+import { Airlines } from '@/components/templates/airline/components';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { useAirlineService, AirlineServiceAtom } from '@/store/airlineService';
 
@@ -15,32 +15,32 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <section>
-      <Airline.CategoryContainer>
-        <Airline.CategoryButton
+      <Airlines.CategoryContainer>
+        <Airlines.CategoryButton
           isSelected={isCurrentCategory('all')}
           onClick={() => handleClickChangeCategory('all')}
         >
           {t('all')}
-        </Airline.CategoryButton>
-        <Airline.CategoryButton
+        </Airlines.CategoryButton>
+        <Airlines.CategoryButton
           isSelected={isCurrentCategory('lcc')}
           onClick={() => handleClickChangeCategory('lcc')}
         >
           {t('lcc')}
-        </Airline.CategoryButton>
-        <Airline.CategoryButton
+        </Airlines.CategoryButton>
+        <Airlines.CategoryButton
           isSelected={isCurrentCategory('fsc')}
           onClick={() => handleClickChangeCategory('fsc')}
         >
           {t('fsc')}
-        </Airline.CategoryButton>
-        <Airline.CategoryButton
+        </Airlines.CategoryButton>
+        <Airlines.CategoryButton
           isSelected={isCurrentCategory('hsc')}
           onClick={() => handleClickChangeCategory('hsc')}
         >
           {t('hsc')}
-        </Airline.CategoryButton>
-      </Airline.CategoryContainer>
+        </Airlines.CategoryButton>
+      </Airlines.CategoryContainer>
       {children}
     </section>
   );
