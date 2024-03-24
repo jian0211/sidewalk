@@ -1,5 +1,5 @@
 import { Button, ButtonProps } from '@/components/atoms/Button';
-import { DepartureFlightIcon, SwapIcon } from '@/components/atoms/Icon';
+import { Icons } from '@/components/atoms/Icon';
 import { Dropdown } from '@/components/molecules/dropdown/Dropdown';
 import {
   ModalBody,
@@ -63,11 +63,7 @@ export const BookingTravelPoint = ({
 export const BookingTravelPointSwapperButton = (
   props: BookingTravelPointSwapperButtonProps,
 ) => {
-  return (
-    <Button {...props}>
-      <SwapIcon />
-    </Button>
-  );
+  return <Button {...props}>{Icons('IconSwap')}</Button>;
 };
 
 export const BookingSearchTravelPointModal = ({
@@ -146,7 +142,7 @@ export const FlightIconWithText = ({
         setIsShow(false);
       }}
     >
-      <DepartureFlightIcon />
+      {Icons('IconDepartureFlight')}
       <h3>{iata}</h3>
       <label>{name}</label>
     </li>

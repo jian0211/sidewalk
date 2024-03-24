@@ -1,14 +1,7 @@
 'use client';
 
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
-import {
-  Logo,
-  SidebarAccordion,
-  SidebarMenuContainer,
-  SidebarContainer,
-  SidebarBottomContainer,
-  SidebarFooter,
-} from '../../organisms/sidebar/SidebarMenu';
+import { SidebarMenu } from '../../organisms/sidebar/SidebarMenu';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
 import { BasicLink } from '@/components/organisms/Link/Link';
 import { useLocale } from '@/hooks/useLocale';
@@ -20,62 +13,74 @@ const Sidebar = () => {
   } = useLocale();
   const { isCurrentPage } = useCurrentPath();
   return (
-    <SidebarContainer>
-      <Logo />
-      <SidebarMenuContainer>
-        <BasicLink title={t('home.title')} href={`/${locale}`} borderHover />
-        <SidebarAccordion
+    <SidebarMenu.Container>
+      <SidebarMenu.Logo />
+      <SidebarMenu.MenuContainer>
+        <SidebarMenu.TabMenu
+          menutype="home"
+          title={t('home.title')}
+          linkProps={{ href: `/${locale}` }}
+          isCurrent={isCurrentPage('home')}
+        />
+        <SidebarMenu.Accordion
           title={t('airports.title')}
           isCurrent={isCurrentPage('airports')}
+          menutype="airports"
         >
-          <BasicLink
+          <SidebarMenu.TabMenu
+            menutype="airportsList"
             title={t('airports.categories.airportsList')}
-            href={`/${locale}/airports/jp`}
-            indent
+            linkProps={{ href: `/${locale}/airports/jp` }}
           />
-          <BasicLink
+          <SidebarMenu.TabMenu
+            menutype="airportsList"
             title={t('airports.categories.airportsSchedule')}
-            href={`/${locale}/airports/schedule`}
-            indent
+            linkProps={{ href: `/${locale}/airports/schedule` }}
           />
-        </SidebarAccordion>
-        <SidebarAccordion
+        </SidebarMenu.Accordion>
+        <SidebarMenu.Accordion
           title={t('airlines.title')}
           isCurrent={isCurrentPage('airlines')}
+          menutype="airlines"
         >
-          <BasicLink
-            href={`/${locale}/airlines`}
+          <SidebarMenu.TabMenu
+            menutype="airlineList"
             title={t('airlines.categories.airlinesList')}
-            indent
+            linkProps={{ href: `/${locale}/airlines` }}
           />
-          <BasicLink
-            href={`/${locale}/airlines/schedule`}
+          <SidebarMenu.TabMenu
+            menutype="airlineList"
             title={t('airlines.categories.airlinesSchedule')}
-            indent
+            linkProps={{ href: `/${locale}/airlines/schedule` }}
           />
-        </SidebarAccordion>
-        <BasicLink
+        </SidebarMenu.Accordion>
+        <SidebarMenu.TabMenu
+          menutype="flights"
           title={t('flights.title')}
-          href={`/${locale}/flights`}
-          borderHover
+          linkProps={{ href: `/${locale}/flights` }}
+          isCurrent={isCurrentPage('flights')}
         />
-      </SidebarMenuContainer>
-      <SidebarBottomContainer>
-        <BasicLink
-          href={`/${locale}/profile`}
+      </SidebarMenu.MenuContainer>
+      <SidebarMenu.BottomContainer>
+        <SidebarMenu.TabMenu
+          menutype="profile"
           title={t('profile')}
-          borderHover
+          linkProps={{
+            href: `/${locale}/profile`,
+          }}
         />
-        <BasicLink
-          href={`/${locale}/profile`}
-          title={t(`authStatus.${'login'}`)} // auth
-          borderHover
+        <SidebarMenu.TabMenu
+          menutype="login"
+          title={t('authStatus.login')}
+          linkProps={{
+            href: `/${locale}/login`,
+          }}
         />
-        <SidebarFooter>
+        <SidebarMenu.Footer>
           <p>@2024</p>
-        </SidebarFooter>
-      </SidebarBottomContainer>
-    </SidebarContainer>
+        </SidebarMenu.Footer>
+      </SidebarMenu.BottomContainer>
+    </SidebarMenu.Container>
   );
 };
 

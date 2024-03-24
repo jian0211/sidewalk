@@ -25,6 +25,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@stylexjs/valid-styles': 'error',
     'react/prop-types': 'off',
+    'import/namespace': 'off',
   },
   settings: {
     'import/parsers': {

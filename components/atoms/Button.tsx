@@ -1,8 +1,8 @@
 import * as stylex from '@stylexjs/stylex';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 import React from 'react';
-import { FindIcon } from '@/components/atoms/Icon';
-import { Padding } from '@/styles/globalTokens.style';
+import { Icons } from '@/components/atoms/Icon';
+import { Padding } from '@/styles/globalTokens.stylex';
 
 export type ButtonProps = React.ComponentPropsWithoutRef<'button'> & {
   style?: StyleXArray<any>;
@@ -89,7 +89,7 @@ export const SearchButton = ({
       )}
       {...props}
     >
-      <FindIcon />
+      {Icons('IconFind')}
     </button>
   );
 };
