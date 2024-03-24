@@ -6,6 +6,7 @@ import { NextIntlClientProvider, useMessages } from 'next-intl';
 import { Nav } from '@/components/templates/nav/Nav';
 import { RecoilProvider } from '@/hooks/providers/RecoilPropvider';
 import { Locales } from '@/types/locale';
+import { palette } from '../../styles/globalTokens.stylex';
 
 export const metadata: Metadata = {
   title: 'Sidewalk with flying',
@@ -51,7 +52,7 @@ const styles = stylex.create({
     width: '100%',
     height: '100vh',
     display: 'flex',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: palette.baseWhite,
   },
   main: {
     width: 'inherit',

@@ -3,7 +3,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { SearchForm } from './search/SearchForm';
 import { LocaleSwitcher } from './localeConvert/LocaleSwitcher';
-import { EditIcon, NotificationIcon } from '@/components/atoms/Icon';
+import { Icons } from '@/components/atoms/Icon';
 import { ComponentPropsWithoutRef } from 'react';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
@@ -52,19 +52,11 @@ const AirlinesLayoutContainer = (props: AirlinesLayoutContainerProps) => {
 };
 
 const NavGlobalEditBox = (props: NavGlobalEditBoxProps) => {
-  return (
-    <div {...props}>
-      <EditIcon />
-    </div>
-  );
+  return <div {...props}>{Icons('IconEdit')}</div>;
 };
 
 const NotificationBox = (props: NotificationBoxProps) => {
-  return (
-    <div {...props}>
-      <NotificationIcon />
-    </div>
-  );
+  return <div {...props}>{Icons('IconNotification')}</div>;
 };
 
 const styles = stylex.create({

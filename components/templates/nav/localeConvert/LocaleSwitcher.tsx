@@ -1,7 +1,7 @@
 'use client';
 
 import { useLocale } from '@/hooks/useLocale';
-import { JapanFlagIcon, KoreaFlagIcon } from '@/components/atoms/Icon';
+import { Icons } from '@/components/atoms/Icon';
 import { Button } from '@/components/atoms/Button';
 import * as stylex from '@stylexjs/stylex';
 
@@ -17,12 +17,12 @@ export const LocaleSwitcher = () => {
     >
       {locale === 'ja' ? (
         <>
-          <KoreaFlagIcon />
+          {Icons('IconKoreaFlag')}
           <p>韓国語</p>
         </>
       ) : (
         <>
-          <JapanFlagIcon />
+          {Icons('IconJapanFlag')}
           <p>일본어</p>
         </>
       )}
