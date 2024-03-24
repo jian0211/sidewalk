@@ -1,68 +1,133 @@
-'use client';
-
 import * as stylex from '@stylexjs/stylex';
+import { hovers, palette, spacing } from '../../../styles/globalTokens.stylex';
+import { PathName } from '@/types/path';
+import { Icons } from '@/components/atoms/Icon';
+import React from 'react';
+import Link, { LinkProps } from 'next/link';
+
 type LogoProps = React.ComponentPropsWithoutRef<'div'>;
-type SidebarContainerProps = React.ComponentPropsWithoutRef<'aside'>;
-type SidebarMenuContainerProps = React.ComponentPropsWithoutRef<'div'>;
-type SidebarAccordionProps = React.ComponentPropsWithoutRef<'div'> & {
+type ContainerProps = React.ComponentPropsWithoutRef<'aside'>;
+type MenuContainerProps = React.ComponentPropsWithoutRef<'div'>;
+type AccordionProps = React.ComponentPropsWithoutRef<'div'> & SidebarUsedTypes;
+type BottomContainerProps = React.ComponentPropsWithoutRef<'div'>;
+type FooterProps = React.ComponentPropsWithoutRef<'footer'>;
+type TabMenuProps = React.ComponentPropsWithoutRef<'div'> &
+  SidebarUsedTypes & {
+    linkProps: LinkProps;
+  };
+
+type SidebarUsedTypes = {
   title: string;
-  isCurrent: boolean;
-};
-type SidebarBottomContainerProps = React.ComponentPropsWithoutRef<'div'>;
-type SidebarFooterProps = React.ComponentPropsWithoutRef<'footer'>;
-
-export const SidebarContainer = (props: SidebarContainerProps) => {
-  return <aside {...stylex.props(styles.sidebarContainer)} {...props} />;
+  isCurrent?: boolean;
+  menutype: PathName | 'airlineList' | 'airportsList' | 'profile' | 'login';
 };
 
-export const Logo = (props: LogoProps) => {
+const MenuIcons: Record<SidebarUsedTypes['menutype'], React.ReactElement> = {
+  home: Icons('IconDashborad'),
+  airlines: Icons('IconPlane'),
+  airlineList: Icons('IconPlaneList'),
+  airports: Icons('IconAirport'),
+  airportsList: Icons('IconAirportList'),
+  flights: Icons('IconFlight'),
+  profile: Icons('IconProfile'),
+  login: Icons('IconLogin'),
+};
+
+const Container = (props: ContainerProps) => {
+  return <aside {...props} {...stylex.props(styles.container)} />;
+};
+
+const Logo = (props: LogoProps) => {
   return (
-    <div {...stylex.props(styles.logo)} {...props}>
-      <h1>SIDE WORK 修正予定</h1>
+    <div {...props} {...stylex.props(styles.logo)}>
+      <h1>SIDE WORK</h1>
     </div>
   );
 };
 
-export const SidebarMenuContainer = (props: SidebarMenuContainerProps) => {
-  return <div {...stylex.props(styles.menuContainer)} {...props} />;
-};
-
-export const SidebarAccordion = ({
-  isCurrent,
-  title,
-  children,
-  ...props
-}: SidebarAccordionProps) => {
+const TabMenu = (props: TabMenuProps) => {
+  const { menutype, linkProps, title, children, isCurrent, ...rest } = props;
   return (
     <div
-      {...stylex.props(styles.sideAccodion, isCurrent && styles.currentPath)}
-      {...props}
+      {...rest}
+      {...stylex.props(
+        styles.tabMenu,
+        hovers.basicHover({ backgroundColor: 'lightBlue', color: 'baseWhite' }),
+      )}
     >
-      <h2 {...stylex.props(styles.title)} {...props}>
+      {MenuIcons[menutype]}
+      <Link {...stylex.props(styles.title)} href={linkProps.href}>
         {title}
-      </h2>
-      <ul style={{ paddingBottom: '1rem' }}>{children}</ul>
+      </Link>
     </div>
   );
 };
 
-export const SidebarBottomContainer = (props: SidebarBottomContainerProps) => {
-  return <div {...stylex.props(styles.bottomContainer)} {...props} />;
+const MenuContainer = (props: MenuContainerProps) => {
+  return <div {...props} {...stylex.props(styles.menuContainer)} />;
 };
 
-export const SidebarFooter = (props: SidebarFooterProps) => {
-  return <footer {...stylex.props(styles.footer)} {...props} />;
+const Accordion = (props: AccordionProps) => {
+  const { isCurrent, menutype, title, children, ...rest } = props;
+  return (
+    <div
+      {...rest}
+      {...stylex.props(styles.accodion, isCurrent && styles.currentPath)}
+    >
+      <div
+        {...stylex.props(
+          styles.tabMenu,
+          hovers.basicHover({
+            backgroundColor: 'lightBlue',
+            color: 'baseWhite',
+          }),
+        )}
+      >
+        {MenuIcons[menutype]}
+        <h2 {...props} {...stylex.props(styles.title)}>
+          {title}
+        </h2>
+      </div>
+      <ul {...stylex.props(styles.accodionList)}>{children}</ul>
+    </div>
+  );
 };
+
+const BottomContainer = (props: BottomContainerProps) => {
+  return <div {...props} {...stylex.props(styles.bottomContainer)} />;
+};
+
+const Footer = (props: FooterProps) => {
+  return <footer {...props} {...stylex.props(styles.footer)} />;
+};
+
+export const SidebarMenu = {
+  Container,
+  Logo,
+  TabMenu,
+  MenuContainer,
+  Accordion,
+  BottomContainer,
+  Footer,
+};
+
+const sidebarWidth = '320px';
+const menuHeigth = '4rem';
 
 const styles = stylex.create({
-  sidebarContainer: {
-    width: '100%',
-    maxWidth: '20rem',
+  container: {
+    width: sidebarWidth,
+    maxWidth: sidebarWidth,
+    minWidth: sidebarWidth,
     height: '100vh',
-    backgroundColor: '#F5F5F9',
+    backgroundColor: palette.whiteGray,
     display: 'flex',
     flexDirection: 'column',
-    color: '#7F8695',
+    borderRightColor: palette.whiteSoftGray,
+    borderRightStyle: 'solid',
+    borderRightWidth: spacing.xsmall,
+    padding: '0 2rem',
+    color: palette.darkGray,
   },
   logo: {
     height: '7rem',
@@ -71,39 +136,17 @@ const styles = stylex.create({
     justifyContent: 'center',
     color: 'tomato',
   },
-  sideAccodion: {
-    // [TODO]: height transition 追加
-    backgroundColor: {
-      default: 'Inherit',
-      ':hover': '#F0F0F7',
-    },
+  accodion: {
     height: {
-      default: '4rem',
+      default: menuHeigth,
       ':hover': 'fit-content',
     },
     overflow: 'hidden',
-    // [TODO]:border 共通部品に移動
-    borderBottomWidth: {
-      default: 'none',
-      ':hover': '1px',
-    },
-    borderBottomStyle: {
-      default: 'none',
-      ':hover': 'solid',
-    },
-    borderBottomColor: {
-      default: 'none',
-      ':hover': '#28176D',
-    },
   },
   title: {
-    padding: `1rem 2rem`,
-    height: '4rem',
     fontSize: '1rem',
-    backgroundColor: {
-      default: 'Inherit',
-      ':hover': '#F0F0F7',
-    },
+    color: 'inherit',
+    fontWeight: 600,
   },
   menuContainer: {
     // [TODO]: scroll 追加
@@ -114,12 +157,25 @@ const styles = stylex.create({
     marginTop: 'auto',
   },
   currentPath: {
-    color: '#28176D',
+    color: palette.baseWhite,
+    // backgroundColor: 'pink',
   },
   footer: {
     height: '7rem',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  tabMenu: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyItems: 'center',
+    gap: '1rem',
+    height: menuHeigth,
+    padding: '0 1rem',
+    borderRadius: '1rem',
+  },
+  accodionList: {
+    marginLeft: '2rem',
   },
 });
