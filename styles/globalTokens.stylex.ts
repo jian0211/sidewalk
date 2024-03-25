@@ -46,11 +46,22 @@ const filterColor: Record<FilterColorProps, string> = {
     'brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(281deg) brightness(103%) contrast(101%)',
 };
 
+export type HoverProps =
+  | { type: 'basicHover'; props: BasicHover }
+  | { type: 'borderHover'; props: BorderHover }
+  | { type: 'shadowHover'; props: undefined };
+
+type BasicHover = {
+  color: keyof typeof palette;
+  backgroundColor: keyof typeof palette;
+};
+type BorderHover = {
+  borderWidth: PixelLevelOption;
+  borderColor: keyof typeof palette;
+};
+
 export const hovers = stylex.create({
-  basicHover: (props: {
-    color: keyof typeof palette;
-    backgroundColor: keyof typeof palette;
-  }) => ({
+  basicHover: (props: BasicHover) => ({
     color: {
       default: 'Inherit',
       ':hover': palette[props.color], // error になってるんですが、後で解決する。
@@ -60,10 +71,7 @@ export const hovers = stylex.create({
       ':hover': palette[props.backgroundColor],
     },
   }),
-  borderHover: (props: {
-    borderWidth: PixelLevelOption;
-    borderColor: keyof typeof palette;
-  }) => ({
+  borderHover: (props: BorderHover) => ({
     borderWidth: {
       default: 'none',
       ':hover': props.borderWidth,
@@ -79,6 +87,13 @@ export const hovers = stylex.create({
     borderInlineColor: {
       default: 'inherit',
       ':hover': palette[props.borderColor],
+    },
+  }),
+  shadowHover: () => ({
+    boxShadow: {
+      default: 'none',
+      ':hover':
+        'rgba(42, 131, 255, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
     },
   }),
 });
