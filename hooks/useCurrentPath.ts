@@ -11,6 +11,9 @@ export const useCurrentPath = () => {
     isHomePath: path === '/ja' || path === '/ko',
     isAirlinePath: isCurrentPage('airlines'),
     isFligths: isCurrentPage('flights'),
+    isLogin: isCurrentPage('login'),
+    isSchedule: isCurrentPage('schedule'),
+    isProfile: isCurrentPage('profile'),
     isCurrentPage,
   };
 };

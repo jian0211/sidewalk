@@ -1,14 +1,13 @@
 import * as Icon from '@/public/svgs/index';
+import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 import Image from 'next/image';
 
-const BasicIcon = ({
-  width = 30,
-  alt = '',
-  src,
-}: {
-  width?: number;
-  alt?: string;
-  src: string;
-}) => <Image src={src} width={width} alt={alt} />;
+type Icons = {
+  style?: StyleXArray<any>;
+  src: IconNames;
+};
+export type IconNames = keyof typeof Icon;
 
-export const Icons = (src: keyof typeof Icon) => BasicIcon({ src: Icon[src] });
+export const Icons = ({ src, style, ...props }: Icons) => (
+  <Image {...props} priority src={Icon[src]} alt="" width={30} style={style} />
+);

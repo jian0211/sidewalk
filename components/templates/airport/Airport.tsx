@@ -5,7 +5,7 @@ import * as stylex from '@stylexjs/stylex';
 import { ComponentPropsWithoutRef, Suspense } from 'react';
 import { useAirports } from './useAirport';
 import Link, { LinkProps } from 'next/link';
-import { LinkIcon } from '@/components/atoms/Icon';
+import { Icons } from '@/components/atoms/Icon';
 import { WeatherIcon } from '../weather/Weather';
 import { EllipsisLoading } from '@/components/molecules/loading/EllipsisLoading';
 import { path } from '@/types/path';
@@ -81,7 +81,7 @@ export const AirportList = ({ airportsList, country }: AirportListProps) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <LinkIcon />
+                <Icons src="IconLink" />
               </Link>
             </Table.Column>
           </Table.Row>

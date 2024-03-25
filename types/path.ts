@@ -2,7 +2,10 @@ export const path = {
   home: '/',
   airports: '/airports',
   airlines: '/airlines',
+  schedule: '/airlines/schedule',
   flights: '/flights',
+  login: '/login',
+  profile: '/profile',
 } as const;
 
 export type LinkProps = {
