@@ -4,22 +4,9 @@ import * as stylex from '@stylexjs/stylex';
 import { useSearch } from './useSearh';
 import { Flights } from '@/store/fligths';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
-import { SearchButton } from '@/components/atoms/Button';
-import {
-  BookingTravelPointDropdown,
-  BookingContainer,
-  BookingTravelPoint,
-  BookingTravelPointSwapperButton,
-  BookingSearchTravelPointModal,
-  BookingTravelPointList,
-  FlightIconWithText,
-  BookingTravelCountryInput,
-  BookingTravelCountryBox,
-} from '@/components/organisms/SearchBar/bookling/Booking';
-import {
-  TripTypeContainer,
-  TripTypeRadioButton,
-} from '@/components/organisms/SearchBar/tripType/TripType';
+import { IconButton } from '@/components/atoms/Button';
+import { Booking } from '@/components/organisms/SearchBar/bookling/Booking';
+import { TripType } from '@/components/organisms/SearchBar/tripType/TripType';
 import {
   DatePickerContainer,
   DatePickerModal,
@@ -44,7 +31,7 @@ export const SearchForm = (props: SearchFormProps) => {
   const t = useTranslatedWord('nav.search');
   const {
     states: { flights },
-    actions: { handleClickSetFligths, handleSubmitSetFligths, toLocaleString },
+    actions: { handleSubmitSetFligths, toLocaleString },
   } = useSearch();
   const { datePickerSetting } = useDatePicker();
   const {
@@ -90,138 +77,136 @@ export const SearchForm = (props: SearchFormProps) => {
   // SearchButton 押す時、データが全部入っているか
   return (
     <form
+      {...props}
       {...stylex.props(styles.searchForm)}
       onSubmit={handleSubmit(onSubmit)}
-      {...props}
     >
-      <BookingContainer>
-        <BookingTravelPointDropdown>
-          <BookingTravelPoint
+      <Booking.Container>
+        <Booking.TravelPointDropdown>
+          <Booking.TravelPoint
             iata={watch('from')}
             title={getBookingTitle(getValues('from'))}
           />
-          <BookingSearchTravelPointModal title={t('booking.modalTitle')}>
-            <BookingTravelCountryBox>
-              <BookingTravelCountryInput
+          <Booking.SearchTravelPointModal title={t('booking.modalTitle')}>
+            <Booking.TravelCountryBox>
+              <Booking.TravelCountryInput
                 value={t('booking.country.japan')}
                 checked={selectCountry === 'japan'}
-                onClick={() => handleSelectCountry('japan')}
-                aria-disabled={isDisabled(getValues('to'), 'japan')}
+                onChange={() => handleSelectCountry('japan')}
               />
-              <BookingTravelCountryInput
+              <Booking.TravelCountryInput
                 value={t('booking.country.korea')}
                 checked={selectCountry === 'korea'}
-                onClick={() => handleSelectCountry('korea')}
-                aria-disabled={isDisabled(getValues('to'), 'korea')}
+                onChange={() => handleSelectCountry('korea')}
               />
-            </BookingTravelCountryBox>
-            <BookingTravelPointList>
+            </Booking.TravelCountryBox>
+            <Booking.TravelPointList>
               {selectCountry === 'korea'
                 ? airportsList.korea_airports.map(
                     ({ iata, ja_name, ko_name }, i) => (
-                      <FlightIconWithText
+                      <Booking.FlightIconWithText
                         key={i}
                         iata={iata}
                         name={locale === 'ja' ? ja_name : ko_name}
                         onClick={() => {
                           setValue('from', iata as any);
                         }}
-                        aria-selected={iata === getValues('from')}
+                        isSelected={iata === getValues('from')}
                       />
                     ),
                   )
                 : airportsList.japan_airports.map(
                     ({ iata, ja_name, ko_name }, i) => (
-                      <FlightIconWithText
+                      <Booking.FlightIconWithText
                         key={i}
                         iata={iata}
                         name={locale === 'ja' ? ja_name : ko_name}
                         onClick={() => {
                           setValue('from', iata as any);
                         }}
-                        aria-selected={iata === getValues('from')}
+                        isSelected={iata === getValues('from')}
                       />
                     ),
                   )}
-            </BookingTravelPointList>
-          </BookingSearchTravelPointModal>
-        </BookingTravelPointDropdown>
-        <BookingTravelPointSwapperButton
+            </Booking.TravelPointList>
+          </Booking.SearchTravelPointModal>
+        </Booking.TravelPointDropdown>
+        <Booking.TravelPointSwapperButton
           onClick={() => {
             const { from, to } = getSwapFromTo(getValues());
             setValue('from', from);
             setValue('to', to);
           }}
         />
-        <BookingTravelPointDropdown>
-          <BookingTravelPoint
+        <Booking.TravelPointDropdown>
+          <Booking.TravelPoint
             iata={watch('to')}
             title={getBookingTitle(getValues('to'))}
           />
-          <BookingSearchTravelPointModal title={t('booking.modalTitle')}>
-            <BookingTravelCountryBox>
-              <BookingTravelCountryInput
+          <Booking.SearchTravelPointModal title={t('booking.modalTitle')}>
+            <Booking.TravelCountryBox>
+              <Booking.TravelCountryInput
                 value={t('booking.country.japan')}
                 checked={!isCurrentCountry('japan')}
-                onClick={() => handleSelectCountry('japan')}
-                aria-disabled={isDisabled(getValues('from'), 'japan')}
+                onChange={() => handleSelectCountry('japan')}
+                isDisabled={isDisabled(getValues('from'), 'japan')}
               />
-              <BookingTravelCountryInput
+              <Booking.TravelCountryInput
                 value={t('booking.country.korea')}
                 checked={!isCurrentCountry('korea')}
-                onClick={() => handleSelectCountry('korea')}
-                aria-disabled={isDisabled(getValues('from'), 'korea')}
+                onChange={() => handleSelectCountry('korea')}
+                isDisabled={isDisabled(getValues('from'), 'korea')}
               />
-            </BookingTravelCountryBox>
-            <BookingTravelPointList>
+            </Booking.TravelCountryBox>
+            <Booking.TravelPointList>
               {!isCurrentCountry('korea')
                 ? airportsList.korea_airports.map(
                     ({ iata, ja_name, ko_name }, i) => (
-                      <FlightIconWithText
+                      <Booking.FlightIconWithText
                         key={i}
                         iata={iata}
                         name={locale === 'ja' ? ja_name : ko_name}
                         onClick={() => {
                           setValue('to', iata as any);
                         }}
-                        aria-selected={iata === getValues('to')}
+                        isSelected={iata === getValues('to')}
                       />
                     ),
                   )
                 : airportsList.japan_airports.map(
                     ({ iata, ja_name, ko_name }, i) => (
-                      <FlightIconWithText
+                      <Booking.FlightIconWithText
                         key={i}
                         iata={iata}
                         name={locale === 'ja' ? ja_name : ko_name}
                         onClick={() => {
                           setValue('to', iata as any);
                         }}
-                        aria-selected={iata === getValues('to')}
+                        isSelected={iata === getValues('to')}
                       />
                     ),
                   )}
-            </BookingTravelPointList>
-          </BookingSearchTravelPointModal>
-        </BookingTravelPointDropdown>
-      </BookingContainer>
+            </Booking.TravelPointList>
+          </Booking.SearchTravelPointModal>
+        </Booking.TravelPointDropdown>
+      </Booking.Container>
 
-      <TripTypeContainer>
-        <TripTypeRadioButton
+      <TripType.Container>
+        <TripType.RadioButton
           {...register('tripType')}
           value="roundTrip"
           checked={getValues('tripType') === 'roundTrip'}
         >
           {t('tripType.roundTrip')}
-        </TripTypeRadioButton>
-        <TripTypeRadioButton
+        </TripType.RadioButton>
+        <TripType.RadioButton
           {...register('tripType')}
           value="oneWay"
           checked={getValues('tripType') === 'oneWay'}
         >
           {t('tripType.oneWay')}
-        </TripTypeRadioButton>
-      </TripTypeContainer>
+        </TripType.RadioButton>
+      </TripType.Container>
       <Controller
         control={control}
         name="dateType"
@@ -280,7 +265,7 @@ export const SearchForm = (props: SearchFormProps) => {
           />
         </PriceRangeSlider>
       </PriceRangeSliderContainer>
-      <SearchButton />
+      <IconButton type="submit" iconProps={{ src: 'IconFind' }} />
     </form>
   );
 };
@@ -293,9 +278,5 @@ const styles = stylex.create({
     display: 'flex',
     alignItems: 'center',
     padding: '0 1rem',
-    // borderRadius: '1vw',
-    // borderWidth: '1px',
-    // borderStyle: 'solid',
-    // borderColor: 'red',
   },
 });

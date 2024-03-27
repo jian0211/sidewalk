@@ -7,9 +7,8 @@ export const useLocale = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const handleChangeLocale = () => {
-    const switchedLocale = locale === 'ko' ? 'ja' : 'ko';
-    router.push(pathname.replace(locale, switchedLocale));
+  const handleChangeLocale = (param: Locales) => {
+    router.push(pathname.replace(locale, param));
   };
   return {
     states: {

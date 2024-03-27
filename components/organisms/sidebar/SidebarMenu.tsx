@@ -1,5 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
-import { hovers, palette, spacing } from '../../../styles/globalTokens.stylex';
+import { palette, spacing } from '../../../styles/globalTokens.stylex';
 import { IconNames, Icons } from '@/components/atoms/Icon';
 import React from 'react';
 import Link, { LinkProps } from 'next/link';
@@ -58,7 +58,7 @@ const TabMenu = (props: TabMenuProps) => {
           type: 'borderHover',
           props: { borderColor: 'lightBlue', borderWidth: '4px' },
         }}
-        isSelected={isCurrent}
+        isSelected={isCurrent ? 'basicSelected' : undefined}
         stylesprops={[styles.tabMenu]}
       >
         <Icons src={iconname} />
@@ -74,7 +74,7 @@ const Accordion = (props: AccordionProps) => {
     <Block
       {...rest}
       variant="round"
-      useHover={{ type: 'shadowHover', props: undefined }}
+      useHover={{ type: 'shadowHover' }}
       useAccordion={{
         defaultHeight: '4rem',
         height: 'fit-content',
@@ -116,12 +116,12 @@ const styles = stylex.create({
     flexDirection: 'column',
     borderRightColor: palette.whiteSoftGray,
     borderRightStyle: 'solid',
-    borderRightWidth: spacing.xsmall,
+    borderRightWidth: spacing.xxsmall,
     padding: '0 2rem',
     color: palette.darkGray,
   },
   logo: {
-    height: '7rem',
+    height: '10rem',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

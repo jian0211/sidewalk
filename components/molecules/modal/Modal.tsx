@@ -1,70 +1,89 @@
-import { CloseButton } from '@/components/atoms/Button';
+import { IconButton } from '@/components/atoms/Button';
+import { palette, spacing } from '../../../styles/globalTokens.stylex';
 import * as stylex from '@stylexjs/stylex';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
+import { frameThemes, shadowThemes } from '@/components/styles';
 
-export type ModalContainerProps = React.ComponentPropsWithoutRef<'div'> & {
+export type ContainerProps = {
   style?: StyleXArray<any>;
-};
-type ModalHeaderProps = React.ComponentPropsWithoutRef<'header'> & {
+} & React.ComponentPropsWithoutRef<'div'>;
+
+type HeaderProps = {
   title: string;
   style?: StyleXArray<any>;
 } & (
-    | { hasCloseButton: true; handleClose: () => void }
-    | { hasCloseButton?: false; handleClose?: never }
-  );
-type ModaleBodyProps = React.ComponentPropsWithoutRef<'section'> & {
+  | { hasCloseButton: true; handleClose: () => void }
+  | { hasCloseButton?: false; handleClose?: never }
+) &
+  React.ComponentPropsWithoutRef<'header'>;
+type BodyProps = {
   style?: StyleXArray<any>;
-};
-type ModalFooterProps = React.ComponentPropsWithoutRef<'footer'>;
+} & React.ComponentPropsWithoutRef<'section'>;
+type FooterProps = React.ComponentPropsWithoutRef<'footer'>;
 
-export const ModalContainer = ({ style, ...props }: ModalContainerProps) => {
-  return <div {...stylex.props(styles.modalContainer, style)} {...props} />;
-};
-
-export const ModalHeader = ({
-  title,
-  style,
-  hasCloseButton,
-  handleClose,
-  ...props
-}: ModalHeaderProps) => {
+const Container = ({ style, ...props }: ContainerProps) => {
   return (
-    <header {...stylex.props(styles.modalHeader, style)} {...props}>
+    <div
+      {...props}
+      {...stylex.props(
+        frameThemes.roundEdged,
+        shadowThemes.main,
+        styles.container,
+        style,
+      )}
+    />
+  );
+};
+
+const Header = (props: HeaderProps) => {
+  const { title, style, hasCloseButton, handleClose, ...rest } = props;
+  return (
+    <header {...rest} {...stylex.props(styles.header, style)}>
       <h3>{title}</h3>
-      {hasCloseButton && <CloseButton onClick={handleClose} />}
+      {hasCloseButton && (
+        <IconButton
+          onClick={handleClose}
+          iconProps={{ src: 'IconX', width: 16 }}
+        />
+      )}
     </header>
   );
 };
-export const ModalBody = ({ style, ...props }: ModaleBodyProps) => {
-  return <section {...stylex.props(styles.modalBody, style)} {...props} />;
+
+const Body = ({ style, ...props }: BodyProps) => {
+  return <section {...props} {...stylex.props(styles.body, style)} />;
 };
 
-export const ModalFooter = (props: ModalFooterProps) => {
-  return <footer {...props} />;
-};
+const Footer = (props: FooterProps) => <footer {...props} />;
+
+export const Modal = { Container, Header, Body, Footer };
 
 const styles = stylex.create({
-  modalContainer: {
+  container: {
+    zIndex: '1',
     display: 'flex',
     flexDirection: 'column',
     width: '40rem',
     height: '100%',
-    padding: '2rem',
-    borderRadius: '1vw',
-    // いつか共通部品に移動
-    boxShadow:
-      'rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px',
+    padding: '0 2rem',
+    backgroundColor: palette.baseWhite,
   },
-  modalHeader: {
+  header: {
     flex: '1',
     width: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    padding: '0.5rem 0',
+    marginTop: '0.5rem',
+    borderBottomColor: palette.whiteSoftGray,
+    borderBottomStyle: 'solid',
+    borderBottomWidth: spacing.xxsmall,
   },
-  modalBody: {
+  body: {
     display: 'flex',
     maxHeight: '20rem',
     minHeight: '20rem',
+    padding: '1rem 0',
   },
 });
