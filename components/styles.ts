@@ -44,21 +44,33 @@ export const statusStyles = stylex.create({
  * Designs
  */
 export type DesignProps = {
-  hasFlex?: boolean;
+  hasFlex?: FlexProps;
   hasBorder?: BorderProps;
   paddingLevel?: Padding;
-  size?: {
-    width?: PixelLevelOption | RemLevelOpton | '100%';
-    height?: PixelLevelOption | RemLevelOpton | '100%';
-  };
-  hasRadius?: PixelLevelOption;
+  padding?: PixelLevelOption | RemLevelOpton;
+  size?: SizeProps;
+  hasRadius?: PixelLevelOption | 'inherit';
+  color?: PaletteKeys;
 };
 type BorderProps = {
   width: PixelLevelOption;
   color: PaletteKeys | 'transparent';
   hoverColor?: PaletteKeys | 'transparent' | null;
 };
-
+type FlexProps = {
+  flexDirection?: 'column' | 'row';
+  alignItems?: 'start' | 'center' | 'end';
+  justifyContent?:
+    | 'start'
+    | 'center'
+    | 'end'
+    | `space-${'evenly' | 'around' | 'between'}`;
+  gap?: PixelLevelOption | RemLevelOpton;
+};
+type SizeProps = {
+  width?: PixelLevelOption | RemLevelOpton | '100%';
+  height?: PixelLevelOption | RemLevelOpton | '100%';
+};
 export const designStyles = stylex.create({
   basicBox: (size: PixelLevelOption | RemLevelOpton) => ({
     paddingBottom: size,
@@ -73,35 +85,52 @@ export const designStyles = stylex.create({
     paddingTop: p.paddingTop,
     paddingLeft: p.paddingLeft,
     paddingRight: p.paddingRight,
-    width: s?.width ?? 'fit-content',
-    height: s?.height ?? 'fit-content',
+    width: s?.width ?? null,
+    height: s?.height ?? null,
   }),
-  flex: {
+  size: (props: DesignProps['size']) => ({
+    width: props?.width ?? null,
+    height: props?.height ?? null,
+  }),
+  flex: (props?: DesignProps['hasFlex']) => ({
     display: 'flex',
-    alignItems: 'center',
-    gap: '0.5rem',
-  },
-  border: (props: BorderProps) => ({
-    borderWidth: props.width,
+    flexDirection: props?.flexDirection ?? null,
+    alignItems: props?.alignItems ?? null,
+    justifyContent: props?.justifyContent ?? null,
+    gap: props?.gap ?? null,
+  }),
+  border: (props: DesignProps['hasBorder']) => ({
+    borderWidth: props?.width ?? null,
     borderStyle: 'solid',
     borderBlockColor: {
-      default: palette[props.color],
-      ':hover': palette[props.hoverColor ?? 'transparent'],
+      default: palette[props?.color ?? 'transparent'],
+      ':hover': palette[props?.hoverColor ?? 'transparent'],
     },
     borderInlineColor: {
-      default: palette[props.color],
-      ':hover': palette[props.hoverColor ?? 'transparent'],
+      default: palette[props?.color ?? 'transparent'],
+      ':hover': palette[props?.hoverColor ?? 'transparent'],
     },
   }),
-  radius: (pxLevel: PixelLevelOption) => ({
+  radius: (pxLevel: DesignProps['hasRadius']) => ({
     borderRadius: pxLevel,
+  }),
+  color: (color: DesignProps['color']) => ({
+    color: palette[color ?? 'transparent'],
+  }),
+  padding: (p: DesignProps['padding']) => ({
+    padding: p ?? null,
+  }),
+  customPadding: (p: DesignProps['paddingLevel']) => ({
+    paddingBottom: p?.paddingBottom ?? null,
+    paddingTop: p?.paddingTop ?? null,
+    paddingLeft: p?.paddingLeft ?? null,
+    paddingRight: p?.paddingRight ?? null,
   }),
 });
 
 /**
  * State-based
  */
-
 export type StateBasedProps = {
   useHover?:
     | { type: 'basicHover'; props: BasicHover }

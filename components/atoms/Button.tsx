@@ -58,7 +58,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...stylex.props(
           styles.button,
           designStyles.customBox(paddingLevel, size),
-          hasFlex && designStyles['flex'],
+          hasFlex && designStyles['flex'](hasFlex),
           hasBorder && designStyles['border'](hasBorder),
           hasRadius && designStyles['radius'](hasRadius),
           isSelected && statusStyles['basicSelected'],

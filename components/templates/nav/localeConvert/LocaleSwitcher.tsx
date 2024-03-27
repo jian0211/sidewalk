@@ -49,7 +49,10 @@ export const LocaleSwitcher = () => {
 const ToggleButton = ({ iconProps: { src }, ...props }: IconButtonProps) => (
   <IconButton
     {...props}
-    hasFlex
+    hasFlex={{
+      alignItems: 'center',
+      gap: '8px',
+    }}
     hasBorder={{
       width: '2px',
       color: 'softGray',
