@@ -55,6 +55,10 @@
         },
         "airlines": {
             "title": "일본과 한국을 왕래하는 항공사 정보"
+        },
+        "translate": {
+            "japan": "일본어",
+            "korea": "한국어"
         }
     },
     "airports": {
