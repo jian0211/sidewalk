@@ -55,6 +55,10 @@
         },
         "airlines": {
             "title": "日本と韓国を行き来する航空会社の情報"
+        },
+        "translate": {
+            "japan": "日本語",
+            "korea": "韓国語"
         }
     },
     "airports": {

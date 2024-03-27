@@ -21,3 +21,5 @@ export type NestedPropertyType<
   : K extends keyof T
     ? T[K]
     : never;
+
+export type Prettier<T extends object> = { [k in keyof T]: T[k] };

@@ -2,74 +2,25 @@ import { LinkProps } from '@/types/path';
 import * as stylex from '@stylexjs/stylex';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
-export type BasicLinkProps = React.ComponentPropsWithRef<'a'> &
-  LinkProps & {
-    style?: StyleXArray<any>;
-    title: string;
-    borderHover?: boolean;
-    indent?: boolean;
-  };
+export type BasicLinkProps = LinkProps & {
+  style?: StyleXArray<any>;
+};
 
-export const BasicLink = (props: BasicLinkProps) => {
-  const { style, href, title, borderHover, indent, ...rest } = props;
-  const path = usePathname();
-  const isCurrentPath = path === href;
-  return (
-    <Link
-      href={href}
-      {...stylex.props(
-        styles.basicLink,
-        borderHover && styles.borderHover,
-        indent && styles.indent,
-        isCurrentPath && styles.currentPath,
-        style, // errorになるんですが、問題ない
-      )}
-      {...rest}
-    >
-      {title}
-    </Link>
-  );
+export const BasicLink = ({ href, ...props }: BasicLinkProps) => {
+  return <Link {...props} href={href} {...stylex.props(styles.basicLink)} />;
 };
 
 const styles = stylex.create({
   basicLink: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: `1rem 2rem`,
-    width: '100%',
-    height: '4rem',
-    fontSize: '1rem',
-    fontWeight: 'bold',
     color: {
-      default: '#9AA0AD',
-      ':hover': '#28176D',
-      ':active': '#28176D', //[TODO]: Default CSSに
+      default: 'inherit',
+      ':hover': null,
+      ':active': null, //[TODO]: Default CSSに
     },
     backgroundColor: {
       default: 'Inherit',
-      ':hover': '#F0F0F7',
+      ':hover': null,
     },
-  },
-  currentPath: {
-    color: '#28176D',
-  },
-  borderHover: {
-    borderBottomWidth: {
-      default: 'none',
-      ':hover': '1px',
-    },
-    borderBottomStyle: {
-      default: 'none',
-      ':hover': 'solid',
-    },
-    borderBottomColor: {
-      default: 'none',
-      ':hover': '#28176D',
-    },
-  },
-  indent: {
-    paddingLeft: '4rem',
   },
 });

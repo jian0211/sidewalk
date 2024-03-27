@@ -1,9 +1,9 @@
 import * as stylex from '@stylexjs/stylex';
-import { hovers, palette, spacing } from '../../../styles/globalTokens.stylex';
-import { PathName } from '@/types/path';
-import { Icons } from '@/components/atoms/Icon';
+import { palette, spacing } from '../../../styles/globalTokens.stylex';
+import { IconNames, Icons } from '@/components/atoms/Icon';
 import React from 'react';
 import Link, { LinkProps } from 'next/link';
+import { Block } from '@/components/atoms/Block';
 
 type LogoProps = React.ComponentPropsWithoutRef<'div'>;
 type ContainerProps = React.ComponentPropsWithoutRef<'aside'>;
@@ -19,86 +19,77 @@ type TabMenuProps = React.ComponentPropsWithoutRef<'div'> &
 type SidebarUsedTypes = {
   title: string;
   isCurrent?: boolean;
-  menutype: PathName | 'airlineList' | 'airportsList' | 'profile' | 'login';
+  iconname: IconNames;
 };
 
-const MenuIcons: Record<SidebarUsedTypes['menutype'], React.ReactElement> = {
-  home: Icons('IconDashborad'),
-  airlines: Icons('IconPlane'),
-  airlineList: Icons('IconPlaneList'),
-  airports: Icons('IconAirport'),
-  airportsList: Icons('IconAirportList'),
-  flights: Icons('IconFlight'),
-  profile: Icons('IconProfile'),
-  login: Icons('IconLogin'),
-};
+const Container = (props: ContainerProps) => (
+  <aside {...props} {...stylex.props(styles.container)} />
+);
 
-const Container = (props: ContainerProps) => {
-  return <aside {...props} {...stylex.props(styles.container)} />;
-};
+const MenuContainer = (props: MenuContainerProps) => (
+  <div {...props} {...stylex.props(styles.menuContainer)} />
+);
+
+const BottomContainer = (props: BottomContainerProps) => (
+  <div {...props} {...stylex.props(styles.bottomContainer)} />
+);
+
+const Footer = (props: FooterProps) => (
+  <footer {...props} {...stylex.props(styles.footer)} />
+);
 
 const Logo = (props: LogoProps) => {
   return (
     <div {...props} {...stylex.props(styles.logo)}>
-      <h1>SIDE WORK</h1>
+      <h1>WWWWWW</h1>
     </div>
   );
 };
 
 const TabMenu = (props: TabMenuProps) => {
-  const { menutype, linkProps, title, children, isCurrent, ...rest } = props;
-  return (
-    <div
-      {...rest}
-      {...stylex.props(
-        styles.tabMenu,
-        hovers.basicHover({ backgroundColor: 'lightBlue', color: 'baseWhite' }),
-      )}
-    >
-      {MenuIcons[menutype]}
-      <Link {...stylex.props(styles.title)} href={linkProps.href}>
-        {title}
-      </Link>
-    </div>
-  );
-};
+  const { iconname, linkProps, title, children, isCurrent, ...rest } = props;
 
-const MenuContainer = (props: MenuContainerProps) => {
-  return <div {...props} {...stylex.props(styles.menuContainer)} />;
+  return (
+    <Link href={linkProps.href}>
+      <Block
+        {...rest}
+        variant="round"
+        useHover={{
+          type: 'borderHover',
+          props: { borderColor: 'lightBlue', borderWidth: '4px' },
+        }}
+        isSelected={isCurrent ? 'basicSelected' : undefined}
+        stylesprops={[styles.tabMenu]}
+      >
+        <Icons src={iconname} />
+        <span {...stylex.props(styles.title)}>{title}</span>
+      </Block>
+    </Link>
+  );
 };
 
 const Accordion = (props: AccordionProps) => {
-  const { isCurrent, menutype, title, children, ...rest } = props;
+  const { isCurrent, iconname, title, children, ...rest } = props;
   return (
-    <div
+    <Block
       {...rest}
-      {...stylex.props(styles.accodion, isCurrent && styles.currentPath)}
+      variant="round"
+      useHover={{ type: 'shadowHover' }}
+      useAccordion={{
+        defaultHeight: '4rem',
+        height: 'fit-content',
+      }}
+      stylesprops={isCurrent && styles.accordion}
     >
-      <div
-        {...stylex.props(
-          styles.tabMenu,
-          hovers.basicHover({
-            backgroundColor: 'lightBlue',
-            color: 'baseWhite',
-          }),
-        )}
-      >
-        {MenuIcons[menutype]}
-        <h2 {...props} {...stylex.props(styles.title)}>
-          {title}
-        </h2>
-      </div>
-      <ul {...stylex.props(styles.accodionList)}>{children}</ul>
-    </div>
+      <Block variant="round" stylesprops={styles.tabMenu}>
+        <Icons src={iconname} />
+        <h2 {...stylex.props(styles.title)}>{title}</h2>
+      </Block>
+      <Block variant="round" stylesprops={styles.accodionList}>
+        {children}
+      </Block>
+    </Block>
   );
-};
-
-const BottomContainer = (props: BottomContainerProps) => {
-  return <div {...props} {...stylex.props(styles.bottomContainer)} />;
-};
-
-const Footer = (props: FooterProps) => {
-  return <footer {...props} {...stylex.props(styles.footer)} />;
 };
 
 export const SidebarMenu = {
@@ -125,23 +116,16 @@ const styles = stylex.create({
     flexDirection: 'column',
     borderRightColor: palette.whiteSoftGray,
     borderRightStyle: 'solid',
-    borderRightWidth: spacing.xsmall,
+    borderRightWidth: spacing.xxsmall,
     padding: '0 2rem',
     color: palette.darkGray,
   },
   logo: {
-    height: '7rem',
+    height: '10rem',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    color: 'tomato',
-  },
-  accodion: {
-    height: {
-      default: menuHeigth,
-      ':hover': 'fit-content',
-    },
-    overflow: 'hidden',
+    color: palette.lightBlue,
   },
   title: {
     fontSize: '1rem',
@@ -149,16 +133,14 @@ const styles = stylex.create({
     fontWeight: 600,
   },
   menuContainer: {
-    // [TODO]: scroll 追加
     height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.5rem',
   },
   bottomContainer: {
     width: '100%',
     marginTop: 'auto',
-  },
-  currentPath: {
-    color: palette.baseWhite,
-    // backgroundColor: 'pink',
   },
   footer: {
     height: '7rem',
@@ -167,15 +149,23 @@ const styles = stylex.create({
     justifyContent: 'center',
   },
   tabMenu: {
-    display: 'flex',
+    width: '100%',
+    display: 'inline-flex',
     alignItems: 'center',
     justifyItems: 'center',
     gap: '1rem',
     height: menuHeigth,
     padding: '0 1rem',
-    borderRadius: '1rem',
   },
   accodionList: {
-    marginLeft: '2rem',
+    display: 'flex',
+    flexDirection: 'column',
+    margin: '0 1rem 1rem 2rem',
+    gap: '0.5rem',
+  },
+  accordion: {
+    height: 'fit-content',
+    boxShadow:
+      'rgba(42, 131, 255, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
   },
 });

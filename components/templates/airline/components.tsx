@@ -17,7 +17,6 @@ const CategoryButton = (props: ButtonProps) => {
     <Button
       {...props}
       paddingLevel={{ paddingLeft: '20px', paddingRight: '20px' }}
-      hasHoverBorder
     />
   );
 };

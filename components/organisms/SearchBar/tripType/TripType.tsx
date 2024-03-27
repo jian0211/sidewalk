@@ -1,64 +1,68 @@
+import { palette, spacing } from '../../../../styles/globalTokens.stylex';
 import * as stylex from '@stylexjs/stylex';
 import { forwardRef } from 'react';
 
-type TripTypeContainerProps = React.ComponentPropsWithoutRef<'div'>;
-type TripTypeRadioButtonProps = React.ComponentProps<'input'> & {
+type ContainerProps = React.ComponentPropsWithoutRef<'div'>;
+type RadioButtonProps = React.ComponentProps<'input'> & {
   value: string;
 };
 
-export const TripTypeContainer = (props: TripTypeContainerProps) => {
-  return <div {...stylex.props(styles.tripTypeContainer)} {...props} />;
+const Container = (props: ContainerProps) => {
+  return <div {...props} {...stylex.props(styles.container)} />;
 };
 
-export const TripTypeRadioButton = forwardRef<
-  HTMLInputElement,
-  TripTypeRadioButtonProps
->(({ value, children, ...props }, ref) => {
-  return (
-    <label
-      {...stylex.props(
-        styles.tripTypeRadioLable,
-        props.checked && styles.checked,
-      )}
-      htmlFor={value}
-    >
-      <input
-        {...stylex.props(styles.tripTypeRadioButton)}
-        ref={ref}
-        id={value}
-        type="radio"
-        value={value}
-        name="tripType"
-        {...props}
-      />
-      {children}
-    </label>
-  );
-});
-TripTypeRadioButton.displayName = 'tripTypeRadioButton';
+const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
+  ({ value, children, ...props }, ref) => {
+    return (
+      <label
+        {...stylex.props(styles.radioLable, props.checked && styles.checked)}
+        htmlFor={value}
+      >
+        <input
+          {...props}
+          {...stylex.props(styles.radioButton)}
+          ref={ref}
+          id={value}
+          type="radio"
+          value={value}
+          name="tripType"
+        />
+        {children}
+      </label>
+    );
+  },
+);
+RadioButton.displayName = 'radioButton';
+
+export const TripType = { Container, RadioButton };
 
 const styles = stylex.create({
-  tripTypeContainer: {
+  container: {
     display: 'flex',
-    borderWidth: '1px',
+    borderColor: palette.whiteSoftGray,
+    borderWidth: spacing.xxsmall,
     borderStyle: 'solid',
-    borderColor: '#00256C',
-    borderRadius: '1vw',
+    borderRadius: spacing.medium,
+    fontWeight: 600,
+    color: palette.darkGray,
   },
-  tripTypeRadioLable: {
+  radioLable: {
     width: '4rem',
     height: '3rem',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: '1vw',
     cursor: 'pointer',
+    // borderColor: 'inherit',
+    // borderWidth: 'inherit',
+    // borderStyle: 'inherit',
+    borderRadius: 'inherit',
   },
-  tripTypeRadioButton: {
+  radioButton: {
     display: 'none',
   },
   checked: {
-    color: 'white',
-    backgroundColor: '#00256C',
+    color: palette.baseWhite,
+    backgroundColor: palette.lightBlue,
   },
 });

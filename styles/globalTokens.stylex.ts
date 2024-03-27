@@ -3,14 +3,32 @@ import * as stylex from '@stylexjs/stylex';
 /**
  * default Style Options
  */
-type SizeOption = 'none' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+type SizeOption =
+  | 'none'
+  | 'xxsmall'
+  | 'xsmall'
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'xlarge'
+  | 'vw';
 type DirectionOption = 'Left' | 'Right' | 'Top' | 'Bottom';
-type PixelLevelOption = '0px' | '4px' | '8px' | '12px' | '20px' | '32px';
+export type PixelLevelOption =
+  | '0px'
+  | '2px'
+  | '4px'
+  | '8px'
+  | '12px'
+  | '20px'
+  | '32px'
+  | '1vw';
+export type RemLevelOpton = '0' | '1rem' | '2rem' | '3rem' | '4rem' | '5rem';
 
 type Spacing = Record<SizeOption, PixelLevelOption>;
 export type Padding = Partial<{
   [k in `padding${DirectionOption}`]: PixelLevelOption;
 }>;
+export type PaletteKeys = keyof typeof palette;
 
 export const palette = stylex.defineVars({
   baseWhite: '#FFFFFF',
@@ -26,29 +44,22 @@ export const palette = stylex.defineVars({
   vividRed: '#E62437',
   mutedOlive: '#OEAD71',
   lightBlue: '#2A83FF',
+  skyBlue: '#4ebffc',
+  transparent: 'transparent',
 });
 
 export const spacing = stylex.defineVars<Spacing>({
   none: '0px',
+  xxsmall: '2px',
   xsmall: '4px',
   small: '8px',
   medium: '12px',
   large: '20px',
   xlarge: '32px',
+  vw: '1vw',
 });
 
-export const hovers = stylex.create({
-  basicHover: (props: {
-    color: keyof typeof palette;
-    backgroundColor: keyof typeof palette;
-  }) => ({
-    color: {
-      default: 'Inherit',
-      ':hover': palette[props.color], // error になってるんですが、後で解決する。
-    },
-    backgroundColor: {
-      default: 'Inherit',
-      ':hover': palette[props.backgroundColor],
-    },
-  }),
+export const shadowing = stylex.defineVars({
+  basic:
+    'rgba(42, 131, 255, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
 });

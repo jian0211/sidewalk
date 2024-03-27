@@ -1,15 +1,32 @@
 import * as stylex from '@stylexjs/stylex';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 import React from 'react';
-import { Icons } from '@/components/atoms/Icon';
-import { Padding } from '@/styles/globalTokens.stylex';
+import { Icons, IconsProps } from '@/components/atoms/Icon';
+import { Padding } from '../../styles/globalTokens.stylex';
+import {
+  DesignProps,
+  StatusProps,
+  designStyles,
+  statusStyles,
+} from '../styles';
+import { Prettier } from '@/types/common';
 
-export type ButtonProps = React.ComponentPropsWithoutRef<'button'> & {
-  style?: StyleXArray<any>;
-  hasHoverBorder?: boolean;
-  isSelected?: boolean;
+type ButtonCssProps = Prettier<
+  Pick<
+    DesignProps,
+    'hasBorder' | 'hasFlex' | 'hasRadius' | 'paddingLevel' | 'size'
+  > &
+    Pick<StatusProps, 'isSelected'>
+>;
+
+export type ButtonProps = {
   type?: 'button' | 'submit';
-  paddingLevel?: Padding;
+  style?: StyleXArray<any>;
+} & ButtonCssProps &
+  React.ComponentPropsWithoutRef<'button'>;
+
+export type IconButtonProps = ButtonProps & {
+  iconProps: IconsProps;
 };
 
 const DEFAULT_PADDING: Padding = {
@@ -20,110 +37,55 @@ const DEFAULT_PADDING: Padding = {
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      style,
-      hasHoverBorder,
-      paddingLevel = DEFAULT_PADDING,
+  (props, ref) => {
+    const {
       type = 'button',
+      size,
+      hasFlex,
+      hasBorder,
+      hasRadius,
+      paddingLevel = DEFAULT_PADDING,
       isSelected,
-      ...props
-    },
-    ref,
-  ) => {
+      style,
+      ...rest
+    } = props;
+
     return (
       <button
+        {...rest}
         type={type}
         ref={ref}
         {...stylex.props(
-          styles.button(paddingLevel),
-          hasHoverBorder && styles.hoverBorder,
-          isSelected && styles.selectedColor,
+          styles.button,
+          designStyles.customBox(paddingLevel, size),
+          hasFlex && designStyles['flex'],
+          hasBorder && designStyles['border'](hasBorder),
+          hasRadius && designStyles['radius'](hasRadius),
+          isSelected && statusStyles['basicSelected'],
           style,
         )}
-        {...props}
       />
     );
   },
 );
 Button.displayName = 'BasicButton';
 
-export const CloseButton = ({
-  style,
-  hasHoverBorder,
-  paddingLevel = DEFAULT_PADDING,
-  type = 'button',
-  isSelected,
-  ...props
-}: ButtonProps) => {
+export const IconButton = (props: IconButtonProps) => {
+  const { iconProps, children, ...rest } = props;
   return (
-    <button
-      type={type}
-      {...stylex.props(
-        styles.button(paddingLevel),
-        hasHoverBorder && styles.hoverBorder,
-        isSelected && styles.selectedColor,
-        style,
-      )}
-      {...props}
-    >
-      X
-    </button>
-  );
-};
-
-export const SearchButton = ({
-  style,
-  hasHoverBorder,
-  paddingLevel = DEFAULT_PADDING,
-  type = 'submit',
-  ...props
-}: ButtonProps) => {
-  return (
-    <button
-      type={type}
-      {...stylex.props(
-        styles.button(paddingLevel),
-        hasHoverBorder && styles.hoverBorder,
-        style,
-      )}
-      {...props}
-    >
-      {Icons('IconFind')}
-    </button>
+    <Button {...rest}>
+      <Icons src={iconProps['src']} width={iconProps['width']} />
+      {children}
+    </Button>
   );
 };
 
 const styles = stylex.create({
-  button: (p: Padding) => ({
-    paddingBottom: p.paddingBottom,
-    paddingTop: p.paddingTop,
-    paddingLeft: p.paddingLeft,
-    paddingRight: p.paddingRight,
+  button: {
     borderColor: 'none',
     borderWidth: 'none',
     borderStyle: 'none',
     background: 'none',
     cursor: 'pointer',
-    height: '3rem',
-  }),
-  hoverBorder: {
-    borderColor: {
-      default: 'none',
-      ':hover': '#00256C',
-    },
-    borderWidth: {
-      default: 'none',
-      ':hover': '1px',
-    },
-    borderStyle: {
-      default: 'none',
-      ':hover': 'solid',
-    },
-    borderRadius: '1vw',
-  },
-  selectedColor: {
-    backgroundColor: '#00256C',
-    color: 'white',
   },
 });

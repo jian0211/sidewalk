@@ -15,6 +15,8 @@ import IconPlaneList from './plane_list.svg';
 import IconAirportList from './list.svg';
 import IconLogin from './login.svg';
 import IconProfile from './profile.svg';
+import IconX from './letter_x.svg';
+import IconGlobal from './global.svg';
 
 export {
   IconJapanFlag,
@@ -33,4 +35,6 @@ export {
   IconAirportList,
   IconLogin,
   IconProfile,
+  IconX,
+  IconGlobal,
 };

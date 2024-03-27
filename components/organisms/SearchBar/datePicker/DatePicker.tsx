@@ -9,11 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './datePicker.css';
 import * as stylex from '@stylexjs/stylex';
 import React from 'react';
-import {
-  ModalContainer,
-  ModalContainerProps,
-  ModalHeader,
-} from '@/components/molecules/modal/Modal';
+import { Modal, ContainerProps } from '@/components/molecules/modal/Modal';
 
 registerLocale('ko', ko);
 registerLocale('ja', ja);
@@ -25,7 +21,7 @@ type DatePickerContainerProps = ReactDatePickerProps & {
   ) => void;
 };
 
-type DatePickerModalProps = ModalContainerProps &
+type DatePickerModalProps = ContainerProps &
   CalendarContainerProps & {
     title: string;
   };
@@ -61,12 +57,12 @@ export const DatePickerModal = ({
   ...props
 }: DatePickerModalProps) => {
   return (
-    <ModalContainer style={styles.datePickerModal}>
+    <Modal.Container style={styles.datePickerModal}>
       <CalendarContainer className={className} {...props}>
-        <ModalHeader title={title} style={styles.datePickerModalHeader} />
+        <Modal.Header title={title} style={styles.datePickerModalHeader} />
         <div {...stylex.props(styles.calendarContainer)}>{children}</div>
       </CalendarContainer>
-    </ModalContainer>
+    </Modal.Container>
   );
 };
 
