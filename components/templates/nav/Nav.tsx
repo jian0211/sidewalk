@@ -8,6 +8,7 @@ import { ComponentPropsWithoutRef } from 'react';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { palette, spacing } from '../../../styles/globalTokens.stylex';
+import { designStyles } from '@/components/styles';
 
 type NavProps = React.ComponentPropsWithoutRef<'nav'>;
 type AirportsLayoutContainerProps = ComponentPropsWithoutRef<'h1'>;
@@ -27,6 +28,7 @@ export const Nav = (props: NavProps) => {
       ) : isAirlinePath ? (
         <AirlinesLayoutContainer />
       ) : undefined}
+
       <LocaleSwitcher />
       <NavGlobalEditBox />
       <NotificationBox />
@@ -55,7 +57,7 @@ const AirlinesLayoutContainer = (props: AirlinesLayoutContainerProps) => {
 const NavGlobalEditBox = (props: NavGlobalEditBoxProps) => {
   return (
     <div {...props}>
-      <Icons src="IconEdit" />
+      <Icons src="IconEdit" useOutline useCursor />
     </div>
   );
 };
@@ -63,7 +65,7 @@ const NavGlobalEditBox = (props: NavGlobalEditBoxProps) => {
 const NotificationBox = (props: NotificationBoxProps) => {
   return (
     <div {...props}>
-      <Icons src="IconNotification" />
+      <Icons src="IconNotification" useOutline useCursor />
     </div>
   );
 };

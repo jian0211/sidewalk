@@ -1,44 +1,91 @@
+import { designStyles } from '@/components/styles';
 import { FLIGHT_COST } from '@/store/fligths';
+import { palette, spacing } from '../../../../styles/globalTokens.stylex';
 import * as stylex from '@stylexjs/stylex';
 import { useLocale } from 'next-intl';
 import React from 'react';
+import './styles.css';
 
-type PriceRangeSliderContainerProps = React.ComponentPropsWithoutRef<'section'>;
+type ContainerProps = React.ComponentPropsWithoutRef<'section'>;
 type LabelBoxProps = React.ComponentPropsWithoutRef<'div'> & {
   rangeType: 'min' | 'max';
 };
-type PriceContentProps = React.ComponentPropsWithoutRef<'div'>;
+type ContentProps = React.ComponentPropsWithoutRef<'div'>;
 type TitleProps = React.ComponentPropsWithoutRef<'h3'>;
-type PriceRangeSliderProps = React.ComponentPropsWithoutRef<'div'>;
+type SliderProps = React.ComponentPropsWithoutRef<'div'>;
 type RangeFillBoxProps = React.ComponentPropsWithoutRef<'div'> & {
   flightCost: typeof FLIGHT_COST;
 };
-type PriceRangeSliderInputProps = React.ComponentPropsWithoutRef<'input'>;
+type InputProps = React.ComponentPropsWithoutRef<'input'>;
 
-export const PriceRangeSliderContainer = (
-  props: PriceRangeSliderContainerProps,
-) => {
-  return <section {...stylex.props(styles.container)} {...props} />;
+const Container = (props: ContainerProps) => {
+  return (
+    <section
+      {...props}
+      {...stylex.props(
+        designStyles['size']({ width: '23rem' }),
+        designStyles['padding']('20px'),
+        designStyles['bgColor']('baseWhite'),
+        designStyles['flex']({
+          flexDirection: 'column',
+          gap: '8px',
+        }),
+      )}
+    />
+  );
 };
 
-export const PriceContent = (props: PriceContentProps) => {
-  return <div {...stylex.props(styles.priceContent)} {...props} />;
+const Content = (props: ContentProps) => {
+  return (
+    <div
+      {...props}
+      {...stylex.props(
+        designStyles['flex']({
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '1rem',
+        }),
+        designStyles['customPadding']({
+          paddingBottom: '4px',
+        }),
+      )}
+    />
+  );
 };
 
-export const Title = (props: TitleProps) => {
-  return <h3 {...stylex.props(styles.title)} {...props} />;
+const Title = (props: TitleProps) => {
+  return <h4 {...props} {...stylex.props(styles.title)} />;
 };
 
-export const LabelBox = ({ rangeType, children, ...props }: LabelBoxProps) => {
+const LabelBox = ({ rangeType, children, ...props }: LabelBoxProps) => {
   const locale = useLocale();
   const currencySymbol: Record<string, string> = {
     ja: '￥',
     ko: '￦',
   };
   return (
-    <div {...stylex.props(styles.labelBox)} {...props}>
-      <label {...stylex.props(styles.label)}>{rangeType.toUpperCase()}</label>
-      <p {...stylex.props(styles.p)} id="min-value">
+    <div
+      {...props}
+      {...stylex.props(
+        designStyles['flex']({
+          flex: '1',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '4px',
+        }),
+      )}
+    >
+      <label
+        {...stylex.props(
+          designStyles['font']({
+            fontSize: '0.9rem',
+            fontWeight: 500,
+          }),
+        )}
+      >
+        {rangeType.toUpperCase()}
+      </label>
+      <p id="min-value">
         {children}
         {currencySymbol[locale]}
       </p>
@@ -46,9 +93,9 @@ export const LabelBox = ({ rangeType, children, ...props }: LabelBoxProps) => {
   );
 };
 
-export const PriceRangeSlider = (props: PriceRangeSliderProps) => {
-  return <div {...stylex.props(styles.rangeSlider)} {...props} />;
-};
+const Slider = (props: SliderProps) => (
+  <div {...props} style={{ position: 'relative' }} />
+);
 
 export const RangeFillBox = ({
   flightCost: { min, max },
@@ -61,10 +108,7 @@ export const RangeFillBox = ({
   return <div {...stylex.props(styles.rangeFill(left, right))} {...props} />;
 };
 
-export const PriceRangeSliderInput = React.forwardRef<
-  HTMLInputElement,
-  PriceRangeSliderInputProps
->((props, ref) => {
+const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const locale = useLocale();
   const stepOfLocale: Record<string, string> = {
     ja: '1000',
@@ -72,54 +116,40 @@ export const PriceRangeSliderInput = React.forwardRef<
   };
   return (
     <input
+      {...props}
+      {...stylex.props(designStyles['color']('lightBlue'))}
       ref={ref}
       type="range"
       step={stepOfLocale[locale]}
       min={FLIGHT_COST.min}
       max={FLIGHT_COST.max}
-      {...props}
     />
   );
 });
-PriceRangeSliderInput.displayName = 'PriceRangeSliderInput';
+Input.displayName = 'PriceRangeSliderInput';
+
+export const PriceRange = {
+  Container,
+  Content,
+  Title,
+  LabelBox,
+  Slider,
+  RangeFillBox,
+  Input,
+};
 
 const styles = stylex.create({
-  container: {
-    width: '23rem',
-    backgroundColor: '#fff',
-    padding: '1rem',
-  },
   title: {
     flex: '1',
     textAlign: 'center',
-    color: '#000',
+    color: palette.darkGray,
   },
-  priceContent: {
-    fontSize: '0.9rem',
-    fontWeight: 500,
-    display: 'flex',
-    gap: '1rem',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: '0.5rem',
-  },
-  labelBox: {
-    flex: '1',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: '5px',
-  },
-  label: {},
-  p: {},
-  rangeSlider: {
-    position: 'relative',
-  },
+
   rangeFill: (left, right) => ({
     left,
     right,
-    height: '6px',
-    backgroundColor: '#00256C',
+    height: spacing.xsmall,
+    backgroundColor: palette.lightBlue,
     position: 'absolute',
     zIndex: 1,
     width: 'auto',

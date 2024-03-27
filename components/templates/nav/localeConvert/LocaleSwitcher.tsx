@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { palette, spacing } from '../../../../styles/globalTokens.stylex';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
+import { designStyles } from '@/components/styles';
 
 export const LocaleSwitcher = () => {
   const t = useTranslatedWord('nav.translate');
@@ -19,7 +20,18 @@ export const LocaleSwitcher = () => {
     setToggle(false);
   });
   return (
-    <div ref={ref}>
+    <div
+      ref={ref}
+      {...stylex.props(
+        designStyles['padding']('8px'),
+        designStyles['border']({ color: 'softGray', width: '2px' }),
+        designStyles['flex']({
+          alignItems: 'center',
+          justifyContent: 'center',
+        }),
+        designStyles['radius']('8px'),
+      )}
+    >
       <IconButton
         iconProps={{ src: 'IconGlobal' }}
         onClick={() => setToggle((prev) => !prev)}

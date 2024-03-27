@@ -51,6 +51,8 @@ export type DesignProps = {
   size?: SizeProps;
   hasRadius?: PixelLevelOption | 'inherit';
   color?: PaletteKeys;
+  bgColor?: PaletteKeys;
+  font?: FontProps;
 };
 type BorderProps = {
   width: PixelLevelOption;
@@ -66,12 +68,22 @@ type FlexProps = {
     | 'end'
     | `space-${'evenly' | 'around' | 'between'}`;
   gap?: PixelLevelOption | RemLevelOpton;
+  flex?: '1' | '2' | '3';
 };
 type SizeProps = {
-  width?: PixelLevelOption | RemLevelOpton | '100%';
+  width?: PixelLevelOption | RemLevelOpton | '100%' | '23rem';
   height?: PixelLevelOption | RemLevelOpton | '100%';
 };
+type FontProps = {
+  fontSize?: `${'0.8' | '0.9' | '1' | '1.1' | '1.2'}rem`;
+  fontWeight?: 500 | 600;
+};
 export const designStyles = stylex.create({
+  X_LAY: {
+    borderBlockColor: 'pink',
+    borderBlockStyle: 'solid',
+    borderBlockWidth: '1px',
+  },
   basicBox: (size: PixelLevelOption | RemLevelOpton) => ({
     paddingBottom: size,
     paddingTop: size,
@@ -98,6 +110,7 @@ export const designStyles = stylex.create({
     alignItems: props?.alignItems ?? null,
     justifyContent: props?.justifyContent ?? null,
     gap: props?.gap ?? null,
+    flex: props?.flex ?? null,
   }),
   border: (props: DesignProps['hasBorder']) => ({
     borderWidth: props?.width ?? null,
@@ -125,6 +138,13 @@ export const designStyles = stylex.create({
     paddingTop: p?.paddingTop ?? null,
     paddingLeft: p?.paddingLeft ?? null,
     paddingRight: p?.paddingRight ?? null,
+  }),
+  bgColor: (color: DesignProps['bgColor']) => ({
+    backgroundColor: palette[color ?? 'transparent'],
+  }),
+  font: (props: DesignProps['font']) => ({
+    fontSize: props?.fontSize ?? null,
+    fontWeight: props?.fontWeight ?? null,
   }),
 });
 
