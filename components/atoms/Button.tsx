@@ -5,6 +5,7 @@ import { Icons, IconsProps } from '@/components/atoms/Icon';
 import { Padding } from '../../styles/globalTokens.stylex';
 import {
   DesignProps,
+  StateBasedProps,
   StatusProps,
   designStyles,
   statusStyles,
@@ -14,9 +15,17 @@ import { Prettier } from '@/types/common';
 type ButtonCssProps = Prettier<
   Pick<
     DesignProps,
-    'hasBorder' | 'hasFlex' | 'hasRadius' | 'paddingLevel' | 'size'
+    | 'hasBorder'
+    | 'hasFlex'
+    | 'hasRadius'
+    | 'paddingLevel'
+    | 'size'
+    | 'bgColor'
+    | 'color'
+    | 'font'
   > &
-    Pick<StatusProps, 'isSelected'>
+    Pick<StatusProps, 'isSelected'> &
+    Pick<StateBasedProps, 'useCustomSelected'>
 >;
 
 export type ButtonProps = {
@@ -46,6 +55,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       hasRadius,
       paddingLevel = DEFAULT_PADDING,
       isSelected,
+      color,
+      bgColor,
+      font,
+      useCustomSelected,
       style,
       ...rest
     } = props;
@@ -61,7 +74,19 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           hasFlex && designStyles['flex'](hasFlex),
           hasBorder && designStyles['border'](hasBorder),
           hasRadius && designStyles['radius'](hasRadius),
+          font &&
+            designStyles['font']({
+              color: font.color,
+              fontSize: font.fontSize,
+              fontWeight: font.fontWeight,
+              textDecoration: font.textDecoration,
+            }),
           isSelected && statusStyles['basicSelected'],
+          useCustomSelected &&
+            statusStyles['customSelected']({
+              color: useCustomSelected.color,
+              bgColor: useCustomSelected.bgColor,
+            }),
           style,
         )}
       />

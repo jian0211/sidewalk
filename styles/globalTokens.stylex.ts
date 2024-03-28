@@ -12,17 +12,32 @@ type SizeOption =
   | 'large'
   | 'xlarge'
   | 'vw';
-type DirectionOption = 'Left' | 'Right' | 'Top' | 'Bottom';
+export type DirectionOption = 'Left' | 'Right' | 'Top' | 'Bottom';
+
 export type PixelLevelOption =
-  | '0px'
-  | '2px'
-  | '4px'
-  | '8px'
-  | '12px'
-  | '20px'
-  | '32px'
+  | `${
+      | 0
+      | 2
+      | 4
+      | 8
+      | 10
+      | 12
+      | 14
+      | 16
+      | 18
+      | 20
+      | 22
+      | 24
+      | 26
+      | 28
+      | 30
+      | 32
+      | 50
+      | 100
+      | 150
+      | 200}px`
   | '1vw';
-export type RemLevelOpton = '0' | '1rem' | '2rem' | '3rem' | '4rem' | '5rem';
+export type RemLevelOpton = `${0 | 1 | 2 | 3 | 4 | 5 | 6}rem`;
 
 type Spacing = Record<SizeOption, PixelLevelOption>;
 export type Padding = Partial<{
@@ -62,4 +77,15 @@ export const spacing = stylex.defineVars<Spacing>({
 export const shadowing = stylex.defineVars({
   basic:
     'rgba(42, 131, 255, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
+});
+
+export const buttonThemeVars = stylex.defineVars<Spacing>({
+  none: '0px',
+  xxsmall: '2px',
+  xsmall: '4px',
+  small: '8px',
+  medium: '12px',
+  large: '20px',
+  xlarge: '32px',
+  vw: '1vw',
 });
