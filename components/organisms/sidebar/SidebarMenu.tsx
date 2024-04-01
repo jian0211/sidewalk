@@ -4,6 +4,7 @@ import { IconNames, Icons } from '@/components/atoms/Icon';
 import React from 'react';
 import Link, { LinkProps } from 'next/link';
 import { Block } from '@/components/atoms/Block';
+import { designStyles } from '@/components/styles';
 
 type LogoProps = React.ComponentPropsWithoutRef<'div'>;
 type ContainerProps = React.ComponentPropsWithoutRef<'aside'>;
@@ -23,24 +24,66 @@ type SidebarUsedTypes = {
 };
 
 const Container = (props: ContainerProps) => (
-  <aside {...props} {...stylex.props(styles.container)} />
+  <aside
+    {...props}
+    {...stylex.props(
+      styles.container,
+      designStyles['flex']({ flexDirection: 'column' }),
+      designStyles['size']({ width: '320px', height: '100vh' }),
+      designStyles['bgColor']({ color: 'whiteGray' }),
+      designStyles['padding']({
+        paddingTop: '0px',
+        paddingBottom: '0px',
+        paddingLeft: '32px',
+        paddingRight: '32px',
+      }),
+    )}
+  />
 );
 
 const MenuContainer = (props: MenuContainerProps) => (
-  <div {...props} {...stylex.props(styles.menuContainer)} />
+  <div
+    {...props}
+    {...stylex.props(
+      designStyles['flex']({ flexDirection: 'column', gap: '8px' }),
+      designStyles['size']({ height: '100%' }),
+    )}
+  />
 );
 
 const BottomContainer = (props: BottomContainerProps) => (
-  <div {...props} {...stylex.props(styles.bottomContainer)} />
+  <div
+    {...props}
+    {...stylex.props(
+      designStyles['size']({ width: '100%' }),
+      designStyles['margin']({ marginTop: 'auto' }),
+    )}
+  />
 );
 
 const Footer = (props: FooterProps) => (
-  <footer {...props} {...stylex.props(styles.footer)} />
+  <footer
+    {...props}
+    {...stylex.props(
+      designStyles['size']({ height: '7rem' }),
+      designStyles['flex']({ alignItems: 'center', justifyContent: 'center' }),
+    )}
+  />
 );
 
 const Logo = (props: LogoProps) => {
   return (
-    <div {...props} {...stylex.props(styles.logo)}>
+    <div
+      {...props}
+      {...stylex.props(
+        designStyles['size']({ height: '10rem' }),
+        designStyles['flex']({
+          alignItems: 'center',
+          justifyContent: 'center',
+        }),
+        designStyles['color']({ color: 'lightBlue' }),
+      )}
+    >
       <h1>WWWWWW</h1>
     </div>
   );
@@ -51,19 +94,52 @@ const TabMenu = (props: TabMenuProps) => {
 
   return (
     <Link href={linkProps.href}>
-      <Block
+      <div
         {...rest}
-        variant="round"
-        useHover={{
-          type: 'borderHover',
-          props: { borderColor: 'lightBlue', borderWidth: '4px' },
-        }}
-        isSelected={isCurrent ? 'basicSelected' : undefined}
-        stylesprops={[styles.tabMenu]}
+        {...stylex.props(
+          designStyles['radius']({
+            borderTopRightRadius: '12px',
+            borderBottomLeftRadius: '12px',
+            borderBottomRightRadius: '12px',
+            borderTopLeftRadius: '12px',
+          }),
+          designStyles['border']({
+            borderColor: 'transparent',
+            hoverColor: 'lightBlue',
+            borderWidth: '2px',
+          }),
+          designStyles['size']({ width: '100%', height: '4rem' }),
+          designStyles['bgColor']({
+            color: isCurrent ? 'lightBlue' : 'whiteGray',
+          }),
+          designStyles['color']({
+            color: isCurrent ? 'baseWhite' : 'darkGray',
+          }),
+          designStyles['padding']({
+            paddingTop: '0px',
+            paddingRight: '16px',
+            paddingBottom: '0px',
+            paddingLeft: '16px',
+          }),
+          designStyles['flex']({
+            alignItems: 'center',
+            justifyContent: 'start',
+            gap: '1rem',
+          }),
+        )}
       >
         <Icons src={iconname} />
-        <span {...stylex.props(styles.title)}>{title}</span>
-      </Block>
+        <span
+          {...stylex.props(
+            designStyles['font']({ fontSize: 'small', fontWeight: 'bold' }),
+            designStyles['color']({
+              color: 'default',
+            }),
+          )}
+        >
+          {title}
+        </span>
+      </div>
     </Link>
   );
 };
@@ -71,24 +147,74 @@ const TabMenu = (props: TabMenuProps) => {
 const Accordion = (props: AccordionProps) => {
   const { isCurrent, iconname, title, children, ...rest } = props;
   return (
-    <Block
+    <div
       {...rest}
-      variant="round"
-      useHover={{ type: 'shadowHover' }}
-      useAccordion={{
-        defaultHeight: '4rem',
-        height: 'fit-content',
-      }}
-      stylesprops={isCurrent && styles.accordion}
+      {...stylex.props(
+        styles.accodion,
+        isCurrent && designStyles['size']({ height: 'fit-content' }),
+        designStyles['radius']({
+          borderTopRightRadius: '12px',
+          borderBottomLeftRadius: '12px',
+          borderBottomRightRadius: '12px',
+          borderTopLeftRadius: '12px',
+        }),
+        designStyles['shadow']({ hoverShadow: 'basic' }),
+      )}
     >
-      <Block variant="round" stylesprops={styles.tabMenu}>
+      <div
+        {...stylex.props(
+          designStyles['radius']({
+            borderTopRightRadius: '12px',
+            borderBottomLeftRadius: '12px',
+            borderBottomRightRadius: '12px',
+            borderTopLeftRadius: '12px',
+          }),
+          designStyles['border']({
+            borderColor: 'transparent',
+            hoverColor: 'lightBlue',
+            borderWidth: '2px',
+          }),
+          designStyles['size']({ width: '100%', height: '4rem' }),
+          designStyles['padding']({
+            paddingTop: '0px',
+            paddingRight: '16px',
+            paddingBottom: '0px',
+            paddingLeft: '16px',
+          }),
+          designStyles['flex']({
+            alignItems: 'center',
+            justifyContent: 'start',
+            gap: '1rem',
+          }),
+          designStyles['color']({ color: 'darkGray' }),
+        )}
+      >
         <Icons src={iconname} />
-        <h2 {...stylex.props(styles.title)}>{title}</h2>
-      </Block>
-      <Block variant="round" stylesprops={styles.accodionList}>
+        <h2
+          {...stylex.props(
+            designStyles['font']({ fontSize: 'small', fontWeight: 'bold' }),
+            designStyles['color']({ color: 'default' }),
+          )}
+        >
+          {title}
+        </h2>
+      </div>
+      <Block
+        theme="variant"
+        flex={{
+          flexDirection: 'column',
+          gap: '8px',
+        }}
+        margin={{
+          marginTop: '0px',
+          marginRight: '16px',
+          marginBottom: '16px',
+          marginLeft: '32px',
+        }}
+      >
         {children}
       </Block>
-    </Block>
+    </div>
   );
 };
 
@@ -102,70 +228,19 @@ export const SidebarMenu = {
   Footer,
 };
 
-const sidebarWidth = '320px';
-const menuHeigth = '4rem';
-
 const styles = stylex.create({
   container: {
-    width: sidebarWidth,
-    maxWidth: sidebarWidth,
-    minWidth: sidebarWidth,
-    height: '100vh',
-    backgroundColor: palette.whiteGray,
-    display: 'flex',
-    flexDirection: 'column',
+    maxWidth: '320px',
+    minWidth: '320px',
     borderRightColor: palette.whiteSoftGray,
     borderRightStyle: 'solid',
     borderRightWidth: spacing.xxsmall,
-    padding: '0 2rem',
-    color: palette.darkGray,
   },
-  logo: {
-    height: '10rem',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: palette.lightBlue,
-  },
-  title: {
-    fontSize: '1rem',
-    color: 'inherit',
-    fontWeight: 600,
-  },
-  menuContainer: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.5rem',
-  },
-  bottomContainer: {
-    width: '100%',
-    marginTop: 'auto',
-  },
-  footer: {
-    height: '7rem',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  tabMenu: {
-    width: '100%',
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyItems: 'center',
-    gap: '1rem',
-    height: menuHeigth,
-    padding: '0 1rem',
-  },
-  accodionList: {
-    display: 'flex',
-    flexDirection: 'column',
-    margin: '0 1rem 1rem 2rem',
-    gap: '0.5rem',
-  },
-  accordion: {
-    height: 'fit-content',
-    boxShadow:
-      'rgba(42, 131, 255, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
+  accodion: {
+    height: {
+      default: '4rem',
+      ':hover': 'fit-content',
+    },
+    overflow: 'hidden',
   },
 });

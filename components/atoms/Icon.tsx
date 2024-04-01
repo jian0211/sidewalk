@@ -34,16 +34,31 @@ export const Icons = (props: IconsProps) => {
       {...stylex.props(
         styles['icon'],
         useBorder && styles['useBorder'],
-        useOutline && designStyles['padding']('8px'),
         useOutline &&
-          designStyles['border']({ color: 'softGray', width: '2px' }),
+          designStyles['padding']({
+            paddingBottom: '8px',
+            paddingLeft: '8px',
+            paddingRight: '8px',
+            paddingTop: '8px',
+          }),
+        useOutline &&
+          designStyles['border']({
+            borderColor: 'softGray',
+            borderWidth: '2px',
+            hoverColor: 'lightBlue',
+          }),
         useOutline &&
           designStyles['flex']({
             alignItems: 'center',
             justifyContent: 'center',
           }),
-        designStyles['radius']('8px'),
-        useCursor && styles['cursor'],
+        designStyles['radius']({
+          borderBottomLeftRadius: '8px',
+          borderBottomRightRadius: '8px',
+          borderTopLeftRadius: '8px',
+          borderTopRightRadius: '8px',
+        }),
+        useCursor && designStyles['cursor'],
         style,
       )}
     >
@@ -68,8 +83,5 @@ const styles = stylex.create({
     borderStyle: 'solid',
     borderWidth: spacing.xxsmall,
     borderRadius: spacing.xxsmall,
-  },
-  cursor: {
-    cursor: 'pointer',
   },
 });

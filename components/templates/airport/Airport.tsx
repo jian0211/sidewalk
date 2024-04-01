@@ -53,29 +53,56 @@ export const AirportList = ({ airportsList, country }: AirportListProps) => {
   return (
     <Table.Container style={styles.listContainer}>
       <Table.Header>
-        <Table.Column size={{ width: '50px' }}>No</Table.Column>
-        <Table.Column size={{ width: '200px' }}>{t('title')}</Table.Column>
-        <Table.Column size={{ width: '200px' }}>
+        <Table.Column
+          size={{ width: '50px' }}
+          flex={{ justifyContent: 'center' }}
+        >
+          No
+        </Table.Column>
+        <Table.Column
+          size={{ width: '200px' }}
+          flex={{ justifyContent: 'center' }}
+        >
+          {t('title')}
+        </Table.Column>
+        <Table.Column
+          size={{ width: '200px' }}
+          flex={{ justifyContent: 'center' }}
+        >
           {t('identifyingCharacter')}
         </Table.Column>
         <Table.Column
-          hasFlex={{
-            flex: 'auto',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
+          size={{ width: '100%' }}
+          flex={{ flex: 'auto', justifyContent: 'center' }}
         >
           {t('address')}
         </Table.Column>
-        <Table.Column size={{ width: '100px' }}>{t('weather')}</Table.Column>
-        <Table.Column size={{ width: '100px' }}>{t('link')}</Table.Column>
+        <Table.Column
+          size={{ width: '100px' }}
+          flex={{ justifyContent: 'center' }}
+        >
+          {t('weather')}
+        </Table.Column>
+        <Table.Column
+          size={{ width: '100px' }}
+          flex={{ justifyContent: 'center' }}
+        >
+          {t('link')}
+        </Table.Column>
       </Table.Header>
       <Table.Body useScroll>
         {airportsList.map((airport, i) => (
           <Table.Row key={i}>
-            <Table.Column size={{ width: '50px' }}>{i + 1}</Table.Column>
-            <Table.Column size={{ width: '200px' }}>
+            <Table.Column
+              size={{ width: '50px' }}
+              flex={{ justifyContent: 'center' }}
+            >
+              {i + 1}
+            </Table.Column>
+            <Table.Column
+              size={{ width: '200px' }}
+              flex={{ justifyContent: 'center' }}
+            >
               <AirportsDetailLink
                 href={(airport.iata || airport.icao).toLowerCase()}
               >
@@ -83,25 +110,30 @@ export const AirportList = ({ airportsList, country }: AirportListProps) => {
                 <div>{airport.titleKo}</div>
               </AirportsDetailLink>
             </Table.Column>
-            <Table.Column size={{ width: '200px' }}>
+            <Table.Column
+              size={{ width: '200px' }}
+              flex={{ justifyContent: 'center' }}
+            >
               {airport.iata || airport.icao}
             </Table.Column>
             <Table.Column
-              hasFlex={{
-                flex: 'auto',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                gap: '8px',
-              }}
+              size={{ width: '100%' }}
+              flex={{ flex: 'auto', justifyContent: 'start' }}
             >
               {airport.address}
             </Table.Column>
-            <Table.Column size={{ width: '100px' }}>
+            <Table.Column
+              size={{ width: '100px' }}
+              flex={{ justifyContent: 'center' }}
+            >
               <Suspense fallback={<EllipsisLoading />}>
                 <WeatherIcon lat={airport.latitude} lon={airport.longitude} />
               </Suspense>
             </Table.Column>
-            <Table.Column size={{ width: '100px' }}>
+            <Table.Column
+              size={{ width: '100px' }}
+              flex={{ justifyContent: 'center' }}
+            >
               <Link
                 href={airport.link}
                 target="_blank"
@@ -124,7 +156,7 @@ export const AirportsContainer: React.FC<AirportsContainerProps> = (props) => {
       {...stylex.props(
         designStyles['size']({ width: '100%' }),
         designStyles['flex']({ flexDirection: 'column' }),
-        designStyles['customPadding']({
+        designStyles['padding']({
           paddingLeft: '32px',
           paddingRight: '32px',
         }),
@@ -142,7 +174,7 @@ export const TitleWithAirportsInfo = (props: TitleWithAirportsInfoProps) => {
       {...rest}
       {...stylex.props(
         designStyles['flex']({ alignItems: 'center', gap: '1rem' }),
-        designStyles['customPadding']({
+        designStyles['padding']({
           paddingBottom: '16px',
           paddingTop: '16px',
         }),
@@ -150,55 +182,83 @@ export const TitleWithAirportsInfo = (props: TitleWithAirportsInfoProps) => {
     >
       <div
         {...stylex.props(
+          designStyles['size']({ width: 'fit-content' }),
           designStyles['flex']({
             gap: '4px',
             alignItems: 'center',
             justifyContent: 'center',
           }),
-          designStyles['padding']('4px'),
+          designStyles['padding']({
+            paddingBottom: '4px',
+            paddingLeft: '4px',
+            paddingRight: '4px',
+            paddingTop: '4px',
+          }),
           designStyles['bgColor']({ color: 'whiteSoftGray' }),
-          designStyles['radius']('12px'),
+          designStyles['radius']({
+            borderBottomLeftRadius: '12px',
+            borderBottomRightRadius: '12px',
+            borderTopLeftRadius: '12px',
+            borderTopRightRadius: '12px',
+          }),
         )}
       >
-        <Link href={getUrl('jp')}>
-          <Button
-            size={{ width: '5rem', height: '3rem' }}
-            hasRadius="8px"
-            bgColor={{ color: 'whiteSoftGray' }}
-            font={{
-              color: 'softGray',
-              fontWeight: 600,
-              fontSize: '1rem',
-            }}
-            useCustomSelected={{
-              color: props.country === 'jp' ? 'darkGray' : 'softGray',
-              bgColor: props.country === 'jp' ? 'baseWhite' : 'whiteSoftGray',
-            }}
-          >
-            {t('japan')}
-          </Button>
-        </Link>
-        <Link href={getUrl('ko')}>
-          <Button
-            size={{ width: '5rem', height: '3rem' }}
-            hasRadius="8px"
-            bgColor={{ color: 'whiteSoftGray' }}
-            font={{
-              color: 'softGray',
-              fontWeight: 600,
-              fontSize: '1rem',
-            }}
-            useCustomSelected={{
-              color: props.country === 'ko' ? 'darkGray' : 'softGray',
-              bgColor: props.country === 'ko' ? 'baseWhite' : 'whiteSoftGray',
-            }}
-          >
-            {t('korea')}
-          </Button>
-        </Link>
+        <Button
+          size={{ width: '5rem', height: '3rem' }}
+          // color={{ color: 'softGray' }}
+          padding={{
+            paddingBottom: '8px',
+            paddingLeft: '8px',
+            paddingRight: '8px',
+            paddingTop: '8px',
+          }}
+          radius={{
+            borderBottomLeftRadius: '8px',
+            borderBottomRightRadius: '8px',
+            borderTopLeftRadius: '8px',
+            borderTopRightRadius: '8px',
+          }}
+          bgColor={{ color: 'whiteSoftGray' }}
+          font={{
+            fontSize: 'small',
+            fontWeight: 'bold',
+          }}
+          useCustomSelected={{
+            color: props.country === 'jp' ? 'darkGray' : 'softGray',
+            bgColor: props.country === 'jp' ? 'baseWhite' : 'whiteSoftGray',
+          }}
+        >
+          <Link href={getUrl('jp')}>{t('japan')}</Link>
+        </Button>
+        <Button
+          size={{ width: '5rem', height: '3rem' }}
+          // color={{ color: 'softGray' }}
+          radius={{
+            borderBottomLeftRadius: '8px',
+            borderBottomRightRadius: '8px',
+            borderTopLeftRadius: '8px',
+            borderTopRightRadius: '8px',
+          }}
+          padding={{
+            paddingBottom: '8px',
+            paddingLeft: '8px',
+            paddingRight: '8px',
+            paddingTop: '8px',
+          }}
+          bgColor={{ color: 'whiteSoftGray' }}
+          font={{
+            fontSize: 'small',
+            fontWeight: 'bold',
+          }}
+          useCustomSelected={{
+            color: props.country === 'ko' ? 'darkGray' : 'softGray',
+            bgColor: props.country === 'ko' ? 'baseWhite' : 'whiteSoftGray',
+          }}
+        >
+          <Link href={getUrl('ko')}>{t('korea')}</Link>
+        </Button>
       </div>
 
-      {/* <h2>{t('info')}</h2> */}
       <span>
         {t('count')}:{airportsCount}
       </span>
@@ -230,5 +290,11 @@ const styles = stylex.create({
     justifyContent: 'center',
     textDecoration: 'none',
     color: 'black',
+  },
+  testsitl: {
+    backgroundColor: {
+      default: 'blue',
+    },
+    fontSize: '2rem',
   },
 });

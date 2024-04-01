@@ -2,6 +2,7 @@ import { ComponentPropsWithoutRef } from 'react';
 import * as stylex from '@stylexjs/stylex';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 import { DesignProps, designStyles } from '@/components/styles';
+import { palette } from '../../../styles/globalTokens.stylex';
 
 type TableProps = ComponentPropsWithoutRef<'ul'> & {
   style?: StyleXArray<any>;
@@ -12,20 +13,30 @@ type BodyProps = ComponentPropsWithoutRef<'div'> & {
   useScroll?: boolean;
 };
 type ColumnProps = ComponentPropsWithoutRef<'div'> &
-  Pick<DesignProps, 'hasFlex' | 'size'>;
+  Pick<DesignProps, 'flex' | 'size'>;
 
 const Container = ({ style, ...props }: TableProps) => (
   <ul
     {...props}
     {...stylex.props(
       designStyles['size']({ width: '100%' }),
-      designStyles['radius']('16px'),
+      designStyles['radius']({
+        borderBottomLeftRadius: '16px',
+        borderBottomRightRadius: '16px',
+        borderTopLeftRadius: '16px',
+        borderTopRightRadius: '16px',
+      }),
       designStyles['bgColor']({ color: 'baseWhite' }),
       designStyles['flex']({
         flexDirection: 'column',
+        justifyContent: 'start',
         gap: '8px',
       }),
-      designStyles['border']({ color: 'softGray', width: '2px' }),
+      designStyles['border']({
+        borderColor: 'softGray',
+        borderWidth: '2px',
+        hoverColor: 'softGray',
+      }),
       style,
     )}
   />
@@ -34,24 +45,27 @@ const Header = (props: HeaderProps) => (
   <li
     {...props}
     {...stylex.props(
+      styles.borderBottom,
       designStyles['size']({
         width: '100%',
         height: '4rem',
       }),
-      designStyles['padding']('1rem'),
-      designStyles['customRadius']({
+      designStyles['padding']({
+        paddingBottom: '16px',
+        paddingLeft: '16px',
+        paddingRight: '16px',
+        paddingTop: '16px',
+      }),
+      designStyles['radius']({
         borderTopLeftRadius: '16px',
         borderTopRightRadius: '16px',
       }),
       designStyles['font']({
-        fontSize: '1rem',
-        fontWeight: 600,
+        fontSize: 'small',
+        fontWeight: 'bold',
       }),
-      designStyles['flex']({ alignItems: 'center', justifyContent: 'center' }),
+      designStyles['flex']({ alignItems: 'center' }),
       designStyles['bgColor']({ color: 'transparent' }),
-      designStyles['customBorder']({
-        Bottom: { color: 'softGray', width: '2px' },
-      }),
     )}
   />
 );
@@ -60,44 +74,31 @@ const Row = (props: RowProps) => (
   <li
     {...props}
     {...stylex.props(
+      styles.borderBottom,
       designStyles['font']({
-        fontSize: '0.9rem',
-        fontWeight: 500,
+        fontSize: 'xsmall',
+        fontWeight: 'medium',
       }),
-      designStyles['flex']({
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '8px',
-      }),
+      designStyles['flex']({ alignItems: 'center', gap: '8px' }),
       designStyles['bgColor']({ color: 'transparent' }),
-      designStyles['padding']('8px'),
-      designStyles['customBorder']({
-        Bottom: { color: 'softGray', width: '2px' },
+      designStyles['padding']({
+        paddingBottom: '8px',
+        paddingLeft: '8px',
+        paddingRight: '8px',
+        paddingTop: '8px',
       }),
     )}
   />
 );
 
 const Column = (props: ColumnProps) => {
-  const { hasFlex, size, ...rest } = props;
+  const { flex, size, ...rest } = props;
   return (
     <div
       {...rest}
       {...stylex.props(
-        designStyles['flex']({
-          alignItems: 'center',
-          justifyContent: 'center',
-        }),
-        hasFlex &&
-          designStyles['flex']({
-            flex: hasFlex.flex,
-            flexDirection: hasFlex.flexDirection,
-            justifyContent: hasFlex.justifyContent,
-            alignItems: hasFlex.alignItems,
-            gap: hasFlex.gap,
-          }),
-        size &&
-          designStyles['size']({ width: size.width, height: size.height }),
+        size && designStyles['size'](size),
+        flex && designStyles['flex'](flex),
       )}
     />
   );
@@ -127,5 +128,10 @@ const styles = stylex.create({
   useScroll: {
     overflowY: 'scroll',
     overflowX: 'hidden',
+  },
+  borderBottom: {
+    borderBottomColor: palette['softGray'],
+    borderBottomStyle: 'solid',
+    borderBottomWidth: '2px',
   },
 });

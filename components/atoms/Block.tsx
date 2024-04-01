@@ -1,37 +1,49 @@
-import { RemLevelOpton } from '../../styles/globalTokens.stylex';
+import {
+  RemLevelOpton,
+  SizeOption,
+  spacing,
+} from '../../styles/globalTokens.stylex';
 import * as stylex from '@stylexjs/stylex';
 import { ComponentProps } from 'react';
 import {
-  StateBasedProps,
+  DesignProps,
   StatusProps,
   designStyles,
   frameThemes,
-  stateBasedstyles,
   statusStyles,
 } from '../styles';
 import { Prettier } from '@/types/common';
+import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 
 type BlockCssProps = Prettier<
-  Pick<StateBasedProps, 'useHover'> & Pick<StatusProps, 'isSelected'>
+  Pick<StatusProps, 'isSelected'> &
+    Pick<
+      DesignProps,
+      'border' | 'color' | 'shadow' | 'flex' | 'margin' | 'size' | 'padding'
+    >
 >;
+
 type CustomBoxProps = {
-  variant?: 'round' | 'square';
   useAccordion?: {
     defaultHeight: RemLevelOpton;
     height: 'fit-content' | RemLevelOpton;
   };
-  stylesprops?: stylex.StyleXStyles;
-  theme?: 'borderTheme';
+  style?: StyleXArray<any>;
+  theme?: 'variant';
 } & BlockCssProps &
   ComponentProps<'div'>;
 
 export const Block = (props: CustomBoxProps) => {
   const {
-    variant,
-    useHover,
+    border,
+    color,
+    shadow,
+    size,
+    margin,
     isSelected,
     useAccordion,
-    stylesprops,
+    padding,
+    style,
     theme,
     ...rest
   } = props;
@@ -40,12 +52,16 @@ export const Block = (props: CustomBoxProps) => {
       {...rest}
       {...stylex.props(
         styles.default,
-        variant === 'round' && designStyles.radius('12px'),
-        useHover && stateBasedstyles[useHover.type](useHover.props),
+        theme === 'variant' && frameThemes.roundEdged,
+        color && designStyles['color'](color),
+        size && designStyles['size'](size),
+        border && designStyles['border'](border),
+        shadow && designStyles['shadow'](shadow),
+        margin && designStyles['margin'](margin),
+        padding && designStyles['padding'](padding),
         isSelected && statusStyles['basicSelected'],
         useAccordion && styles.accodion(useAccordion),
-        theme === 'borderTheme' && frameThemes.roundEdged,
-        stylesprops,
+        style,
       )}
     />
   );
@@ -62,5 +78,8 @@ const styles = stylex.create({
       ':hover': data?.height,
     },
     overflow: 'hidden',
+  }),
+  roundLevel: (props: SizeOption) => ({
+    borderRadius: spacing[props],
   }),
 });

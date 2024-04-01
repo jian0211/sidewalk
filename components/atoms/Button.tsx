@@ -2,30 +2,28 @@ import * as stylex from '@stylexjs/stylex';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 import React from 'react';
 import { Icons, IconsProps } from '@/components/atoms/Icon';
-import { Padding } from '../../styles/globalTokens.stylex';
 import {
   DesignProps,
-  StateBasedProps,
   StatusProps,
   designStyles,
   statusStyles,
 } from '../styles';
 import { Prettier } from '@/types/common';
+import { PixelLevelOption } from '../../styles/globalTokens.stylex';
 
 type ButtonCssProps = Prettier<
   Pick<
     DesignProps,
-    | 'hasBorder'
-    | 'hasFlex'
-    | 'hasRadius'
-    | 'paddingLevel'
+    | 'border'
+    | 'flex'
+    | 'radius'
+    | 'padding'
     | 'size'
     | 'bgColor'
     | 'color'
     | 'font'
   > &
-    Pick<StatusProps, 'isSelected'> &
-    Pick<StateBasedProps, 'useCustomSelected'>
+    Pick<StatusProps, 'isSelected'>
 >;
 
 export type ButtonProps = {
@@ -38,27 +36,19 @@ export type IconButtonProps = ButtonProps & {
   iconProps: IconsProps;
 };
 
-const DEFAULT_PADDING: Padding = {
-  paddingBottom: '0px',
-  paddingLeft: '0px',
-  paddingRight: '0px',
-  paddingTop: '0px',
-};
-
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
     const {
       type = 'button',
       size,
-      hasFlex,
-      hasBorder,
-      hasRadius,
-      paddingLevel = DEFAULT_PADDING,
+      flex,
+      border,
+      radius,
+      padding,
       isSelected,
       color,
       bgColor,
       font,
-      useCustomSelected,
       style,
       ...rest
     } = props;
@@ -70,23 +60,22 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...stylex.props(
           styles.button,
-          designStyles.customBox(paddingLevel, size),
-          hasFlex && designStyles['flex'](hasFlex),
-          hasBorder && designStyles['border'](hasBorder),
-          hasRadius && designStyles['radius'](hasRadius),
+          designStyles['size']({
+            width: size?.width ?? 'fit-content',
+            height: size?.height ?? 'fit-content',
+          }),
+          padding && designStyles['padding'](padding),
+          flex && designStyles['flex'](flex),
+          border && designStyles['border'](border),
+          radius && designStyles['radius'](radius),
+          color && designStyles['color'](color),
           font &&
             designStyles['font']({
-              color: font.color,
               fontSize: font.fontSize,
               fontWeight: font.fontWeight,
               textDecoration: font.textDecoration,
             }),
           isSelected && statusStyles['basicSelected'],
-          useCustomSelected &&
-            statusStyles['customSelected']({
-              color: useCustomSelected.color,
-              bgColor: useCustomSelected.bgColor,
-            }),
           style,
         )}
       />
@@ -102,6 +91,23 @@ export const IconButton = (props: IconButtonProps) => {
       <Icons src={iconProps['src']} width={iconProps['width']} />
       {children}
     </Button>
+  );
+};
+
+type RoundButtonProps = ButtonProps & {
+  roundLevel?: PixelLevelOption;
+};
+export const RoundButton = ({ roundLevel, ...props }: RoundButtonProps) => {
+  return (
+    <Button
+      radius={{
+        borderBottomLeftRadius: roundLevel ?? '4px',
+        borderBottomRightRadius: roundLevel ?? '4px',
+        borderTopLeftRadius: roundLevel ?? '4px',
+        borderTopRightRadius: roundLevel ?? '4px',
+      }}
+      {...props}
+    />
   );
 };
 

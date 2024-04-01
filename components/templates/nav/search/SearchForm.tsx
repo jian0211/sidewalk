@@ -6,7 +6,6 @@ import { Flights } from '@/store/fligths';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { IconButton } from '@/components/atoms/Button';
 import { Booking } from '@/components/organisms/SearchBar/bookling/Booking';
-import { TripType } from '@/components/organisms/SearchBar/tripType/TripType';
 import {
   DatePickerContainer,
   DatePickerModal,
@@ -16,6 +15,7 @@ import { PriceRange } from '@/components/organisms/SearchBar/PriceRangeSlider/Pr
 import { useAiportsList } from '@/store/airports';
 import { useBooking } from './useBooking';
 import { useLocale } from '@/hooks/useLocale';
+import { TripType } from '@/components/organisms/SearchBar/tripType/TripType';
 
 type SearchFormProps = React.ComponentPropsWithoutRef<'form'>;
 

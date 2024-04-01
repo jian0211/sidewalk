@@ -3,16 +3,40 @@ import * as stylex from '@stylexjs/stylex';
 /**
  * default Style Options
  */
-type SizeOption =
-  | 'none'
-  | 'xxsmall'
-  | 'xsmall'
-  | 'small'
-  | 'medium'
-  | 'large'
-  | 'xlarge'
-  | 'vw';
+
 export type DirectionOption = 'Left' | 'Right' | 'Top' | 'Bottom';
+
+export type RemLevelOpton = `${0 | 1 | 2 | 3 | 4 | 5 | 6}rem`;
+
+export type PaddingProps = Partial<{
+  [k in `padding${DirectionOption}`]: PixelLevelOption;
+}>;
+export type MarginProps = Partial<{
+  [k in `margin${DirectionOption}`]: PixelLevelOption;
+}>;
+
+const paletteProperties = {
+  baseWhite: '#FFFFFF',
+  whiteGray: '#FAFBFB',
+  whiteSoftGray: '#F4F4F4',
+  softGray: '#E3E3E5',
+  deepSky: '#86829D',
+  darkGray: '#3C4963',
+  darkBlue: '#OE1E3E',
+  brightOrange: '#FE784A',
+  purple: '#7439E8',
+  brightGreen: '#23C55E',
+  vividRed: '#E62437',
+  mutedOlive: '#OEAD71',
+  lightBlue: '#2A83FF',
+  skyBlue: '#4ebffc',
+  transparent: 'transparent',
+  default: 'currentcolor',
+  inherit: 'inherit',
+} as const;
+
+export type PaletteKeys = keyof typeof paletteProperties;
+export const palette = stylex.defineVars(paletteProperties);
 
 export type PixelLevelOption =
   | `${
@@ -36,34 +60,23 @@ export type PixelLevelOption =
       | 100
       | 150
       | 200}px`
-  | '1vw';
-export type RemLevelOpton = `${0 | 1 | 2 | 3 | 4 | 5 | 6}rem`;
+  | '1vw'
+  | 'auto'
+  | 'fit-content';
+export type SizeOption =
+  | 'none'
+  | 'xxsmall'
+  | 'xsmall'
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'xlarge'
+  | 'xxlarge'
+  | 'auto'
+  | 'fitContent'
+  | 'vw';
 
-type Spacing = Record<SizeOption, PixelLevelOption>;
-export type Padding = Partial<{
-  [k in `padding${DirectionOption}`]: PixelLevelOption;
-}>;
-export type PaletteKeys = keyof typeof palette;
-
-export const palette = stylex.defineVars({
-  baseWhite: '#FFFFFF',
-  whiteGray: '#FAFBFB',
-  whiteSoftGray: '#F4F4F4',
-  softGray: '#E3E3E5',
-  deepSky: '#86829D',
-  darkGray: '#3C4963',
-  darkBlue: '#OE1E3E',
-  brightOrange: '#FE784A',
-  purple: '#7439E8',
-  brightGreen: '#23C55E',
-  vividRed: '#E62437',
-  mutedOlive: '#OEAD71',
-  lightBlue: '#2A83FF',
-  skyBlue: '#4ebffc',
-  transparent: 'transparent',
-});
-
-export const spacing = stylex.defineVars<Spacing>({
+export const spacing = stylex.defineVars<Record<SizeOption, PixelLevelOption>>({
   none: '0px',
   xxsmall: '2px',
   xsmall: '4px',
@@ -71,21 +84,39 @@ export const spacing = stylex.defineVars<Spacing>({
   medium: '12px',
   large: '20px',
   xlarge: '32px',
+  xxlarge: '50px',
   vw: '1vw',
+  auto: 'auto',
+  fitContent: 'fit-content',
 });
 
+const fontProperties = {
+  size: {
+    xxsmall: '0.75rem',
+    xsmall: '0.875rem',
+    small: '1rem',
+    medium: '1.25rem',
+    large: '1.5rem',
+    xlarge: '1.8rem',
+    xxlarge: '3rem',
+  },
+  weight: {
+    light: '300',
+    normal: '400',
+    medium: '500',
+    bold: '600',
+  },
+} as const;
+
+export const fontSizing = stylex.defineVars(fontProperties.size);
+
+export const fontWeight = stylex.defineVars(fontProperties.weight);
+
 export const shadowing = stylex.defineVars({
+  none: 'none',
   basic:
     'rgba(42, 131, 255, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
 });
 
-export const buttonThemeVars = stylex.defineVars<Spacing>({
-  none: '0px',
-  xxsmall: '2px',
-  xsmall: '4px',
-  small: '8px',
-  medium: '12px',
-  large: '20px',
-  xlarge: '32px',
-  vw: '1vw',
-});
+type NumberTable = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+type Gaps = `${0 | 1 | 2 | 3}.${NumberTable}${'px' | 'rem'}`;

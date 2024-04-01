@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from '@/components/atoms/Button';
+import { Button, ButtonProps, RoundButton } from '@/components/atoms/Button';
 import Images from '@/public/images/index';
 import * as stylex from '@stylexjs/stylex';
 import Image from 'next/image';
@@ -14,9 +14,11 @@ const CategoryContainer = (props: CategoryContainerProps) => {
 
 const CategoryButton = (props: ButtonProps) => {
   return (
-    <Button
+    <RoundButton
       {...props}
-      paddingLevel={{ paddingLeft: '20px', paddingRight: '20px' }}
+      size={{ width: 'fit-content', height: '3rem' }}
+      padding={{ paddingLeft: '20px', paddingRight: '20px' }}
+      roundLevel="12px"
     />
   );
 };
@@ -64,7 +66,7 @@ const styles = stylex.create({
     height: 'fit-content',
     gap: '1rem',
     alignItems: 'center',
-    padding: '0 2rem',
+    padding: '1rem 2rem',
     marginBottom: '1rem',
   },
   body: {

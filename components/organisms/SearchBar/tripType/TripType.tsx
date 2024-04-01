@@ -13,11 +13,16 @@ const Container = (props: ContainerProps) => {
       {...props}
       {...stylex.props(
         designStyles['flex'](),
-        designStyles.border({
-          color: 'whiteSoftGray',
-          width: '2px',
+        designStyles['border']({
+          borderColor: 'whiteSoftGray',
+          borderWidth: '2px',
         }),
-        designStyles.radius('12px'),
+        designStyles['radius']({
+          borderBottomLeftRadius: '12px',
+          borderBottomRightRadius: '12px',
+          borderTopLeftRadius: '12px',
+          borderTopRightRadius: '12px',
+        }),
       )}
     />
   );
@@ -28,14 +33,20 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
     return (
       <label
         {...stylex.props(
-          styles.lable,
           designStyles['flex']({
             alignItems: 'center',
             justifyContent: 'center',
           }),
           designStyles['size']({ width: '4rem', height: '3rem' }),
-          designStyles['color']('darkGray'),
-          designStyles['radius']('inherit'),
+          designStyles['cursor'],
+          designStyles['font']({ fontWeight: 'bold' }),
+          designStyles['color']({ color: 'darkGray' }),
+          designStyles['radius']({
+            borderBottomLeftRadius: '12px',
+            borderBottomRightRadius: '12px',
+            borderTopLeftRadius: '12px',
+            borderTopRightRadius: '12px',
+          }),
           props.checked && statusStyles['basicSelected'],
         )}
         htmlFor={value}
@@ -57,10 +68,3 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
 RadioButton.displayName = 'radioButton';
 
 export const TripType = { Container, RadioButton };
-
-const styles = stylex.create({
-  lable: {
-    cursor: 'pointer',
-    fontWeight: 600,
-  },
-});

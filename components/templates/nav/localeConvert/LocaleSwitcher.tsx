@@ -23,13 +23,28 @@ export const LocaleSwitcher = () => {
     <div
       ref={ref}
       {...stylex.props(
-        designStyles['padding']('8px'),
-        designStyles['border']({ color: 'softGray', width: '2px' }),
+        designStyles['position']('relative'),
         designStyles['flex']({
           alignItems: 'center',
           justifyContent: 'center',
         }),
-        designStyles['radius']('8px'),
+        designStyles['padding']({
+          paddingBottom: '8px',
+          paddingLeft: '8px',
+          paddingRight: '8px',
+          paddingTop: '8px',
+        }),
+        designStyles['border']({
+          borderWidth: '2px',
+          borderColor: 'softGray',
+          hoverColor: 'lightBlue',
+        }),
+        designStyles['radius']({
+          borderBottomLeftRadius: '8px',
+          borderBottomRightRadius: '8px',
+          borderTopLeftRadius: '8px',
+          borderTopRightRadius: '8px',
+        }),
       )}
     >
       <IconButton
@@ -37,7 +52,12 @@ export const LocaleSwitcher = () => {
         onClick={() => setToggle((prev) => !prev)}
       />
       {toggle && (
-        <div {...stylex.props(styles.localeSwitcher)}>
+        <div
+          {...stylex.props(
+            styles.localeSwitcher,
+            designStyles['size']({ width: '150px' }),
+          )}
+        >
           <ToggleButton
             isSelected={locale === 'ko'}
             onClick={() => handleChangeLocale('ko')}
@@ -61,17 +81,22 @@ export const LocaleSwitcher = () => {
 const ToggleButton = ({ iconProps: { src }, ...props }: IconButtonProps) => (
   <IconButton
     {...props}
-    hasFlex={{
+    flex={{
       alignItems: 'center',
       gap: '8px',
     }}
-    hasBorder={{
-      width: '2px',
-      color: 'softGray',
+    border={{
+      borderWidth: '2px',
+      borderColor: 'softGray',
       hoverColor: 'lightBlue',
     }}
-    hasRadius="8px"
-    paddingLevel={{
+    radius={{
+      borderBottomLeftRadius: '8px',
+      borderBottomRightRadius: '8px',
+      borderTopLeftRadius: '8px',
+      borderTopRightRadius: '8px',
+    }}
+    padding={{
       paddingBottom: '8px',
       paddingLeft: '8px',
       paddingRight: '8px',
@@ -88,7 +113,7 @@ const ToggleButton = ({ iconProps: { src }, ...props }: IconButtonProps) => (
 const styles = stylex.create({
   localeSwitcher: {
     position: 'absolute',
-    marginTop: spacing.medium,
+    top: '4rem',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

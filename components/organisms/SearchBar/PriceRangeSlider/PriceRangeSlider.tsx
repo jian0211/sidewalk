@@ -24,8 +24,15 @@ const Container = (props: ContainerProps) => {
       {...props}
       {...stylex.props(
         designStyles['size']({ width: '23rem' }),
-        designStyles['padding']('20px'),
-        designStyles['bgColor']('baseWhite'),
+        designStyles['padding']({
+          paddingBottom: '20px',
+          paddingLeft: '20px',
+          paddingRight: '20px',
+          paddingTop: '20px',
+        }),
+        designStyles['bgColor']({
+          color: 'baseWhite',
+        }),
         designStyles['flex']({
           flexDirection: 'column',
           gap: '8px',
@@ -45,7 +52,7 @@ const Content = (props: ContentProps) => {
           justifyContent: 'space-between',
           gap: '1rem',
         }),
-        designStyles['customPadding']({
+        designStyles['padding']({
           paddingBottom: '4px',
         }),
       )}
@@ -78,8 +85,8 @@ const LabelBox = ({ rangeType, children, ...props }: LabelBoxProps) => {
       <label
         {...stylex.props(
           designStyles['font']({
-            fontSize: '0.9rem',
-            fontWeight: 500,
+            fontSize: 'xsmall',
+            fontWeight: 'medium',
           }),
         )}
       >
@@ -117,7 +124,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   return (
     <input
       {...props}
-      {...stylex.props(designStyles['color']('lightBlue'))}
+      {...stylex.props(
+        designStyles['color']({
+          color: 'lightBlue',
+        }),
+      )}
       ref={ref}
       type="range"
       step={stepOfLocale[locale]}
@@ -144,7 +155,6 @@ const styles = stylex.create({
     textAlign: 'center',
     color: palette.darkGray,
   },
-
   rangeFill: (left, right) => ({
     left,
     right,

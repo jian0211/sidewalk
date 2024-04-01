@@ -27,7 +27,7 @@ export const Nav = (props: NavProps) => {
         designStyles['size']({ width: '100%', height: '6rem' }),
         designStyles['flex']({ alignItems: 'center', gap: '1rem' }),
         designStyles['position']('relative'),
-        designStyles['customPadding']({
+        designStyles['padding']({
           paddingTop: '0px',
           paddingBottom: '0px',
           paddingLeft: '24px',
@@ -53,15 +53,15 @@ const AirportsLayoutContainer = (props: AirportsLayoutContainerProps) => {
   const t = useTranslatedWord('nav.airports');
   return (
     <h1
+      {...props}
       {...stylex.props(
-        designStyles['flex']({ flex: '1' }),
+        designStyles['size']({ width: '100%' }),
+        designStyles['color']({ color: 'darkGray' }),
         designStyles['font']({
-          fontSize: '1.8rem',
-          fontWeight: 500,
-          color: 'darkGray',
+          fontSize: 'xlarge',
+          fontWeight: 'medium',
         }),
       )}
-      {...props}
     >
       {t('title')}
     </h1>
@@ -72,15 +72,15 @@ const AirlinesLayoutContainer = (props: AirlinesLayoutContainerProps) => {
   const t = useTranslatedWord('nav.airlines');
   return (
     <h1
+      {...props}
       {...stylex.props(
-        designStyles['flex']({ flex: '1' }),
+        designStyles['size']({ width: '100%' }),
+        designStyles['color']({ color: 'darkGray' }),
         designStyles['font']({
-          fontSize: '1.8rem',
-          fontWeight: 500,
-          color: 'darkGray',
+          fontSize: 'xlarge',
+          fontWeight: 'medium',
         }),
       )}
-      {...props}
     >
       {t('title')}
     </h1>
