@@ -17,6 +17,7 @@ import IconLogin from './login.svg';
 import IconProfile from './profile.svg';
 import IconX from './letter_x.svg';
 import IconGlobal from './global.svg';
+import IconUrlLink from './url_link.svg';
 
 export {
   IconJapanFlag,
@@ -37,4 +38,5 @@ export {
   IconProfile,
   IconX,
   IconGlobal,
+  IconUrlLink,
 };
