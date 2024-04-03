@@ -6,7 +6,7 @@ type PageProps = { params: { locale: Locales } };
 
 const AirlinesPage = async ({ params }: PageProps) => {
   const airlineList = await getAirlines();
-  return <Airline airlineList={airlineList} locale={params.locale} />;
+  return <Airline airlineList={airlineList} />;
 };
 
 export default AirlinesPage;

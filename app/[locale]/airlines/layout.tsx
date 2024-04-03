@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     airlineServiceCategory === serviceType;
 
   return (
-    <section>
+    <section style={{ padding: '0 2rem' }}>
       <Airlines.CategoryContainer>
         <Airlines.CategoryButton
           isSelected={isCurrentCategory('all')}
