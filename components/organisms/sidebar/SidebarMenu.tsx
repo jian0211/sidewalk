@@ -1,5 +1,11 @@
 import * as stylex from '@stylexjs/stylex';
-import { palette, spacing } from '../../../styles/globalTokens.stylex';
+import {
+  PaletteVars,
+  fontWeight,
+  palette,
+  shadowing,
+  spacing,
+} from '../../../styles/globalTokens.stylex';
 import { IconNames, Icons } from '@/components/atoms/Icon';
 import React from 'react';
 import Link, { LinkProps } from 'next/link';
@@ -24,118 +30,48 @@ type SidebarUsedTypes = {
 };
 
 const Container = (props: ContainerProps) => (
-  <aside
-    {...props}
-    {...stylex.props(
-      styles.container,
-      designStyles['flex']({ flexDirection: 'column' }),
-      designStyles['size']({ width: '320px', height: '100vh' }),
-      designStyles['bgColor']({ color: 'whiteGray' }),
-      designStyles['padding']({
-        paddingTop: '0px',
-        paddingBottom: '0px',
-        paddingLeft: '32px',
-        paddingRight: '32px',
-      }),
-    )}
-  />
-);
-
-const MenuContainer = (props: MenuContainerProps) => (
-  <div
-    {...props}
-    {...stylex.props(
-      designStyles['flex']({ flexDirection: 'column', gap: '8px' }),
-      designStyles['size']({ height: '100%' }),
-    )}
-  />
-);
-
-const BottomContainer = (props: BottomContainerProps) => (
-  <div
-    {...props}
-    {...stylex.props(
-      designStyles['size']({ width: '100%' }),
-      designStyles['margin']({ marginTop: 'auto' }),
-    )}
-  />
-);
-
-const Footer = (props: FooterProps) => (
-  <footer
-    {...props}
-    {...stylex.props(
-      designStyles['size']({ height: '7rem' }),
-      designStyles['flex']({ alignItems: 'center', justifyContent: 'center' }),
-    )}
-  />
+  <aside {...props} {...stylex.props(styles.container)} />
 );
 
 const Logo = (props: LogoProps) => {
   return (
-    <div
-      {...props}
-      {...stylex.props(
-        designStyles['size']({ height: '10rem' }),
-        designStyles['flex']({
-          alignItems: 'center',
-          justifyContent: 'center',
-        }),
-        designStyles['color']({ color: 'lightBlue' }),
-      )}
-    >
-      <h1>WWWWWW</h1>
+    <div {...props} {...stylex.props(styles.logo)}>
+      <h1 {...stylex.props(designStyles['color']({ color: 'lightBlue' }))}>
+        WWWWWW
+      </h1>
     </div>
   );
 };
+
+const MenuContainer = (props: MenuContainerProps) => (
+  <div {...props} {...stylex.props(styles.menuContainer)} />
+);
+
+const BottomContainer = (props: BottomContainerProps) => (
+  <div {...props} {...stylex.props(styles.bottomContainer)} />
+);
+
+const Footer = (props: FooterProps) => (
+  <footer {...props} {...stylex.props(styles.footer)} />
+);
 
 const TabMenu = (props: TabMenuProps) => {
   const { iconname, linkProps, title, children, isCurrent, ...rest } = props;
 
   return (
-    <Link href={linkProps.href}>
+    <Link href={linkProps.href} style={{ width: '100%', height: '4rem' }}>
       <div
         {...rest}
         {...stylex.props(
-          designStyles['radius']({
-            borderTopRightRadius: '12px',
-            borderBottomLeftRadius: '12px',
-            borderBottomRightRadius: '12px',
-            borderTopLeftRadius: '12px',
+          styles.tabMenu({
+            backgroundColor: isCurrent ? 'lightBlue' : 'whiteGray',
           }),
-          designStyles['border']({
-            borderColor: 'transparent',
-            hoverColor: 'lightBlue',
-            borderWidth: '2px',
-          }),
-          designStyles['size']({ width: '100%', height: '4rem' }),
-          designStyles['bgColor']({
-            color: isCurrent ? 'lightBlue' : 'whiteGray',
-          }),
-          designStyles['color']({
-            color: isCurrent ? 'baseWhite' : 'darkGray',
-          }),
-          designStyles['padding']({
-            paddingTop: '0px',
-            paddingRight: '16px',
-            paddingBottom: '0px',
-            paddingLeft: '16px',
-          }),
-          designStyles['flex']({
-            alignItems: 'center',
-            justifyContent: 'start',
-            gap: '1rem',
-          }),
+          styles.borderHover,
         )}
       >
         <Icons src={iconname} />
         <span
-          {...stylex.props(
-            designStyles['font']({ fontSize: 'small', fontWeight: 'bold' }),
-            designStyles['color']({
-              color: 'default',
-            }),
-          )}
+          {...stylex.props(styles.text(isCurrent ? 'baseWhite' : 'inherit'))}
         >
           {title}
         </span>
@@ -150,70 +86,25 @@ const Accordion = (props: AccordionProps) => {
     <div
       {...rest}
       {...stylex.props(
-        styles.accodion,
-        isCurrent && designStyles['size']({ height: 'fit-content' }),
-        designStyles['radius']({
-          borderTopRightRadius: '12px',
-          borderBottomLeftRadius: '12px',
-          borderBottomRightRadius: '12px',
-          borderTopLeftRadius: '12px',
-        }),
-        designStyles['shadow']({ hoverShadow: 'basic' }),
+        styles.accodion(isCurrent ? 'fit-content' : '4rem'),
+        styles.borderHover,
+        isCurrent && styles.shadow,
       )}
     >
-      <div
-        {...stylex.props(
-          designStyles['radius']({
-            borderTopRightRadius: '12px',
-            borderBottomLeftRadius: '12px',
-            borderBottomRightRadius: '12px',
-            borderTopLeftRadius: '12px',
-          }),
-          designStyles['border']({
-            borderColor: 'transparent',
-            hoverColor: 'lightBlue',
-            borderWidth: '2px',
-          }),
-          designStyles['size']({ width: '100%', height: '4rem' }),
-          designStyles['padding']({
-            paddingTop: '0px',
-            paddingRight: '16px',
-            paddingBottom: '0px',
-            paddingLeft: '16px',
-          }),
-          designStyles['flex']({
-            alignItems: 'center',
-            justifyContent: 'start',
-            gap: '1rem',
-          }),
-          designStyles['color']({ color: 'darkGray' }),
-        )}
-      >
+      <div {...stylex.props(styles.tabMenu({ backgroundColor: 'whiteGray' }))}>
         <Icons src={iconname} />
-        <h2
-          {...stylex.props(
-            designStyles['font']({ fontSize: 'small', fontWeight: 'bold' }),
-            designStyles['color']({ color: 'default' }),
-          )}
-        >
-          {title}
-        </h2>
+        <h2 {...stylex.props(styles.text('darkGray'))}>{title}</h2>
       </div>
-      <Block
-        theme="variant"
-        flex={{
+      <div
+        style={{
+          display: 'flex',
           flexDirection: 'column',
-          gap: '8px',
-        }}
-        margin={{
-          marginTop: '0px',
-          marginRight: '16px',
-          marginBottom: '16px',
-          marginLeft: '32px',
+          padding: '0 1rem 0 2rem',
+          gap: '0.5rem',
         }}
       >
         {children}
-      </Block>
+      </div>
     </div>
   );
 };
@@ -230,17 +121,84 @@ export const SidebarMenu = {
 
 const styles = stylex.create({
   container: {
+    width: '320px',
     maxWidth: '320px',
     minWidth: '320px',
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '0 2rem',
+    backgroundColor: palette.whiteGray,
     borderRightColor: palette.whiteSoftGray,
     borderRightStyle: 'solid',
     borderRightWidth: spacing.xxsmall,
   },
-  accodion: {
+  tabMenu: (props: { backgroundColor: PaletteVars }) => ({
+    width: '100%',
+    height: '4rem',
+    display: 'flex',
+    flex: '4',
+    alignItems: 'center',
+    gap: '1rem',
+    backgroundColor: palette[props.backgroundColor],
+    padding: '0 1rem',
+  }),
+  accodion: (height) => ({
     height: {
-      default: '4rem',
+      default: height,
       ':hover': 'fit-content',
     },
     overflow: 'hidden',
+    boxShadow: {
+      default: null,
+      ':hover': shadowing.basic,
+    },
+    paddingBottom: '1rem',
+  }),
+  footer: {
+    flex: '1',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: {
+    width: '100%',
+    height: '96px',
+    minHeight: '96px',
+    maxHeight: '96px',
+    flex: '1',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  bottomContainer: {
+    width: '100%',
+    flex: '2',
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: 'auto',
+  },
+  menuContainer: {
+    flex: '4',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: spacing['small'],
+  },
+  text: (color: PaletteVars) => ({
+    fontSize: '1rem',
+    fontWeight: fontWeight['bold'],
+    color: palette[color],
+  }),
+  shadow: {
+    boxShadow: shadowing.basic,
+  },
+  borderHover: {
+    borderRadius: '1rem',
+    borderWidth: '2px',
+    borderStyle: 'solid',
+    borderColor: {
+      default: palette['whiteGray'],
+      ':hover': palette['lightBlue'],
+    },
   },
 });

@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import {
   PaddingProps,
-  PaletteKeys,
+  PaletteVars,
   PixelLevelOption,
   RemLevelOpton,
   palette,
@@ -10,18 +10,20 @@ import {
   fontSizing,
   fontWeight,
   MarginProps,
+  SizeOption,
 } from '../styles/globalTokens.stylex';
 
 type FlexProps = {
-  flexDirection?: 'column' | 'row';
+  display?: 'flex';
+  flex?: `${0 | 1 | 2 | 3 | 4 | 5}`;
+  flexDirection?: 'row' | 'column';
+  gap?: SizeOption;
   alignItems?: 'start' | 'center' | 'end';
   justifyContent?:
     | 'start'
     | 'center'
     | 'end'
     | `space-${'evenly' | 'around' | 'between'}`;
-  gap?: PixelLevelOption | RemLevelOpton;
-  flex?: '1' | '2' | '3' | 'auto';
 };
 type RadiusProps = Partial<{
   [k in `border${
@@ -40,7 +42,8 @@ type SizeProps = {
     | '23rem'
     | 'auto'
     | 'inherit'
-    | '320px';
+    | '320px'
+    | '360px';
   height?:
     | PixelLevelOption
     | RemLevelOpton
@@ -48,7 +51,9 @@ type SizeProps = {
     | '6rem'
     | '7rem'
     | '10rem'
+    | '14rem'
     | 'auto'
+    | '180px'
     | 'inherit'
     | '100vh';
 };
@@ -73,11 +78,11 @@ export const statusStyles = stylex.create({
     color: palette.baseWhite,
     backgroundColor: palette.lightBlue,
   },
-  customSelected: (props: { color: PaletteKeys; bgColor: PaletteKeys }) => ({
+  customSelected: (props: { color: PaletteVars; bgColor: PaletteVars }) => ({
     color: palette[props.color],
     backgroundColor: palette[props.bgColor],
   }),
-  checked: (bgColor: PaletteKeys) => ({
+  checked: (bgColor: PaletteVars) => ({
     backgroundColor: palette[bgColor],
   }),
   disabled: {
@@ -94,14 +99,14 @@ export type DesignProps = {
   size?: SizeProps;
   flex?: FlexProps;
   color?: {
-    color: PaletteKeys;
-    hoverColor?: PaletteKeys;
-    checkedColor?: PaletteKeys;
+    color: PaletteVars;
+    hoverColor?: PaletteVars;
+    checkedColor?: PaletteVars;
   };
   bgColor?: {
-    color: PaletteKeys;
-    hoverColor?: PaletteKeys;
-    checkedColor?: PaletteKeys;
+    color: PaletteVars;
+    hoverColor?: PaletteVars;
+    checkedColor?: PaletteVars;
   };
   font?: FontProps;
   position?: 'relative';
@@ -115,72 +120,72 @@ export type DesignProps = {
 
 type BorderProps = {
   borderWidth?: PixelLevelOption | RemLevelOpton;
-  borderColor?: PaletteKeys;
-  hoverColor?: PaletteKeys;
+  borderColor?: PaletteVars;
+  hoverColor?: PaletteVars;
 };
 
 export const designStyles = stylex.create({
   size: (props: DesignProps['size']) => ({
-    width: props?.width,
-    height: props?.height,
+    width: props?.width ?? false,
+    height: props?.height ?? false,
   }),
-  flex: (props?: DesignProps['flex']) => ({
+  flex: (props: DesignProps['flex']) => ({
     display: 'flex',
     flexDirection: props?.flexDirection,
     alignItems: props?.alignItems,
     justifyContent: props?.justifyContent,
-    gap: props?.gap,
+    gap: spacing[props?.gap ?? 'none'],
   }),
   border: (props: DesignProps['border']) => ({
     borderStyle: 'solid',
-    borderWidth: props?.borderWidth,
+    borderWidth: props?.borderWidth ?? false,
     borderColor: {
-      default: palette[props?.borderColor ?? 'transparent'],
-      ':hover': palette[props?.hoverColor ?? 'transparent'],
+      default: props?.borderColor ? palette[props.borderColor] : false,
+      ':hover': props?.hoverColor ? palette[props.hoverColor] : false,
     },
   }),
-  margin: (props: MarginProps) => ({
-    marginBottom: props.marginBottom,
-    marginTop: props.marginTop,
-    marginRight: props.marginRight,
-    marginLeft: props.marginLeft,
+  margin: (props: DesignProps['margin']) => ({
+    marginBottom: props?.marginBottom ?? false,
+    marginTop: props?.marginTop ?? false,
+    marginRight: props?.marginRight ?? false,
+    marginLeft: props?.marginLeft ?? false,
   }),
   radius: (props: DesignProps['radius']) => ({
-    borderTopLeftRadius: props?.borderTopLeftRadius,
-    borderTopRightRadius: props?.borderTopRightRadius,
-    borderBottomLeftRadius: props?.borderBottomLeftRadius,
-    borderBottomRightRadius: props?.borderBottomRightRadius,
+    borderTopLeftRadius: props?.borderTopLeftRadius ?? false,
+    borderTopRightRadius: props?.borderTopRightRadius ?? false,
+    borderBottomLeftRadius: props?.borderBottomLeftRadius ?? false,
+    borderBottomRightRadius: props?.borderBottomRightRadius ?? false,
   }),
   color: (props: DesignProps['color']) => ({
     color: {
-      default: palette[props?.color ?? 'default'],
-      ':hover': palette[props!.hoverColor ?? props!.color!],
-      ':checked': palette[props!.checkedColor ?? props!.color!],
+      default: props?.color ? palette[props.color] : false,
+      ':hover': palette[props?.hoverColor ?? props!.color!],
+      ':checked': props?.checkedColor ? palette[props.checkedColor] : false,
     },
   }),
   padding: (p: DesignProps['padding']) => ({
-    paddingBottom: p?.paddingBottom,
-    paddingLeft: p?.paddingLeft,
-    paddingRight: p?.paddingRight,
-    paddingTop: p?.paddingTop,
+    paddingBottom: p?.paddingBottom ?? false,
+    paddingLeft: p?.paddingLeft ?? false,
+    paddingRight: p?.paddingRight ?? false,
+    paddingTop: p?.paddingTop ?? false,
   }),
   bgColor: (props: DesignProps['bgColor']) => ({
     backgroundColor: {
-      default: palette[props?.color ?? 'transparent'],
+      default: props?.color ? palette[props.color] : false,
       ':hover': palette[props?.hoverColor ?? props!.color],
-      ':checked': palette[props?.checkedColor ?? props!.color],
+      ':checked': props?.checkedColor ? palette[props.checkedColor] : false,
     },
   }),
   font: (props: DesignProps['font']) => ({
-    fontSize: fontSizing[props?.fontSize ?? 'small'],
-    fontWeight: fontWeight[props?.fontWeight ?? 'normal'],
+    fontSize: props?.fontSize ? fontSizing[props.fontSize] : false,
+    fontWeight: props?.fontWeight ? fontWeight[props.fontWeight] : false,
     textDecoration: 'none',
   }),
   position: (position: DesignProps['position']) => ({ position }),
   shadow: (props: DesignProps['shadow']) => ({
     boxShadow: {
       default: null,
-      ':hover': shadowing[props?.hoverShadow ?? 'none'],
+      ':hover': props?.hoverShadow ? shadowing[props.hoverShadow] : false,
     },
   }),
   cursor: {

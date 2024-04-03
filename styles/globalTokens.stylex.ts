@@ -9,10 +9,10 @@ export type DirectionOption = 'Left' | 'Right' | 'Top' | 'Bottom';
 export type RemLevelOpton = `${0 | 1 | 2 | 3 | 4 | 5 | 6}rem`;
 
 export type PaddingProps = Partial<{
-  [k in `padding${DirectionOption}`]: PixelLevelOption;
+  [k in `padding${DirectionOption}`]?: PixelLevelOption;
 }>;
 export type MarginProps = Partial<{
-  [k in `margin${DirectionOption}`]: PixelLevelOption;
+  [k in `margin${DirectionOption}`]?: PixelLevelOption;
 }>;
 
 const paletteProperties = {
@@ -35,7 +35,7 @@ const paletteProperties = {
   inherit: 'inherit',
 } as const;
 
-export type PaletteKeys = keyof typeof paletteProperties;
+export type PaletteVars = keyof typeof paletteProperties;
 export const palette = stylex.defineVars(paletteProperties);
 
 export type PixelLevelOption =
@@ -43,6 +43,7 @@ export type PixelLevelOption =
       | 0
       | 2
       | 4
+      | 6
       | 8
       | 10
       | 12
@@ -112,10 +113,51 @@ export const fontSizing = stylex.defineVars(fontProperties.size);
 
 export const fontWeight = stylex.defineVars(fontProperties.weight);
 
+const levelProperties = {
+  '0': '0',
+  '1': '1',
+  '2': '2',
+  '3': '3',
+  '4': '4',
+  '5': '5',
+} as const;
+
+export type FlexVars = {
+  display?: 'flex';
+  flex?: `${0 | 1 | 2 | 3 | 4 | 5}`;
+  flexDirection?: 'row' | 'column';
+  gap?: SizeOption;
+  alignItems?: 'start' | 'center' | 'end';
+  justifyContent?:
+    | 'start'
+    | 'center'
+    | 'end'
+    | `space-${'evenly' | 'around' | 'between'}`;
+};
+export const flexing: stylex.VarGroup<FlexVars> = stylex.defineVars({
+  display: 'flex',
+  flex: '0',
+  flexDirection: 'row',
+  alignItems: 'start',
+  justifyContent: 'start',
+});
+
 export const shadowing = stylex.defineVars({
   none: 'none',
   basic:
     'rgba(42, 131, 255, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
+  dug: 'rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset',
+  swell:
+    'rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px',
+});
+
+export type SizeVars = {
+  width?: `${string}${'px' | 'rem' | '%'}` | 'fit-content' | 'auto';
+  height?: `${string}${'px' | 'rem' | '%'}` | 'fit-content' | 'auto';
+};
+export const sizing: stylex.VarGroup<SizeVars> = stylex.defineVars({
+  width: '0px',
+  height: '0px',
 });
 
 type NumberTable = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;

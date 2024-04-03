@@ -60,10 +60,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...stylex.props(
           styles.button,
-          designStyles['size']({
-            width: size?.width ?? 'fit-content',
-            height: size?.height ?? 'fit-content',
-          }),
+          size &&
+            designStyles['size']({
+              width: size?.width ?? 'fit-content',
+              height: size?.height ?? 'fit-content',
+            }),
           padding && designStyles['padding'](padding),
           flex && designStyles['flex'](flex),
           border && designStyles['border'](border),

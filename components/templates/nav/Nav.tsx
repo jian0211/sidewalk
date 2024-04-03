@@ -25,7 +25,7 @@ export const Nav = (props: NavProps) => {
       {...stylex.props(
         styles.nav,
         designStyles['size']({ width: '100%', height: '6rem' }),
-        designStyles['flex']({ alignItems: 'center', gap: '1rem' }),
+        designStyles['flex']({ alignItems: 'center', gap: 'medium' }),
         designStyles['position']('relative'),
         designStyles['padding']({
           paddingTop: '0px',
@@ -74,12 +74,9 @@ const AirlinesLayoutContainer = (props: AirlinesLayoutContainerProps) => {
     <h1
       {...props}
       {...stylex.props(
+        designStyles['flex']({ alignItems: 'center' }),
         designStyles['size']({ width: '100%' }),
-        designStyles['color']({ color: 'darkGray' }),
-        designStyles['font']({
-          fontSize: 'xlarge',
-          fontWeight: 'medium',
-        }),
+        designStyles['font']({ fontSize: 'xlarge', fontWeight: 'medium' }),
       )}
     >
       {t('title')}
