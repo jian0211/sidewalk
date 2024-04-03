@@ -1,6 +1,8 @@
 import { ComponentPropsWithoutRef } from 'react';
 import * as stylex from '@stylexjs/stylex';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
+import { DesignProps, designStyles } from '@/components/styles';
+import { palette } from '../../../styles/globalTokens.stylex';
 
 type TableProps = ComponentPropsWithoutRef<'ul'> & {
   style?: StyleXArray<any>;
@@ -10,40 +12,93 @@ type HeaderProps = ComponentPropsWithoutRef<'li'>;
 type BodyProps = ComponentPropsWithoutRef<'div'> & {
   useScroll?: boolean;
 };
-type ColumnProps = ComponentPropsWithoutRef<'div'> & {
-  flex?: FlexLevel;
-  columnFlexDirection?: boolean;
-  width?: WidthLevel;
-};
-type FlexLevel = 'auto' | '1' | '2' | '3' | '4' | '5';
-type WidthLevel = '100' | '200' | '300' | '400';
+type ColumnProps = ComponentPropsWithoutRef<'div'> &
+  Pick<DesignProps, 'flex' | 'size'>;
 
 const Container = ({ style, ...props }: TableProps) => (
-  <ul {...props} {...stylex.props(styles.container, style)} />
+  <ul
+    {...props}
+    {...stylex.props(
+      designStyles['size']({ width: '100%' }),
+      designStyles['radius']({
+        borderBottomLeftRadius: '16px',
+        borderBottomRightRadius: '16px',
+        borderTopLeftRadius: '16px',
+        borderTopRightRadius: '16px',
+      }),
+      designStyles['bgColor']({ color: 'baseWhite' }),
+      designStyles['flex']({
+        flexDirection: 'column',
+        justifyContent: 'start',
+        gap: '8px',
+      }),
+      designStyles['border']({
+        borderColor: 'softGray',
+        borderWidth: '2px',
+        hoverColor: 'softGray',
+      }),
+      style,
+    )}
+  />
 );
-
 const Header = (props: HeaderProps) => (
-  <li {...props} {...stylex.props(styles.row, styles.header)} />
+  <li
+    {...props}
+    {...stylex.props(
+      styles.borderBottom,
+      designStyles['size']({
+        width: '100%',
+        height: '4rem',
+      }),
+      designStyles['padding']({
+        paddingBottom: '16px',
+        paddingLeft: '16px',
+        paddingRight: '16px',
+        paddingTop: '16px',
+      }),
+      designStyles['radius']({
+        borderTopLeftRadius: '16px',
+        borderTopRightRadius: '16px',
+      }),
+      designStyles['font']({
+        fontSize: 'small',
+        fontWeight: 'bold',
+      }),
+      designStyles['flex']({ alignItems: 'center' }),
+      designStyles['bgColor']({ color: 'transparent' }),
+    )}
+  />
 );
 
 const Row = (props: RowProps) => (
-  <li {...props} {...stylex.props(styles.row)} />
+  <li
+    {...props}
+    {...stylex.props(
+      styles.borderBottom,
+      designStyles['font']({
+        fontSize: 'xsmall',
+        fontWeight: 'medium',
+      }),
+      designStyles['flex']({ alignItems: 'center', gap: '8px' }),
+      designStyles['bgColor']({ color: 'transparent' }),
+      designStyles['padding']({
+        paddingBottom: '8px',
+        paddingLeft: '8px',
+        paddingRight: '8px',
+        paddingTop: '8px',
+      }),
+    )}
+  />
 );
 
-const Column = ({
-  flex,
-  width,
-  columnFlexDirection,
-  ...props
-}: ColumnProps) => {
+const Column = (props: ColumnProps) => {
+  const { flex, size, ...rest } = props;
   return (
     <div
-      {...props}
+      {...rest}
       {...stylex.props(
-        styles.column,
-        flex && styles.flexLevel(flex),
-        width && styles.widthLevel(width),
-        columnFlexDirection && styles.useColumnFlexDirection,
+        size && designStyles['size'](size),
+        flex && designStyles['flex'](flex),
       )}
     />
   );
@@ -53,7 +108,10 @@ const Body = ({ useScroll, ...props }: BodyProps) => {
   return (
     <div
       {...props}
-      {...stylex.props(styles.body, useScroll && styles.useScroll)}
+      {...stylex.props(
+        designStyles['size']({ height: '100%' }),
+        useScroll && styles.useScroll,
+      )}
     />
   );
 };
@@ -67,52 +125,13 @@ export const Table = {
 };
 
 const styles = stylex.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    gap: '0.5rem',
-  },
-  header: {
-    backgroundColor: '#323648',
-    color: 'white',
-    fontWeight: 500,
-  },
-  body: {
-    height: '100%',
-  },
-  row: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '1rem',
-    fontSize: '0.9rem',
-    borderBottomColor: '#848797',
-    borderBottomStyle: 'solid',
-    borderBottomWidth: '1px',
-    backgroundColor: {
-      default: 'none',
-      ':hover': 'skyblue',
-    },
-    cursor: 'pointer',
-  },
-  column: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  flexLevel: (level: FlexLevel) => ({
-    flex: level,
-  }),
-  widthLevel: (width: WidthLevel) => ({
-    width: width + 'px',
-  }),
   useScroll: {
     overflowY: 'scroll',
     overflowX: 'hidden',
   },
-  useColumnFlexDirection: {
-    flexDirection: 'column',
-    gap: '0.5rem',
+  borderBottom: {
+    borderBottomColor: palette['softGray'],
+    borderBottomStyle: 'solid',
+    borderBottomWidth: '2px',
   },
 });

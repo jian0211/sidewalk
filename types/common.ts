@@ -23,3 +23,17 @@ export type NestedPropertyType<
     : never;
 
 export type Prettier<T extends object> = { [k in keyof T]: T[k] };
+
+type NumericRange<
+  START extends number,
+  END extends number,
+  ARR extends unknown[] = [],
+  ACC extends number = never,
+> = ARR['length'] extends END
+  ? ACC | START | END
+  : NumericRange<
+      START,
+      END,
+      [...ARR, 1],
+      ARR[START] extends undefined ? ACC : ACC | ARR['length']
+    >;

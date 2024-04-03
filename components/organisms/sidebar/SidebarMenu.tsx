@@ -1,9 +1,16 @@
 import * as stylex from '@stylexjs/stylex';
-import { palette, spacing } from '../../../styles/globalTokens.stylex';
+import {
+  PaletteVars,
+  fontWeight,
+  palette,
+  shadowing,
+  spacing,
+} from '../../../styles/globalTokens.stylex';
 import { IconNames, Icons } from '@/components/atoms/Icon';
 import React from 'react';
 import Link, { LinkProps } from 'next/link';
 import { Block } from '@/components/atoms/Block';
+import { designStyles } from '@/components/styles';
 
 type LogoProps = React.ComponentPropsWithoutRef<'div'>;
 type ContainerProps = React.ComponentPropsWithoutRef<'aside'>;
@@ -26,6 +33,16 @@ const Container = (props: ContainerProps) => (
   <aside {...props} {...stylex.props(styles.container)} />
 );
 
+const Logo = (props: LogoProps) => {
+  return (
+    <div {...props} {...stylex.props(styles.logo)}>
+      <h1 {...stylex.props(designStyles['color']({ color: 'lightBlue' }))}>
+        WWWWWW
+      </h1>
+    </div>
+  );
+};
+
 const MenuContainer = (props: MenuContainerProps) => (
   <div {...props} {...stylex.props(styles.menuContainer)} />
 );
@@ -38,32 +55,27 @@ const Footer = (props: FooterProps) => (
   <footer {...props} {...stylex.props(styles.footer)} />
 );
 
-const Logo = (props: LogoProps) => {
-  return (
-    <div {...props} {...stylex.props(styles.logo)}>
-      <h1>WWWWWW</h1>
-    </div>
-  );
-};
-
 const TabMenu = (props: TabMenuProps) => {
   const { iconname, linkProps, title, children, isCurrent, ...rest } = props;
 
   return (
-    <Link href={linkProps.href}>
-      <Block
+    <Link href={linkProps.href} style={{ width: '100%', height: '4rem' }}>
+      <div
         {...rest}
-        variant="round"
-        useHover={{
-          type: 'borderHover',
-          props: { borderColor: 'lightBlue', borderWidth: '4px' },
-        }}
-        isSelected={isCurrent ? 'basicSelected' : undefined}
-        stylesprops={[styles.tabMenu]}
+        {...stylex.props(
+          styles.tabMenu({
+            backgroundColor: isCurrent ? 'lightBlue' : 'whiteGray',
+          }),
+          styles.borderHover,
+        )}
       >
         <Icons src={iconname} />
-        <span {...stylex.props(styles.title)}>{title}</span>
-      </Block>
+        <span
+          {...stylex.props(styles.text(isCurrent ? 'baseWhite' : 'inherit'))}
+        >
+          {title}
+        </span>
+      </div>
     </Link>
   );
 };
@@ -71,24 +83,29 @@ const TabMenu = (props: TabMenuProps) => {
 const Accordion = (props: AccordionProps) => {
   const { isCurrent, iconname, title, children, ...rest } = props;
   return (
-    <Block
+    <div
       {...rest}
-      variant="round"
-      useHover={{ type: 'shadowHover' }}
-      useAccordion={{
-        defaultHeight: '4rem',
-        height: 'fit-content',
-      }}
-      stylesprops={isCurrent && styles.accordion}
+      {...stylex.props(
+        styles.accodion(isCurrent ? 'fit-content' : '4rem'),
+        styles.borderHover,
+        isCurrent && styles.shadow,
+      )}
     >
-      <Block variant="round" stylesprops={styles.tabMenu}>
+      <div {...stylex.props(styles.tabMenu({ backgroundColor: 'whiteGray' }))}>
         <Icons src={iconname} />
-        <h2 {...stylex.props(styles.title)}>{title}</h2>
-      </Block>
-      <Block variant="round" stylesprops={styles.accodionList}>
+        <h2 {...stylex.props(styles.text('darkGray'))}>{title}</h2>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '0 1rem 0 2rem',
+          gap: '0.5rem',
+        }}
+      >
         {children}
-      </Block>
-    </Block>
+      </div>
+    </div>
   );
 };
 
@@ -102,70 +119,86 @@ export const SidebarMenu = {
   Footer,
 };
 
-const sidebarWidth = '320px';
-const menuHeigth = '4rem';
-
 const styles = stylex.create({
   container: {
-    width: sidebarWidth,
-    maxWidth: sidebarWidth,
-    minWidth: sidebarWidth,
+    width: '320px',
+    maxWidth: '320px',
+    minWidth: '320px',
     height: '100vh',
-    backgroundColor: palette.whiteGray,
     display: 'flex',
     flexDirection: 'column',
+    padding: '0 2rem',
+    backgroundColor: palette.whiteGray,
     borderRightColor: palette.whiteSoftGray,
     borderRightStyle: 'solid',
     borderRightWidth: spacing.xxsmall,
-    padding: '0 2rem',
-    color: palette.darkGray,
+  },
+  tabMenu: (props: { backgroundColor: PaletteVars }) => ({
+    width: '100%',
+    height: '4rem',
+    display: 'flex',
+    flex: '4',
+    alignItems: 'center',
+    gap: '1rem',
+    backgroundColor: palette[props.backgroundColor],
+    padding: '0 1rem',
+  }),
+  accodion: (height) => ({
+    height: {
+      default: height,
+      ':hover': 'fit-content',
+    },
+    overflow: 'hidden',
+    boxShadow: {
+      default: null,
+      ':hover': shadowing.basic,
+    },
+    paddingBottom: '1rem',
+  }),
+  footer: {
+    flex: '1',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   logo: {
-    height: '10rem',
+    width: '100%',
+    height: '96px',
+    minHeight: '96px',
+    maxHeight: '96px',
+    flex: '1',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    color: palette.lightBlue,
-  },
-  title: {
-    fontSize: '1rem',
-    color: 'inherit',
-    fontWeight: 600,
-  },
-  menuContainer: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.5rem',
   },
   bottomContainer: {
     width: '100%',
-    marginTop: 'auto',
-  },
-  footer: {
-    height: '7rem',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  tabMenu: {
-    width: '100%',
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyItems: 'center',
-    gap: '1rem',
-    height: menuHeigth,
-    padding: '0 1rem',
-  },
-  accodionList: {
+    flex: '2',
     display: 'flex',
     flexDirection: 'column',
-    margin: '0 1rem 1rem 2rem',
-    gap: '0.5rem',
+    marginTop: 'auto',
   },
-  accordion: {
-    height: 'fit-content',
-    boxShadow:
-      'rgba(42, 131, 255, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
+  menuContainer: {
+    flex: '4',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: spacing['small'],
+  },
+  text: (color: PaletteVars) => ({
+    fontSize: '1rem',
+    fontWeight: fontWeight['bold'],
+    color: palette[color],
+  }),
+  shadow: {
+    boxShadow: shadowing.basic,
+  },
+  borderHover: {
+    borderRadius: '1rem',
+    borderWidth: '2px',
+    borderStyle: 'solid',
+    borderColor: {
+      default: palette['whiteGray'],
+      ':hover': palette['lightBlue'],
+    },
   },
 });

@@ -10,6 +10,7 @@ import './datePicker.css';
 import * as stylex from '@stylexjs/stylex';
 import React from 'react';
 import { Modal, ContainerProps } from '@/components/molecules/modal/Modal';
+import { designStyles } from '@/components/styles';
 
 registerLocale('ko', ko);
 registerLocale('ja', ja);
@@ -69,18 +70,17 @@ export const DatePickerModal = ({
 const styles = stylex.create({
   datePickerModal: {
     width: '100%',
-    zIndex: 1,
     backgroundColor: 'white',
-    height: '40rem',
+    height: 'fit-content',
   },
   datePickerModalHeader: {
-    padding: '1.5rem',
-    fontSize: '1.2rem',
+    padding: '1rem',
+    fontSize: '1rem',
   },
   calendarContainer: {
     display: 'flex',
     position: 'relative',
     height: '100%',
-    fontSize: '1.1rem',
+    fontSize: '1rem',
   },
 });

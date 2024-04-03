@@ -13,7 +13,6 @@ import React from 'react';
 import {
   designStyles,
   frameThemes,
-  stateBasedstyles,
   StatusProps,
   statusStyles,
 } from '@/components/styles';
@@ -45,12 +44,35 @@ type BookingUsedType = {
 };
 
 const Container = (props: ContainerProps) => (
-  <div {...props} {...stylex.props(styles.container)} />
+  <div
+    {...props}
+    {...stylex.props(
+      designStyles['size']({ width: '13rem' }),
+      designStyles['flex']({
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '1rem',
+      }),
+    )}
+  />
 );
 
 const TravelPointDropdown = (props: TravelPointDropdownProps) => {
   return (
-    <div {...props} {...stylex.props(styles.travelPointDropdown)}>
+    <div
+      {...props}
+      {...stylex.props(
+        designStyles['size']({ width: '4rem', height: '3rem' }),
+        designStyles['flex']({
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'space-evenly',
+        }),
+        designStyles['font']({ fontWeight: 'bold' }),
+        designStyles['color']({ color: 'darkGray' }),
+        designStyles['cursor'],
+      )}
+    >
       <Dropdown>{props.children}</Dropdown>
     </div>
   );
@@ -58,7 +80,19 @@ const TravelPointDropdown = (props: TravelPointDropdownProps) => {
 
 const TravelPoint = ({ iata, title, ...props }: TravelPointProps) => {
   return (
-    <div {...props} {...stylex.props(styles.travelPoint)}>
+    <div
+      {...props}
+      {...stylex.props(
+        designStyles['size']({ width: '5rem' }),
+        designStyles['flex']({ flexDirection: 'column', alignItems: 'center' }),
+        designStyles['padding']({
+          paddingBottom: '16px',
+          paddingLeft: '16px',
+          paddingRight: '16px',
+          paddingTop: '16px',
+        }),
+      )}
+    >
       <label>{iata}</label>
       <p {...stylex.props(styles.travelPointTitle)}>{title}</p>
     </div>
@@ -87,7 +121,11 @@ const SearchTravelPointModal = (props: SearchTravelPointModalProps) => {
 const TravelCountryBox = (props: TravelCountryBoxProps) => (
   <div
     {...props}
-    {...stylex.props(styles.travelCountryBox, frameThemes.roundEdged)}
+    {...stylex.props(
+      designStyles['size']({ width: '150px', height: 'auto' }),
+      designStyles['flex']({ flex: '1', flexDirection: 'column' }),
+      frameThemes.roundEdged,
+    )}
   />
 );
 
@@ -100,8 +138,8 @@ const TravelCountryInput = React.forwardRef<
     <label
       {...stylex.props(
         styles.radioLable,
-        stateBasedstyles.borderHover({
-          borderColor: 'lightBlue',
+        designStyles['border']({
+          hoverColor: 'lightBlue',
           borderWidth: '2px',
         }),
         rest.checked && statusStyles['basicSelected'],
@@ -125,7 +163,15 @@ const TravelCountryInput = React.forwardRef<
 TravelCountryInput.displayName = 'TravelCountryInput';
 
 const TravelPointList = (props: TravelPointListProps) => {
-  return <ul {...props} {...stylex.props(styles.travelPointList)} />;
+  return (
+    <ul
+      {...props}
+      {...stylex.props(
+        designStyles['size']({ width: '100%' }),
+        designStyles['flex']({ flex: '2', flexDirection: 'column' }),
+      )}
+    />
+  );
 };
 
 const FlightIconWithText = (props: FlightIconWithTextProps) => {
@@ -135,27 +181,32 @@ const FlightIconWithText = (props: FlightIconWithTextProps) => {
     <li
       {...rest}
       {...stylex.props(
-        styles.flightIconWithText,
-        designStyles.customBox(
-          {
-            paddingTop: '8px',
-            paddingRight: '20px',
-            paddingBottom: '8px',
-            paddingLeft: '20px',
-          },
-          { width: '100%', height: '3rem' },
-        ),
-        designStyles.border({
-          color: 'transparent',
-          width: '2px',
-          hoverColor: 'lightBlue',
+        designStyles['size']({ width: '100%', height: '3rem' }),
+        designStyles['flex']({ alignItems: 'center', gap: '1rem' }),
+        designStyles['font']({ fontSize: 'xsmall', fontWeight: 'medium' }),
+        designStyles['padding']({
+          paddingTop: '8px',
+          paddingRight: '20px',
+          paddingBottom: '8px',
+          paddingLeft: '20px',
         }),
-        designStyles.radius('8px'),
-        isSelected &&
-          statusStyles['customSelected']({
-            color: 'lightBlue',
-            bgColor: 'baseWhite',
-          }),
+        designStyles['border']({
+          borderColor: 'transparent',
+          hoverColor: 'lightBlue',
+          borderWidth: '2px',
+        }),
+        designStyles['color']({
+          color: isSelected ? 'lightBlue' : 'darkGray',
+        }),
+        designStyles['bgColor']({
+          color: isSelected ? 'baseWhite' : 'transparent',
+        }),
+        designStyles['radius']({
+          borderBottomLeftRadius: '8px',
+          borderBottomRightRadius: '8px',
+          borderTopLeftRadius: '8px',
+          borderTopRightRadius: '8px',
+        }),
       )}
       onClick={(e) => {
         onClick?.(e);
@@ -194,38 +245,12 @@ export const Booking = {
 };
 
 const styles = stylex.create({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '13rem',
-    gap: '1rem',
-  },
-  travelPointDropdown: {
-    width: '4rem',
-    height: '3rem',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    cursor: 'pointer',
-    fontWeight: 600,
-    color: palette.darkGray,
-  },
   travelPointTitle: {
     width: 'inherit',
     textAlign: 'center',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-  },
-  flightIconWithText: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1rem',
-    cursor: 'pointer',
-    fontWeight: 500,
-    fontSize: '0.9rem',
   },
   radioLable: {
     width: '100%',
@@ -236,19 +261,5 @@ const styles = stylex.create({
     justifyContent: 'flex-start',
     cursor: 'pointer',
     borderRadius: '0.5vw',
-  },
-  travelCountryBox: {
-    flex: '1',
-    height: 'auto',
-  },
-  travelPointList: {
-    flex: '2',
-  },
-  travelPoint: {
-    width: '5rem',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '1rem',
   },
 });

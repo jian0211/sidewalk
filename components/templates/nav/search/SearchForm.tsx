@@ -6,24 +6,16 @@ import { Flights } from '@/store/fligths';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { IconButton } from '@/components/atoms/Button';
 import { Booking } from '@/components/organisms/SearchBar/bookling/Booking';
-import { TripType } from '@/components/organisms/SearchBar/tripType/TripType';
 import {
   DatePickerContainer,
   DatePickerModal,
 } from '@/components/organisms/SearchBar/datePicker/DatePicker';
 import { useDatePicker } from './useDatePicker';
-import {
-  LabelBox,
-  PriceContent,
-  PriceRangeSlider,
-  PriceRangeSliderContainer,
-  PriceRangeSliderInput,
-  RangeFillBox,
-  Title,
-} from '@/components/organisms/SearchBar/PriceRangeSlider/PriceRangeSlider';
+import { PriceRange } from '@/components/organisms/SearchBar/PriceRangeSlider/PriceRangeSlider';
 import { useAiportsList } from '@/store/airports';
 import { useBooking } from './useBooking';
 import { useLocale } from '@/hooks/useLocale';
+import { TripType } from '@/components/organisms/SearchBar/tripType/TripType';
 
 type SearchFormProps = React.ComponentPropsWithoutRef<'form'>;
 
@@ -233,19 +225,19 @@ export const SearchForm = (props: SearchFormProps) => {
           </DatePickerContainer>
         )}
       />
-      <PriceRangeSliderContainer>
-        <PriceContent>
-          <LabelBox rangeType="min">
+      <PriceRange.Container>
+        <PriceRange.Content>
+          <PriceRange.LabelBox rangeType="min">
             {toLocaleString(getValues('flightCost.min'))}
-          </LabelBox>
-          <Title>{t('priceRangeSlider.title')}</Title>
-          <LabelBox rangeType="max">
+          </PriceRange.LabelBox>
+          <PriceRange.Title>{t('priceRangeSlider.title')}</PriceRange.Title>
+          <PriceRange.LabelBox rangeType="max">
             {toLocaleString(getValues('flightCost.max'))}
-          </LabelBox>
-        </PriceContent>
-        <PriceRangeSlider>
-          <RangeFillBox flightCost={watch('flightCost')} />
-          <PriceRangeSliderInput
+          </PriceRange.LabelBox>
+        </PriceRange.Content>
+        <PriceRange.Slider>
+          <PriceRange.RangeFillBox flightCost={watch('flightCost')} />
+          <PriceRange.Input
             {...register('flightCost.min', {
               onChange: (min) => {
                 if (Number(min.target.value) > getValues('flightCost.max')) {
@@ -254,7 +246,7 @@ export const SearchForm = (props: SearchFormProps) => {
               },
             })}
           />
-          <PriceRangeSliderInput
+          <PriceRange.Input
             {...register('flightCost.max', {
               onChange: (max) => {
                 if (Number(max.target.value) < getValues('flightCost.min')) {
@@ -263,8 +255,8 @@ export const SearchForm = (props: SearchFormProps) => {
               },
             })}
           />
-        </PriceRangeSlider>
-      </PriceRangeSliderContainer>
+        </PriceRange.Slider>
+      </PriceRange.Container>
       <IconButton type="submit" iconProps={{ src: 'IconFind' }} />
     </form>
   );

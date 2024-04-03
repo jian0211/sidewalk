@@ -1,4 +1,4 @@
-.react-datepicker-wrapper,
+.picker .react-datepicker-wrapper,
 .react-datepicker__input-container {
   display: block;
 }
@@ -16,8 +16,8 @@
 
 /* 日付ホバー時 */
 .react-datepicker__day:hover {
-  background: #db4d6d;
-  color: #fafafa;
+  background: #2a83ff;
+  color: #ffffff;
 }
 
 /* 曜日 */
@@ -30,7 +30,6 @@
 .react-datepicker__month-text--keyboard-selected,
 .react-datepicker__quarter-text--keyboard-selected,
 .react-datepicker__year-text--keyboard-selected {
-  border-radius: 0.3rem;
   background-color: #fff; /* デフォだと今日の日付に色がつくので白に上書き */
 }
 
@@ -46,9 +45,9 @@
   .react-datepicker__time-box
   ul.react-datepicker__time-list
   li.react-datepicker__time-list-item--selected {
-  background: #e87a90;
+  background: #2a83ff;
   font-weight: normal;
-  color: #fafafa;
+  color: #ffffff;
 }
 
 /* 選択中の日付 */
@@ -76,7 +75,7 @@
     .react-datepicker__quarter-text--in-range,
     .react-datepicker__year-text--in-range
   ) {
-  background-color: #f596aa;
+  background-color: #2a83ff;
 }
 
 /* 既存にあるCSS削除 */
@@ -84,33 +83,40 @@
   transform: none !important;
   inset: 6rem auto auto 0px !important;
   padding: 0 !important;
-  width: 100%;
 }
 .react-datepicker__navigation {
   transform: translateY(550%);
 }
 
 .react-datepicker {
-  height: 100% !important;
+  /* height: 100% !important; */
   border: none !important;
+  font-weight: 600;
 }
 
 .dataPickerBox {
-  border: none;
-  border-bottom: 1px solid #00256c;
   width: 20rem;
-  height: 3rem;
+  height: 52px;
+  border: 2px solid #f4f4f4;
+  border-radius: 10px;
   padding: 1rem;
   font-size: 1rem;
+  font-weight: 600;
+  color: #86829d;
+  background-color: #fafbfb;
 
   &:hover {
-    border: 1px solid #00256c;
-    border-radius: 0.3vw;
+    border-color: #2a83ff;
+  }
+  &:focus {
+    outline: none;
+    border-color: #2a83ff;
   }
 }
 
 .react-datepicker__month-container {
   flex: 1;
+  margin: 2rem;
 }
 
 .react-datepicker__day-name,
@@ -118,5 +124,5 @@
 .react-datepicker__time-name {
   width: 3rem;
   line-height: 3rem;
-  margin: 0.5rem;
+  margin: 4px;
 }

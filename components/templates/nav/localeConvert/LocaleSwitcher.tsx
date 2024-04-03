@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { palette, spacing } from '../../../../styles/globalTokens.stylex';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
+import { designStyles } from '@/components/styles';
 
 export const LocaleSwitcher = () => {
   const t = useTranslatedWord('nav.translate');
@@ -19,13 +20,44 @@ export const LocaleSwitcher = () => {
     setToggle(false);
   });
   return (
-    <div ref={ref}>
+    <div
+      ref={ref}
+      {...stylex.props(
+        designStyles['position']('relative'),
+        designStyles['flex']({
+          alignItems: 'center',
+          justifyContent: 'center',
+        }),
+        designStyles['padding']({
+          paddingBottom: '8px',
+          paddingLeft: '8px',
+          paddingRight: '8px',
+          paddingTop: '8px',
+        }),
+        designStyles['border']({
+          borderWidth: '2px',
+          borderColor: 'softGray',
+          hoverColor: 'lightBlue',
+        }),
+        designStyles['radius']({
+          borderBottomLeftRadius: '8px',
+          borderBottomRightRadius: '8px',
+          borderTopLeftRadius: '8px',
+          borderTopRightRadius: '8px',
+        }),
+      )}
+    >
       <IconButton
         iconProps={{ src: 'IconGlobal' }}
         onClick={() => setToggle((prev) => !prev)}
       />
       {toggle && (
-        <div {...stylex.props(styles.localeSwitcher)}>
+        <div
+          {...stylex.props(
+            styles.localeSwitcher,
+            designStyles['size']({ width: '150px' }),
+          )}
+        >
           <ToggleButton
             isSelected={locale === 'ko'}
             onClick={() => handleChangeLocale('ko')}
@@ -49,14 +81,22 @@ export const LocaleSwitcher = () => {
 const ToggleButton = ({ iconProps: { src }, ...props }: IconButtonProps) => (
   <IconButton
     {...props}
-    hasFlex
-    hasBorder={{
-      width: '2px',
-      color: 'softGray',
+    flex={{
+      alignItems: 'center',
+      gap: '8px',
+    }}
+    border={{
+      borderWidth: '2px',
+      borderColor: 'softGray',
       hoverColor: 'lightBlue',
     }}
-    hasRadius="8px"
-    paddingLevel={{
+    radius={{
+      borderBottomLeftRadius: '8px',
+      borderBottomRightRadius: '8px',
+      borderTopLeftRadius: '8px',
+      borderTopRightRadius: '8px',
+    }}
+    padding={{
       paddingBottom: '8px',
       paddingLeft: '8px',
       paddingRight: '8px',
@@ -73,7 +113,7 @@ const ToggleButton = ({ iconProps: { src }, ...props }: IconButtonProps) => (
 const styles = stylex.create({
   localeSwitcher: {
     position: 'absolute',
-    marginTop: spacing.medium,
+    top: '4rem',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

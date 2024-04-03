@@ -79,10 +79,10 @@ const Sidebar = () => {
           }}
           isCurrent={paths.isLogin}
         />
-        <SidebarMenu.Footer>
-          <p>@2024</p>
-        </SidebarMenu.Footer>
       </SidebarMenu.BottomContainer>
+      <SidebarMenu.Footer>
+        <p>@2024</p>
+      </SidebarMenu.Footer>
     </SidebarMenu.Container>
   );
 };

@@ -53,6 +53,7 @@ const styles = stylex.create({
     height: '100vh',
     display: 'flex',
     backgroundColor: palette.baseWhite,
+    color: palette.darkGray,
   },
   main: {
     width: 'inherit',

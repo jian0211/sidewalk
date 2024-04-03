@@ -1,0 +1,46 @@
+import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
+import * as stylex from '@stylexjs/stylex';
+import { DesignProps, designStyles } from '../styles';
+
+type FlexProps = {
+  flexProps?: DesignProps['flex']; //FlexVars;
+  sizeProps?: DesignProps['size'];
+  bgColorProps?: DesignProps['bgColor'];
+  colorProps?: DesignProps['color'];
+  radiusProps?: DesignProps['radius'];
+  paddingProps?: DesignProps['padding']; //RemLevelOpton | PixelLevelOption;
+  marginProps?: DesignProps['margin']; //RemLevelOpton | PixelLevelOption;
+  borderProps?: DesignProps['border']; //RemLevelOpton | PixelLevelOption;
+  xstyle?: StyleXArray<any>;
+} & React.ComponentProps<'div'>;
+
+export const Flex = (props: FlexProps) => {
+  const {
+    flexProps,
+    sizeProps,
+    bgColorProps,
+    radiusProps,
+    paddingProps,
+    marginProps,
+    borderProps,
+    colorProps,
+    xstyle,
+    ...rest
+  } = props;
+  return (
+    <div
+      {...rest}
+      {...stylex.props(
+        flexProps && designStyles['flex'](flexProps),
+        sizeProps && designStyles['size'](sizeProps),
+        bgColorProps && designStyles['bgColor'](bgColorProps),
+        colorProps && designStyles['color'](colorProps),
+        radiusProps && designStyles['radius'](radiusProps),
+        paddingProps && designStyles['padding'](paddingProps),
+        marginProps && designStyles['margin'](marginProps),
+        borderProps && designStyles['border'](borderProps),
+        xstyle,
+      )}
+    />
+  );
+};

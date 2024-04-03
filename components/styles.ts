@@ -1,13 +1,68 @@
 import * as stylex from '@stylexjs/stylex';
 import {
-  Padding,
-  PaletteKeys,
+  PaddingProps,
+  PaletteVars,
   PixelLevelOption,
   RemLevelOpton,
   palette,
   shadowing,
   spacing,
+  fontSizing,
+  fontWeight,
+  MarginProps,
+  SizeOption,
 } from '../styles/globalTokens.stylex';
+
+type FlexProps = {
+  display?: 'flex';
+  flex?: `${0 | 1 | 2 | 3 | 4 | 5}`;
+  flexDirection?: 'row' | 'column';
+  gap?: SizeOption;
+  alignItems?: 'start' | 'center' | 'end';
+  justifyContent?:
+    | 'start'
+    | 'center'
+    | 'end'
+    | `space-${'evenly' | 'around' | 'between'}`;
+};
+type RadiusProps = Partial<{
+  [k in `border${
+    | 'TopLeft'
+    | 'TopRight'
+    | 'BottomLeft'
+    | 'BottomRight'}Radius`]: PixelLevelOption;
+}>;
+
+type SizeProps = {
+  width?:
+    | PixelLevelOption
+    | RemLevelOpton
+    | '100%'
+    | '13rem'
+    | '23rem'
+    | 'auto'
+    | 'inherit'
+    | '320px'
+    | '360px';
+  height?:
+    | PixelLevelOption
+    | RemLevelOpton
+    | '100%'
+    | '6rem'
+    | '7rem'
+    | '10rem'
+    | '14rem'
+    | 'auto'
+    | '180px'
+    | 'inherit'
+    | '100vh';
+};
+
+type FontProps = {
+  fontSize?: keyof typeof fontSizing;
+  fontWeight?: keyof typeof fontWeight;
+  textDecoration?: 'none';
+};
 
 /**
  * Status
@@ -17,21 +72,17 @@ export type StatusProps = {
   isChecked?: boolean;
   isDisabled?: boolean;
 };
-export type SelectedColors = {
-  color: PaletteKeys;
-  backgroundColor: PaletteKeys;
-};
 
 export const statusStyles = stylex.create({
   basicSelected: {
     color: palette.baseWhite,
     backgroundColor: palette.lightBlue,
   },
-  customSelected: (props: { color: PaletteKeys; bgColor: PaletteKeys }) => ({
+  customSelected: (props: { color: PaletteVars; bgColor: PaletteVars }) => ({
     color: palette[props.color],
     backgroundColor: palette[props.bgColor],
   }),
-  checked: (bgColor: PaletteKeys) => ({
+  checked: (bgColor: PaletteVars) => ({
     backgroundColor: palette[bgColor],
   }),
   disabled: {
@@ -44,115 +95,102 @@ export const statusStyles = stylex.create({
  * Designs
  */
 export type DesignProps = {
-  hasFlex?: boolean;
-  hasBorder?: BorderProps;
-  paddingLevel?: Padding;
-  size?: {
-    width?: PixelLevelOption | RemLevelOpton | '100%';
-    height?: PixelLevelOption | RemLevelOpton | '100%';
+  padding?: PaddingProps;
+  size?: SizeProps;
+  flex?: FlexProps;
+  color?: {
+    color: PaletteVars;
+    hoverColor?: PaletteVars;
+    checkedColor?: PaletteVars;
   };
-  hasRadius?: PixelLevelOption;
+  bgColor?: {
+    color: PaletteVars;
+    hoverColor?: PaletteVars;
+    checkedColor?: PaletteVars;
+  };
+  font?: FontProps;
+  position?: 'relative';
+  radius?: RadiusProps;
+  border?: BorderProps;
+  shadow?: {
+    hoverShadow: keyof typeof shadowing;
+  };
+  margin?: MarginProps;
 };
+
 type BorderProps = {
-  width: PixelLevelOption;
-  color: PaletteKeys | 'transparent';
-  hoverColor?: PaletteKeys | 'transparent' | null;
+  borderWidth?: PixelLevelOption | RemLevelOpton;
+  borderColor?: PaletteVars;
+  hoverColor?: PaletteVars;
 };
 
 export const designStyles = stylex.create({
-  basicBox: (size: PixelLevelOption | RemLevelOpton) => ({
-    paddingBottom: size,
-    paddingTop: size,
-    paddingLeft: size,
-    paddingRight: size,
-    width: '100%',
-    height: '100%',
+  size: (props: DesignProps['size']) => ({
+    width: props?.width ?? false,
+    height: props?.height ?? false,
   }),
-  customBox: (p: Padding, s?: DesignProps['size']) => ({
-    paddingBottom: p.paddingBottom,
-    paddingTop: p.paddingTop,
-    paddingLeft: p.paddingLeft,
-    paddingRight: p.paddingRight,
-    width: s?.width ?? 'fit-content',
-    height: s?.height ?? 'fit-content',
-  }),
-  flex: {
+  flex: (props: DesignProps['flex']) => ({
     display: 'flex',
-    alignItems: 'center',
-    gap: '0.5rem',
-  },
-  border: (props: BorderProps) => ({
-    borderWidth: props.width,
+    flexDirection: props?.flexDirection,
+    alignItems: props?.alignItems,
+    justifyContent: props?.justifyContent,
+    gap: spacing[props?.gap ?? 'none'],
+  }),
+  border: (props: DesignProps['border']) => ({
     borderStyle: 'solid',
-    borderBlockColor: {
-      default: palette[props.color],
-      ':hover': palette[props.hoverColor ?? 'transparent'],
-    },
-    borderInlineColor: {
-      default: palette[props.color],
-      ':hover': palette[props.hoverColor ?? 'transparent'],
+    borderWidth: props?.borderWidth ?? false,
+    borderColor: {
+      default: props?.borderColor ? palette[props.borderColor] : false,
+      ':hover': props?.hoverColor ? palette[props.hoverColor] : false,
     },
   }),
-  radius: (pxLevel: PixelLevelOption) => ({
-    borderRadius: pxLevel,
+  margin: (props: DesignProps['margin']) => ({
+    marginBottom: props?.marginBottom ?? false,
+    marginTop: props?.marginTop ?? false,
+    marginRight: props?.marginRight ?? false,
+    marginLeft: props?.marginLeft ?? false,
   }),
-});
-
-/**
- * State-based
- */
-
-export type StateBasedProps = {
-  useHover?:
-    | { type: 'basicHover'; props: BasicHover }
-    | { type: 'borderHover'; props: BorderHover }
-    | { type: 'shadowHover'; props?: undefined };
-};
-
-export type BasicHover = {
-  color: keyof typeof palette;
-  backgroundColor: keyof typeof palette;
-};
-export type BorderHover = {
-  borderWidth: PixelLevelOption | 'inherit';
-  borderColor: keyof typeof palette;
-};
-
-export const stateBasedstyles = stylex.create({
-  basicHover: (props: BasicHover) => ({
+  radius: (props: DesignProps['radius']) => ({
+    borderTopLeftRadius: props?.borderTopLeftRadius ?? false,
+    borderTopRightRadius: props?.borderTopRightRadius ?? false,
+    borderBottomLeftRadius: props?.borderBottomLeftRadius ?? false,
+    borderBottomRightRadius: props?.borderBottomRightRadius ?? false,
+  }),
+  color: (props: DesignProps['color']) => ({
     color: {
-      default: 'transparent',
-      ':hover': palette[props.color],
+      default: props?.color ? palette[props.color] : false,
+      ':hover': palette[props?.hoverColor ?? props!.color!],
+      ':checked': props?.checkedColor ? palette[props.checkedColor] : false,
     },
+  }),
+  padding: (p: DesignProps['padding']) => ({
+    paddingBottom: p?.paddingBottom ?? false,
+    paddingLeft: p?.paddingLeft ?? false,
+    paddingRight: p?.paddingRight ?? false,
+    paddingTop: p?.paddingTop ?? false,
+  }),
+  bgColor: (props: DesignProps['bgColor']) => ({
     backgroundColor: {
-      default: 'transparent',
-      ':hover': palette[props.backgroundColor],
+      default: props?.color ? palette[props.color] : false,
+      ':hover': palette[props?.hoverColor ?? props!.color],
+      ':checked': props?.checkedColor ? palette[props.checkedColor] : false,
     },
   }),
-  borderHover: (props: BorderHover) => ({
-    borderWidth: {
-      default: 'transparent',
-      ':hover': props.borderWidth,
-    },
-    borderStyle: {
-      default: null,
-      ':hover': 'solid',
-    },
-    borderBlockColor: {
-      default: 'transparent',
-      ':hover': palette[props.borderColor],
-    },
-    borderInlineColor: {
-      default: 'transparent',
-      ':hover': palette[props.borderColor],
-    },
+  font: (props: DesignProps['font']) => ({
+    fontSize: props?.fontSize ? fontSizing[props.fontSize] : false,
+    fontWeight: props?.fontWeight ? fontWeight[props.fontWeight] : false,
+    textDecoration: 'none',
   }),
-  shadowHover: () => ({
+  position: (position: DesignProps['position']) => ({ position }),
+  shadow: (props: DesignProps['shadow']) => ({
     boxShadow: {
-      default: 'transparent',
-      ':hover': shadowing.basic,
+      default: null,
+      ':hover': props?.hoverShadow ? shadowing[props.hoverShadow] : false,
     },
   }),
+  cursor: {
+    cursor: 'pointer',
+  },
 });
 
 /**

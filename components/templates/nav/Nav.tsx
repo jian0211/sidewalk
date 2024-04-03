@@ -8,6 +8,7 @@ import { ComponentPropsWithoutRef } from 'react';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { palette, spacing } from '../../../styles/globalTokens.stylex';
+import { designStyles } from '@/components/styles';
 
 type NavProps = React.ComponentPropsWithoutRef<'nav'>;
 type AirportsLayoutContainerProps = ComponentPropsWithoutRef<'h1'>;
@@ -19,7 +20,21 @@ export const Nav = (props: NavProps) => {
   const { isAirportPath, isAirlinePath, isFligths, isHomePath } =
     useCurrentPath();
   return (
-    <nav {...props} {...stylex.props(styles.nav)}>
+    <nav
+      {...props}
+      {...stylex.props(
+        styles.nav,
+        designStyles['size']({ width: '100%', height: '6rem' }),
+        designStyles['flex']({ alignItems: 'center', gap: 'medium' }),
+        designStyles['position']('relative'),
+        designStyles['padding']({
+          paddingTop: '0px',
+          paddingBottom: '0px',
+          paddingLeft: '24px',
+          paddingRight: '24px',
+        }),
+      )}
+    >
       {isHomePath || isFligths ? (
         <SearchForm />
       ) : isAirportPath ? (
@@ -37,7 +52,17 @@ export const Nav = (props: NavProps) => {
 const AirportsLayoutContainer = (props: AirportsLayoutContainerProps) => {
   const t = useTranslatedWord('nav.airports');
   return (
-    <h1 {...stylex.props(styles.airportsLayoutTitle)} {...props}>
+    <h1
+      {...props}
+      {...stylex.props(
+        designStyles['size']({ width: '100%' }),
+        designStyles['color']({ color: 'darkGray' }),
+        designStyles['font']({
+          fontSize: 'xlarge',
+          fontWeight: 'medium',
+        }),
+      )}
+    >
       {t('title')}
     </h1>
   );
@@ -46,7 +71,14 @@ const AirportsLayoutContainer = (props: AirportsLayoutContainerProps) => {
 const AirlinesLayoutContainer = (props: AirlinesLayoutContainerProps) => {
   const t = useTranslatedWord('nav.airlines');
   return (
-    <h1 {...stylex.props(styles.airportsLayoutTitle)} {...props}>
+    <h1
+      {...props}
+      {...stylex.props(
+        designStyles['flex']({ alignItems: 'center' }),
+        designStyles['size']({ width: '100%' }),
+        designStyles['font']({ fontSize: 'xlarge', fontWeight: 'medium' }),
+      )}
+    >
       {t('title')}
     </h1>
   );
@@ -55,7 +87,7 @@ const AirlinesLayoutContainer = (props: AirlinesLayoutContainerProps) => {
 const NavGlobalEditBox = (props: NavGlobalEditBoxProps) => {
   return (
     <div {...props}>
-      <Icons src="IconEdit" />
+      <Icons src="IconEdit" useOutline useCursor />
     </div>
   );
 };
@@ -63,27 +95,15 @@ const NavGlobalEditBox = (props: NavGlobalEditBoxProps) => {
 const NotificationBox = (props: NotificationBoxProps) => {
   return (
     <div {...props}>
-      <Icons src="IconNotification" />
+      <Icons src="IconNotification" useOutline useCursor />
     </div>
   );
 };
 
 const styles = stylex.create({
   nav: {
-    position: 'relative',
-    width: '100%',
-    height: '6rem',
-    display: 'flex',
-    alignItems: 'center',
-    padding: '0 24px 0 24px',
-    gap: '1rem',
     borderBottomColor: palette.whiteSoftGray,
     borderBottomStyle: 'solid',
     borderBottomWidth: spacing.xxsmall,
-  },
-  airportsLayoutTitle: {
-    flex: '1',
-    fontSize: '2rem',
-    fontWeight: 400,
   },
 });
