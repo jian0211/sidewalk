@@ -11,6 +11,7 @@ type FlexProps = {
   paddingProps?: DesignProps['padding']; //RemLevelOpton | PixelLevelOption;
   marginProps?: DesignProps['margin']; //RemLevelOpton | PixelLevelOption;
   borderProps?: DesignProps['border']; //RemLevelOpton | PixelLevelOption;
+  fontProps?: DesignProps['font'];
   xstyle?: StyleXArray<any>;
 } & React.ComponentProps<'div'>;
 
@@ -24,6 +25,7 @@ export const Flex = (props: FlexProps) => {
     marginProps,
     borderProps,
     colorProps,
+    fontProps,
     xstyle,
     ...rest
   } = props;
@@ -39,6 +41,7 @@ export const Flex = (props: FlexProps) => {
         paddingProps && designStyles['padding'](paddingProps),
         marginProps && designStyles['margin'](marginProps),
         borderProps && designStyles['border'](borderProps),
+        fontProps && designStyles['font'](fontProps),
         xstyle,
       )}
     />
