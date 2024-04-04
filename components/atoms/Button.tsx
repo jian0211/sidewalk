@@ -9,7 +9,7 @@ import {
   statusStyles,
 } from '../styles';
 import { Prettier } from '@/types/common';
-import { PixelLevelOption } from '../../styles/globalTokens.stylex';
+import { PixelLevelOption, palette } from '../../styles/globalTokens.stylex';
 
 type ButtonCssProps = Prettier<
   Pick<
@@ -28,6 +28,7 @@ type ButtonCssProps = Prettier<
 
 export type ButtonProps = {
   type?: 'button' | 'submit';
+  theme?: keyof typeof themes;
   style?: StyleXArray<any>;
 } & ButtonCssProps &
   React.ComponentPropsWithoutRef<'button'>;
@@ -49,6 +50,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       color,
       bgColor,
       font,
+      theme,
       style,
       ...rest
     } = props;
@@ -76,6 +78,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               fontWeight: font.fontWeight,
               textDecoration: font.textDecoration,
             }),
+          theme && themes[theme],
           isSelected && statusStyles['basicSelected'],
           style,
         )}
@@ -119,5 +122,28 @@ const styles = stylex.create({
     borderStyle: 'none',
     background: 'none',
     cursor: 'pointer',
+  },
+});
+
+const themes = stylex.create({
+  circle: {
+    borderRadius: '100%',
+    padding: '12px',
+    borderWidth: '2px',
+    borderStyle: 'solid',
+    borderColor: {
+      default: palette['baseWhite'],
+      ':hover': palette['lightBlue'],
+    },
+  },
+  round: {
+    borderRadius: '12px',
+    padding: '12px',
+    borderWidth: '2px',
+    borderStyle: 'solid',
+    borderColor: {
+      default: palette['baseWhite'],
+      ':hover': palette['lightBlue'],
+    },
   },
 });

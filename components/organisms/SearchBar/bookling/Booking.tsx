@@ -44,17 +44,7 @@ type BookingUsedType = {
 };
 
 const Container = (props: ContainerProps) => (
-  <div
-    {...props}
-    {...stylex.props(
-      designStyles['size']({ width: '13rem' }),
-      designStyles['flex']({
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '1rem',
-      }),
-    )}
-  />
+  <div {...props} {...stylex.props(styles.container)} />
 );
 
 const TravelPointDropdown = (props: TravelPointDropdownProps) => {
@@ -64,6 +54,7 @@ const TravelPointDropdown = (props: TravelPointDropdownProps) => {
       {...stylex.props(
         designStyles['size']({ width: '4rem', height: '3rem' }),
         designStyles['flex']({
+          flex: '1',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'space-evenly',
@@ -80,19 +71,7 @@ const TravelPointDropdown = (props: TravelPointDropdownProps) => {
 
 const TravelPoint = ({ iata, title, ...props }: TravelPointProps) => {
   return (
-    <div
-      {...props}
-      {...stylex.props(
-        designStyles['size']({ width: '5rem' }),
-        designStyles['flex']({ flexDirection: 'column', alignItems: 'center' }),
-        designStyles['padding']({
-          paddingBottom: '16px',
-          paddingLeft: '16px',
-          paddingRight: '16px',
-          paddingTop: '16px',
-        }),
-      )}
-    >
+    <div {...props} {...stylex.props(styles.travelPoint)}>
       <label>{iata}</label>
       <p {...stylex.props(styles.travelPointTitle)}>{title}</p>
     </div>
@@ -100,7 +79,13 @@ const TravelPoint = ({ iata, title, ...props }: TravelPointProps) => {
 };
 
 const TravelPointSwapperButton = (props: TravelPointSwapperButtonProps) => {
-  return <IconButton {...props} iconProps={{ src: 'IconSwap', width: 28 }} />;
+  return (
+    <IconButton
+      {...props}
+      theme="round"
+      iconProps={{ src: 'IconSwap', width: 28 }}
+    />
+  );
 };
 
 const SearchTravelPointModal = (props: SearchTravelPointModalProps) => {
@@ -182,7 +167,7 @@ const FlightIconWithText = (props: FlightIconWithTextProps) => {
       {...rest}
       {...stylex.props(
         designStyles['size']({ width: '100%', height: '3rem' }),
-        designStyles['flex']({ alignItems: 'center', gap: '1rem' }),
+        designStyles['flex']({ alignItems: 'center', gap: 'medium' }),
         designStyles['font']({ fontSize: 'xsmall', fontWeight: 'medium' }),
         designStyles['padding']({
           paddingTop: '8px',
@@ -245,6 +230,15 @@ export const Booking = {
 };
 
 const styles = stylex.create({
+  container: {
+    display: 'flex',
+    gap: '1rem',
+    width: '15rem',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    padding: '6px',
+    marginRight: '1rem',
+  },
   travelPointTitle: {
     width: 'inherit',
     textAlign: 'center',
@@ -261,5 +255,18 @@ const styles = stylex.create({
     justifyContent: 'flex-start',
     cursor: 'pointer',
     borderRadius: '0.5vw',
+  },
+  travelPoint: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '8px',
+    borderRadius: '12px',
+    borderWidth: '2px',
+    borderStyle: 'solid',
+    borderColor: {
+      default: palette['baseWhite'],
+      ':hover': palette['lightBlue'],
+    },
   },
 });
