@@ -1,6 +1,6 @@
 import { Country } from '@/types/country';
 import { PrismaClient } from '@prisma/client';
-import type { NextApiRequest } from 'next';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient();
 
@@ -10,12 +10,17 @@ type Params = {
   };
 };
 
-export async function GET(req: NextApiRequest, { params }: Params) {
+export async function GET(
+  req: Request & NextApiRequest,
+  res: Response & NextApiResponse,
+  { params }: Params,
+) {
   try {
     const airports = await getAirportsOfCountry(params.country);
     return Response.json(airports);
   } catch (err) {
     console.log('err', err);
+    res.status(500).send({ error: 'Failed to fetch data' });
   }
 }
 
