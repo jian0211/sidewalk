@@ -13,9 +13,9 @@ import {
   SizeOption,
 } from '../styles/globalTokens.stylex';
 
-type FlexProps = {
+export type FlexProps = {
   display?: 'flex';
-  flex?: `${0 | 1 | 2 | 3 | 4 | 5}`;
+  flex?: `${0 | 1 | 2 | 3 | 4 | 5}` | 'auto';
   flexDirection?: 'row' | 'column';
   gap?: SizeOption;
   alignItems?: 'start' | 'center' | 'end';

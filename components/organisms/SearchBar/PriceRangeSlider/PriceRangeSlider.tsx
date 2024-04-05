@@ -1,6 +1,10 @@
 import { designStyles } from '@/components/styles';
 import { FLIGHT_COST } from '@/store/fligths';
-import { palette, spacing } from '../../../../styles/globalTokens.stylex';
+import {
+  fontWeight,
+  palette,
+  spacing,
+} from '../../../../styles/globalTokens.stylex';
 import * as stylex from '@stylexjs/stylex';
 import { useLocale } from 'next-intl';
 import React from 'react';
@@ -18,24 +22,26 @@ type RangeFillBoxProps = React.ComponentPropsWithoutRef<'div'> & {
 };
 type InputProps = React.ComponentPropsWithoutRef<'input'>;
 
+const TOTAL_WIDTH = 23;
+
 const Container = (props: ContainerProps) => {
   return (
     <section
       {...props}
       {...stylex.props(
-        designStyles['size']({ width: '23rem' }),
+        designStyles['position']('relative'),
+        designStyles['size']({ width: `${TOTAL_WIDTH}rem`, height: '4rem' }),
         designStyles['padding']({
           paddingBottom: '20px',
           paddingLeft: '20px',
           paddingRight: '20px',
-          paddingTop: '20px',
+          paddingTop: '10px',
         }),
-        designStyles['bgColor']({
-          color: 'baseWhite',
-        }),
+        designStyles['bgColor']({ color: 'baseWhite' }),
         designStyles['flex']({
           flexDirection: 'column',
-          gap: '8px',
+          justifyContent: 'center',
+          gap: 'medium',
         }),
       )}
     />
@@ -50,10 +56,7 @@ const Content = (props: ContentProps) => {
         designStyles['flex']({
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: '1rem',
-        }),
-        designStyles['padding']({
-          paddingBottom: '4px',
+          gap: 'medium',
         }),
       )}
     />
@@ -78,7 +81,7 @@ const LabelBox = ({ rangeType, children, ...props }: LabelBoxProps) => {
           flex: '1',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: '4px',
+          gap: 'xxsmall',
         }),
       )}
     >
@@ -100,16 +103,13 @@ const LabelBox = ({ rangeType, children, ...props }: LabelBoxProps) => {
   );
 };
 
-const Slider = (props: SliderProps) => (
-  <div {...props} style={{ position: 'relative' }} />
-);
+const Slider = (props: SliderProps) => <div {...props} />;
 
 export const RangeFillBox = ({
   flightCost: { min, max },
   ...props
 }: RangeFillBoxProps) => {
   // fill range
-  const TOTAL_WIDTH = 21;
   const left = ((min / FLIGHT_COST.max) * TOTAL_WIDTH).toFixed(2) + 'rem';
   const right = ((1 - max / FLIGHT_COST.max) * TOTAL_WIDTH).toFixed(2) + 'rem';
   return <div {...stylex.props(styles.rangeFill(left, right))} {...props} />;
@@ -153,15 +153,16 @@ const styles = stylex.create({
   title: {
     flex: '1',
     textAlign: 'center',
-    color: palette.darkGray,
+    color: palette['darkGray'],
   },
   rangeFill: (left, right) => ({
     left,
     right,
-    height: spacing.xsmall,
-    backgroundColor: palette.lightBlue,
+    height: spacing['xsmall'],
+    backgroundColor: palette['lightBlue'],
     position: 'absolute',
     zIndex: 1,
     width: 'auto',
+    fontWeight: fontWeight['bold'],
   }),
 });

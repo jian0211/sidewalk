@@ -56,6 +56,7 @@ const AirportsLayoutContainer = (props: AirportsLayoutContainerProps) => {
       {...props}
       {...stylex.props(
         designStyles['size']({ width: '100%' }),
+        designStyles['flex']({ alignItems: 'center' }),
         designStyles['color']({ color: 'darkGray' }),
         designStyles['font']({
           fontSize: 'xlarge',

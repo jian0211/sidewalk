@@ -12,16 +12,17 @@ const Container = (props: ContainerProps) => {
     <div
       {...props}
       {...stylex.props(
-        designStyles['flex'](),
+        designStyles['flex']({}),
         designStyles['border']({
           borderColor: 'whiteSoftGray',
           borderWidth: '2px',
+          hoverColor: 'lightBlue',
         }),
         designStyles['radius']({
-          borderBottomLeftRadius: '12px',
-          borderBottomRightRadius: '12px',
-          borderTopLeftRadius: '12px',
-          borderTopRightRadius: '12px',
+          borderBottomLeftRadius: '16px',
+          borderBottomRightRadius: '16px',
+          borderTopLeftRadius: '16px',
+          borderTopRightRadius: '16px',
         }),
       )}
     />
