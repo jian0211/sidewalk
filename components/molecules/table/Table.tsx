@@ -4,11 +4,11 @@ import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 import { DesignProps, designStyles } from '@/components/styles';
 import { palette } from '../../../styles/globalTokens.stylex';
 
-type TableProps = ComponentPropsWithoutRef<'ul'> & {
+export type TableProps = ComponentPropsWithoutRef<'ul'> & {
   style?: StyleXArray<any>;
 };
-type RowProps = ComponentPropsWithoutRef<'li'>;
-type HeaderProps = ComponentPropsWithoutRef<'li'>;
+export type RowProps = ComponentPropsWithoutRef<'li'>;
+export type HeaderProps = ComponentPropsWithoutRef<'li'>;
 type BodyProps = ComponentPropsWithoutRef<'div'> & {
   useScroll?: boolean;
 };
@@ -30,7 +30,7 @@ const Container = ({ style, ...props }: TableProps) => (
       designStyles['flex']({
         flexDirection: 'column',
         justifyContent: 'start',
-        gap: '8px',
+        gap: 'small',
       }),
       designStyles['border']({
         borderColor: 'softGray',
@@ -45,7 +45,7 @@ const Header = (props: HeaderProps) => (
   <li
     {...props}
     {...stylex.props(
-      styles.borderBottom,
+      styles.header,
       designStyles['size']({
         width: '100%',
         height: '4rem',
@@ -55,10 +55,6 @@ const Header = (props: HeaderProps) => (
         paddingLeft: '16px',
         paddingRight: '16px',
         paddingTop: '16px',
-      }),
-      designStyles['radius']({
-        borderTopLeftRadius: '16px',
-        borderTopRightRadius: '16px',
       }),
       designStyles['font']({
         fontSize: 'small',
@@ -74,13 +70,12 @@ const Row = (props: RowProps) => (
   <li
     {...props}
     {...stylex.props(
-      styles.borderBottom,
+      styles.row,
       designStyles['font']({
         fontSize: 'xsmall',
         fontWeight: 'medium',
       }),
-      designStyles['flex']({ alignItems: 'center', gap: '8px' }),
-      designStyles['bgColor']({ color: 'transparent' }),
+      designStyles['flex']({ alignItems: 'center', gap: 'small' }),
       designStyles['padding']({
         paddingBottom: '8px',
         paddingLeft: '8px',
@@ -129,7 +124,14 @@ const styles = stylex.create({
     overflowY: 'scroll',
     overflowX: 'hidden',
   },
-  borderBottom: {
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+    borderBottomColor: palette['softGray'],
+    borderBottomStyle: 'solid',
+    borderBottomWidth: '2px',
+  },
+  row: {
     borderBottomColor: palette['softGray'],
     borderBottomStyle: 'solid',
     borderBottomWidth: '2px',
