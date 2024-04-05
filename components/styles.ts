@@ -97,19 +97,11 @@ export const statusStyles = stylex.create({
 export type DesignProps = {
   padding?: PaddingProps;
   size?: SizeProps;
-  flex?: FlexProps;
-  color?: {
-    color: PaletteVars;
-    hoverColor?: PaletteVars;
-    checkedColor?: PaletteVars;
-  };
-  bgColor?: {
-    color: PaletteVars;
-    hoverColor?: PaletteVars;
-    checkedColor?: PaletteVars;
-  };
+  flex?: FlexProps; //typeof flexProperties; // FlexProps;
+  color?: ColorProps;
+  bgColor?: BgColorProps;
   font?: FontProps;
-  position?: 'relative';
+  position?: PositionProps;
   radius?: RadiusProps;
   border?: BorderProps;
   shadow?: {
@@ -117,7 +109,17 @@ export type DesignProps = {
   };
   margin?: MarginProps;
 };
-
+type PositionProps = 'relative';
+type ColorProps = {
+  color: PaletteVars;
+  hoverColor?: PaletteVars;
+  checkedColor?: PaletteVars;
+};
+type BgColorProps = {
+  color: PaletteVars;
+  hoverColor?: PaletteVars;
+  checkedColor?: PaletteVars;
+};
 type BorderProps = {
   borderWidth?: PixelLevelOption | RemLevelOpton;
   borderColor?: PaletteVars;
@@ -125,67 +127,66 @@ type BorderProps = {
 };
 
 export const designStyles = stylex.create({
-  size: (props: DesignProps['size']) => ({
-    width: props?.width ?? false,
-    height: props?.height ?? false,
+  size: (props: SizeProps) => ({
+    width: props.width ?? false,
+    height: props.height ?? false,
   }),
-  flex: (props: DesignProps['flex']) => ({
+  flex: (props: FlexProps) => ({
     display: 'flex',
-    flexDirection: props?.flexDirection,
-    alignItems: props?.alignItems,
-    justifyContent: props?.justifyContent,
-    gap: spacing[props?.gap ?? 'none'],
+    flexDirection: props.flexDirection ?? 'row',
+    alignItems: props.alignItems ?? 'stretch',
+    justifyContent: props.justifyContent ?? 'flex-start',
+    gap: spacing[props.gap ?? 'none'],
   }),
-  border: (props: DesignProps['border']) => ({
+  border: (props: BorderProps) => ({
     borderStyle: 'solid',
-    borderWidth: props?.borderWidth ?? false,
+    borderWidth: props.borderWidth ?? false,
     borderColor: {
-      default: props?.borderColor ? palette[props.borderColor] : false,
-      ':hover': props?.hoverColor ? palette[props.hoverColor] : false,
+      default: palette[props.borderColor ?? 'baseWhite'],
+      ':hover': palette[props.hoverColor ?? props.borderColor!],
     },
   }),
-  margin: (props: DesignProps['margin']) => ({
-    marginBottom: props?.marginBottom ?? false,
-    marginTop: props?.marginTop ?? false,
-    marginRight: props?.marginRight ?? false,
-    marginLeft: props?.marginLeft ?? false,
+  margin: (props: MarginProps) => ({
+    marginBottom: props.marginBottom ?? false,
+    marginTop: props.marginTop ?? false,
+    marginRight: props.marginRight ?? false,
+    marginLeft: props.marginLeft ?? false,
   }),
-  radius: (props: DesignProps['radius']) => ({
-    borderTopLeftRadius: props?.borderTopLeftRadius ?? false,
-    borderTopRightRadius: props?.borderTopRightRadius ?? false,
-    borderBottomLeftRadius: props?.borderBottomLeftRadius ?? false,
-    borderBottomRightRadius: props?.borderBottomRightRadius ?? false,
+  radius: (props: RadiusProps) => ({
+    borderTopLeftRadius: props.borderTopLeftRadius ?? false,
+    borderTopRightRadius: props.borderTopRightRadius ?? false,
+    borderBottomLeftRadius: props.borderBottomLeftRadius ?? false,
+    borderBottomRightRadius: props.borderBottomRightRadius ?? false,
   }),
-  color: (props: DesignProps['color']) => ({
+  color: (props: ColorProps) => ({
     color: {
-      default: props?.color ? palette[props.color] : false,
-      ':hover': palette[props?.hoverColor ?? props!.color!],
-      ':checked': props?.checkedColor ? palette[props.checkedColor] : false,
+      default: palette[props.color],
+      ':hover': palette[props.hoverColor ?? props.color],
+      // ':checked': props?.checkedColor ? palette[props.checkedColor] : false,
     },
   }),
-  padding: (p: DesignProps['padding']) => ({
-    paddingBottom: p?.paddingBottom ?? false,
-    paddingLeft: p?.paddingLeft ?? false,
-    paddingRight: p?.paddingRight ?? false,
-    paddingTop: p?.paddingTop ?? false,
+  padding: (p: PaddingProps) => ({
+    paddingBottom: p.paddingBottom ?? false,
+    paddingLeft: p.paddingLeft ?? false,
+    paddingRight: p.paddingRight ?? false,
+    paddingTop: p.paddingTop ?? false,
   }),
-  bgColor: (props: DesignProps['bgColor']) => ({
+  bgColor: (props: BgColorProps) => ({
     backgroundColor: {
-      default: props?.color ? palette[props.color] : false,
-      ':hover': palette[props?.hoverColor ?? props!.color],
-      ':checked': props?.checkedColor ? palette[props.checkedColor] : false,
+      default: palette[props.color],
+      ':hover': palette[props.hoverColor ?? props.color],
     },
   }),
-  font: (props: DesignProps['font']) => ({
-    fontSize: props?.fontSize ? fontSizing[props.fontSize] : false,
-    fontWeight: props?.fontWeight ? fontWeight[props.fontWeight] : false,
+  font: (props: FontProps) => ({
+    fontSize: fontSizing[props.fontSize ?? 'small'],
+    fontWeight: fontWeight[props.fontWeight ?? 'normal'],
     textDecoration: 'none',
   }),
-  position: (position: DesignProps['position']) => ({ position }),
+  position: (position: PositionProps) => ({ position }),
   shadow: (props: DesignProps['shadow']) => ({
     boxShadow: {
       default: null,
-      ':hover': props?.hoverShadow ? shadowing[props.hoverShadow] : false,
+      ':hover': shadowing[props?.hoverShadow ?? 'none'],
     },
   }),
   cursor: {

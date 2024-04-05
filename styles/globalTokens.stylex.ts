@@ -113,15 +113,6 @@ export const fontSizing = stylex.defineVars(fontProperties.size);
 
 export const fontWeight = stylex.defineVars(fontProperties.weight);
 
-const levelProperties = {
-  '0': '0',
-  '1': '1',
-  '2': '2',
-  '3': '3',
-  '4': '4',
-  '5': '5',
-} as const;
-
 export type FlexVars = {
   display?: 'flex';
   flex?: `${0 | 1 | 2 | 3 | 4 | 5}`;

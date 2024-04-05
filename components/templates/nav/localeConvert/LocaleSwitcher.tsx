@@ -83,7 +83,7 @@ const ToggleButton = ({ iconProps: { src }, ...props }: IconButtonProps) => (
     {...props}
     flex={{
       alignItems: 'center',
-      gap: '8px',
+      gap: 'small',
     }}
     border={{
       borderWidth: '2px',

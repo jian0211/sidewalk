@@ -1,15 +1,18 @@
 import { carriersDummy } from '@/prisma/dummy/airlines';
 import { PrismaClient } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
 const prisma = new PrismaClient();
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(
+  req: Request & NextApiRequest,
+  res: Response & NextApiResponse,
+) {
   try {
     await prisma.airline.createMany({ data: carriersDummy });
     return Response.json('dummy Ok');
   } catch (err) {
     console.log('err', err);
+    res.status(500).send({ error: 'Failed to fetch data' });
   }
 }
 
