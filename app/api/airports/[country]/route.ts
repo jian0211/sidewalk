@@ -1,8 +1,6 @@
+import { db } from '@/prisma/prisma';
 import { Country } from '@/types/country';
-import { PrismaClient } from '@prisma/client';
-import type { NextApiRequest, NextApiResponse } from 'next';
-
-const prisma = new PrismaClient();
+import type { NextApiRequest } from 'next';
 
 type Params = {
   params: {
@@ -10,22 +8,17 @@ type Params = {
   };
 };
 
-export async function GET(
-  req: Request & NextApiRequest,
-  res: Response & NextApiResponse,
-  { params }: Params,
-) {
+export async function GET(req: Request & NextApiRequest, { params }: Params) {
   try {
     const airports = await getAirportsOfCountry(params.country);
     return Response.json(airports);
   } catch (err) {
     console.log('err', err);
-    res.status(500).send({ error: 'Failed to fetch data' });
   }
 }
 
 const getAirportsOfCountry = async (country: Country) => {
-  return await prisma.airport.findMany({
+  return await db.airport.findMany({
     where: { countryCode: country === 'jp' ? 'JP' : 'KO' },
   });
 };
