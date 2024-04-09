@@ -6,14 +6,27 @@ export const metadata: Metadata = {
   title: 'Home-page | Sidewalk',
 };
 
-const HomePage = () => {
+const HomePage = async () => {
   return (
     <Dashboard.Container>
-      <Dashboard.ArticleBox theme="rectangle" />
-      <Dashboard.ArticleBox theme="square" />
-      <Dashboard.ArticleBox theme="graph">
-        <MyResponsiveLine />
-      </Dashboard.ArticleBox>
+      <Dashboard.Article>
+        <Dashboard.Box theme="rectangle">
+          <h3>one</h3>
+        </Dashboard.Box>
+        <Dashboard.Box theme="rectangle">
+          <h3>two</h3>
+        </Dashboard.Box>
+        <Dashboard.Box theme="rectangle">
+          <h3>three</h3>
+        </Dashboard.Box>
+        <Dashboard.Box theme="rectangle">
+          <h3>four</h3>
+        </Dashboard.Box>
+        <Dashboard.Box theme="square" />
+        <Dashboard.Box theme="graph">
+          <MyResponsiveLine />
+        </Dashboard.Box>
+      </Dashboard.Article>
     </Dashboard.Container>
   );
 };
