@@ -9,6 +9,7 @@ export const useCurrentPath = () => {
     path,
     isAirportPath: isCurrentPage('airports'),
     isHomePath: path === '/ja' || path === '/ko',
+    isDashboardPath: isCurrentPage('dashboard'),
     isAirlinePath: isCurrentPage('airlines'),
     isFligths: isCurrentPage('flights'),
     isLogin: isCurrentPage('login'),

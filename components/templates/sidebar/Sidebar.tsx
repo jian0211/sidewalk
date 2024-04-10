@@ -18,7 +18,7 @@ const Sidebar = () => {
         <SidebarMenu.TabMenu
           iconname="IconDashborad"
           title={t('home.title')}
-          linkProps={{ href: `/${locale}` }}
+          linkProps={{ href: `/${locale}/dashboard` }}
           isCurrent={paths.isHomePath}
         />
         <SidebarMenu.Accordion

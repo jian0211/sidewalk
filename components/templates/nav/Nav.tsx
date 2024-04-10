@@ -17,8 +17,13 @@ type NavGlobalEditBoxProps = React.ComponentPropsWithoutRef<'div'>;
 type NotificationBoxProps = React.ComponentPropsWithoutRef<'div'>;
 
 export const Nav = (props: NavProps) => {
-  const { isAirportPath, isAirlinePath, isFligths, isHomePath } =
-    useCurrentPath();
+  const {
+    isAirportPath,
+    isAirlinePath,
+    isFligths,
+    isHomePath,
+    isDashboardPath,
+  } = useCurrentPath();
   return (
     <nav
       {...props}
@@ -35,7 +40,7 @@ export const Nav = (props: NavProps) => {
         }),
       )}
     >
-      {isHomePath || isFligths ? (
+      {isHomePath || isFligths || isDashboardPath ? (
         <SearchForm />
       ) : isAirportPath ? (
         <AirportsLayoutContainer />

@@ -1,5 +1,6 @@
 export const path = {
   home: '/',
+  dashboard: '/dashboard',
   airports: '/airports',
   airlines: '/airlines',
   schedule: '/airlines/schedule',

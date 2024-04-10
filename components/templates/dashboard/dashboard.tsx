@@ -1,11 +1,17 @@
-import { palette } from '../../../styles/globalTokens.stylex';
+import {
+  fontSizing,
+  fontWeight,
+  palette,
+} from '../../../styles/globalTokens.stylex';
 import * as stylex from '@stylexjs/stylex';
 
 type ContainerProps = React.ComponentProps<'section'>;
 type ArticleProps = React.ComponentProps<'article'>;
 type BoxProps = {
   theme: 'graph' | 'square' | 'rectangle';
+  title: string;
 } & React.ComponentProps<'div'>;
+type TitleProps = React.ComponentProps<'h3'>;
 
 const Container = (props: ContainerProps) => {
   return <section {...props} {...stylex.props(styles['container'])} />;
@@ -16,29 +22,31 @@ const Article = (props: ArticleProps) => {
 };
 
 const Box = (props: BoxProps) => {
-  const { theme, children, ...rest } = props;
+  const { theme, children, title, ...rest } = props;
   return (
     <div {...rest} {...stylex.props(styles['box'], themes[theme])}>
-      <span {...stylex.props(styles.bossss)}>
-        <span {...stylex.props(styles.testTitle)}>testvbale</span>
-      </span>
+      <div {...stylex.props(styles['titleBox'])}>
+        <p {...stylex.props(styles['boxTitle'])}>{title}</p>
+      </div>
       {children}
     </div>
   );
 };
 
-export const Dashboard = { Container, Article, Box };
+const Title = (props: TitleProps) => {
+  return <h3 {...props} style={{ padding: '2rem' }} />;
+};
+
+export const Dashboard = { Container, Article, Box, Title };
 
 const styles = stylex.create({
   container: {
+    display: 'flex',
     width: '100%',
     height: '50rem',
-    // paddingBlock: '2rem',
-    // marginInline: '2rem',
     padding: '2rem',
-    margin: '2rem',
+    // margin: '2rem',
     overflowY: 'scroll',
-    display: 'flex',
     gap: '1rem',
     border: '1px solid red',
   },
@@ -46,24 +54,29 @@ const styles = stylex.create({
     display: 'flex',
     flexWrap: 'wrap',
     gap: '1rem',
+    height: 'fit-content',
+    padding: '2rem',
+    alignContent: 'flex-start',
   },
   box: {
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: 'pink',
+    overflow: 'hidden',
+    backgroundColor: palette['whiteSoftGray'],
     borderRadius: '1vw',
+    border: '1px solid red',
+    padding: '2rem',
   },
-  bossss: {
+  titleBox: {
     right: '0',
     position: 'absolute',
-    // padding: '8px',
     display: 'flex',
     justifyContent: 'flex-end',
     paddingLeft: '8px',
     paddingBottom: '8px',
-    width: 'fit-content',
-    height: 'fit-content',
+    width: '40%',
+    height: '3rem',
     borderBottomLeftRadius: '1vw',
     backgroundColor: 'white',
 
@@ -72,7 +85,7 @@ const styles = stylex.create({
       top: '0',
       left: '-1rem',
       position: 'absolute',
-      backgroundColor: 'pink',
+      backgroundColor: palette['whiteSoftGray'],
       width: '1rem',
       height: '1rem',
       borderRadius: '0 1vw 0 0',
@@ -84,30 +97,27 @@ const styles = stylex.create({
       bottom: '-16px',
       right: 0,
       //   backgroundColor: 'red',
-      backgroundColor: 'pink',
+      backgroundColor: palette['whiteSoftGray'],
       width: '1rem',
       height: '1rem',
       borderRadius: '0 1vw 0 0',
       boxShadow: '4px -4px 0 4px white',
     },
   },
-  testTitle: {
-    display: 'table-cell',
-    width: 'auto',
-    height: '40px',
-    backgroundColor: 'pink', // palette['whiteSoftGray'],
-    paddingInline: '1rem',
-    borderRadius: '1vw',
-    borderColor: 'pink', // palette['baseWhite'],
+  boxTitle: {
+    width: 'calc(100% - 12px)',
+    // paddingLeft: '8px',
+    height: '36px',
+    backgroundColor: palette['whiteSoftGray'], // palette['whiteSoftGray'],
+    borderRadius: '14px',
+    borderColor: palette['whiteSoftGray'], // palette['baseWhite'],
     borderStyle: 'solid',
-    verticalAlign: 'middle',
     textAlign: 'center',
+    fontSize: fontSizing['small'],
+    fontWeight: fontWeight['medium'],
   },
 });
 
-// 비율로??
-// samll 24rem
-// middle 48rem
 const DEFAULT_WIDTH = '24rem';
 const themes = stylex.create({
   square: {
@@ -127,9 +137,9 @@ const themes = stylex.create({
     maxHeight: '12rem',
   },
   graph: {
-    width: '84rem', //'calc(DEFAULT_WIDTH * 4)',
-    minWidth: '84rem',
-    maxWidth: '84rem',
+    width: '73rem', //'calc(DEFAULT_WIDTH * 4)',
+    minWidth: '73rem',
+    maxWidth: '73rem',
     height: DEFAULT_WIDTH,
     minHeight: DEFAULT_WIDTH,
     maxHeight: DEFAULT_WIDTH,
