@@ -91,7 +91,7 @@ export const spacing = stylex.defineVars<Record<SizeOption, PixelLevelOption>>({
   fitContent: 'fit-content',
 });
 
-const fontProperties = {
+export const fontProperties = {
   size: {
     xxsmall: '0.75rem',
     xsmall: '0.875rem',

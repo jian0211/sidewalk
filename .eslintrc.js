@@ -23,7 +23,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    // '@stylexjs/valid-styles': 'error',
+    '@stylexjs/valid-styles': 'error',
     'react/prop-types': 'off',
     'import/namespace': 'off',
   },
