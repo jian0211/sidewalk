@@ -1,17 +1,40 @@
+import { Icons } from '@/components/atoms/Icon';
 import { ResponsiveLine, Serie } from '@nivo/line';
 import * as stylex from '@stylexjs/stylex';
 
-type NavProps = React.ComponentProps<'div'>;
+type GraphNavProps = React.ComponentProps<'div'>;
 type GraphProps = { graphData?: Serie[] } & React.ComponentProps<'div'>;
+type VerticalRotationIconProps = React.ComponentProps<'span'>;
 
-const Nav = (props: NavProps) => {
-  return <div {...props} {...stylex.props(styles.nav)} />;
+const VerticalRotationIcon = (props: VerticalRotationIconProps) => {
+  const { children, ...rest } = props;
+  return (
+    <span {...rest} {...stylex.props(styles['verticalRotationIcon'])}>
+      <Icons
+        src="IconCurrencyKrw"
+        width={50}
+        style={styles['FrontIconAnimation']}
+      />
+      <Icons
+        customPostition={{
+          left: 0,
+        }}
+        src="IconCurrencyJpy"
+        width={50}
+        style={styles['BackIconAnimation']}
+      />
+    </span>
+  );
+};
+
+const GraphNav = (props: GraphNavProps) => {
+  return <div {...props} {...stylex.props(styles['graphNav'])} />;
 };
 
 const Graph = (props: GraphProps) => {
   const { graphData = dummyData, ...rest } = props;
   return (
-    <div {...rest} {...stylex.props(styles.graphBox)}>
+    <div {...rest} {...stylex.props(styles['graphBox'])}>
       <ResponsiveLine
         data={graphData}
         margin={{ top: 10, right: 10, bottom: 30, left: 30 }}
@@ -53,7 +76,8 @@ const Graph = (props: GraphProps) => {
 };
 
 export const ExchangeRate = {
-  Nav,
+  VerticalRotationIcon,
+  GraphNav,
   Graph,
 };
 const dummyData = [
@@ -167,8 +191,52 @@ const dummyData = [
   },
 ];
 
+const verticalRotationAnimationFront = stylex.keyframes({
+  '0%': {
+    opacity: 0,
+  },
+  '48%': {
+    opacity: 0,
+  },
+  '50%': {
+    transform: 'rotateY(-90deg)',
+    animationTimingFunction: 'cubic-bezier(0.5, 0, 1, 0.5)',
+    opacity: 1,
+  },
+  '75%': {
+    transform: 'rotateY(180deg)',
+    animationTimingFunction: 'cubic-bezier(0, 0.5, 0.5, 1)',
+  },
+  '100%': {
+    transform: 'rotateY(270deg)',
+    animationTimingFunction: 'cubic-bezier(0.5, 0, 1, 0.5)',
+  },
+});
+
+const verticalRotationAnimationBack = stylex.keyframes({
+  '0%': {
+    transform: 'rotateY(-90deg)',
+    animationTimingFunction: 'cubic-bezier(0.5, 0, 1, 0.5)',
+  },
+  '25%': {
+    transform: 'rotateY(180deg)',
+    animationTimingFunction: 'cubic-bezier(0, 0.5, 0.5, 1)',
+  },
+  '49%': {
+    opacity: 1,
+    transform: 'rotateY(270deg)',
+    animationTimingFunction: 'cubic-bezier(0.5, 0, 1, 0.5)',
+  },
+  '50%': {
+    opacity: 0,
+  },
+  '100%': {
+    opacity: 0,
+  },
+});
+
 const styles = stylex.create({
-  nav: {
+  graphNav: {
     width: '59%',
     height: '3rem',
     display: 'flex',
@@ -181,4 +249,15 @@ const styles = stylex.create({
     width: '100%',
     height: '18rem',
   },
+  FrontIconAnimation: {
+    animationName: verticalRotationAnimationFront,
+    animationDuration: '5s',
+    animationIterationCount: 'infinite',
+  },
+  BackIconAnimation: {
+    animationName: verticalRotationAnimationBack,
+    animationDuration: '5s',
+    animationIterationCount: 'infinite',
+  },
+  verticalRotationIcon: { position: 'relative' },
 });

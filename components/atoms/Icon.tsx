@@ -5,6 +5,13 @@ import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 import Image from 'next/image';
 import { designStyles } from '../styles';
 
+type CustomPosition = {
+  left?: number;
+  right?: number;
+  top?: number;
+  bottom?: number;
+};
+
 export type IconsProps = {
   style?: StyleXArray<any>;
   src: IconNames;
@@ -13,6 +20,7 @@ export type IconsProps = {
   useBorder?: boolean;
   useOutline?: boolean;
   useCursor?: boolean;
+  customPostition?: CustomPosition;
 } & React.ComponentProps<'span'>;
 export type IconNames = keyof typeof Icon;
 
@@ -25,6 +33,7 @@ export const Icons = (props: IconsProps) => {
     useBorder,
     useOutline,
     useCursor,
+    customPostition,
     ...rest
   } = props;
 
@@ -59,6 +68,7 @@ export const Icons = (props: IconsProps) => {
           borderTopRightRadius: '8px',
         }),
         useCursor && designStyles['cursor'],
+        customPostition && styles['customPosition'](customPostition),
         style,
       )}
     >
@@ -84,4 +94,11 @@ const styles = stylex.create({
     borderWidth: spacing.xxsmall,
     borderRadius: spacing.xxsmall,
   },
+  customPosition: (props: CustomPosition) => ({
+    position: 'absolute',
+    left: props.left ?? 'auto',
+    right: props.left ?? 'auto',
+    top: props.left ?? 'auto',
+    bottom: props.left ?? 'auto',
+  }),
 });
