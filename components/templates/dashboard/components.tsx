@@ -10,10 +10,12 @@ import * as stylex from '@stylexjs/stylex';
 
 type ContainerProps = React.ComponentProps<'section'>;
 type ArticleProps = React.ComponentProps<'article'>;
+type ArticleBodyProps = React.ComponentProps<'div'>;
 type BoxProps = {
   theme: 'graph' | 'square' | 'rectangle';
   title: string;
 } & React.ComponentProps<'div'>;
+type PanelHeaderProps = React.ComponentProps<'div'>;
 type PanelTitleProps = React.ComponentProps<'h3'>;
 type IconWithTextProps = {
   colorProps?: Partial<ColorProps>;
@@ -29,6 +31,8 @@ type FontProps = {
 type ColorProps = {
   color: PaletteVars;
 };
+type ArticleHeaderProps = React.ComponentProps<'div'>;
+type ArticleHeaderTitleProps = React.ComponentProps<'span'>;
 
 const Container = (props: ContainerProps) => {
   return <section {...props} {...stylex.props(styles['container'])} />;
@@ -37,7 +41,15 @@ const Container = (props: ContainerProps) => {
 const Article = (props: ArticleProps) => {
   return <article {...props} {...stylex.props(styles['article'])} />;
 };
-
+const ArticleHeader = (props: ArticleHeaderProps) => {
+  return <div {...props} {...stylex.props(styles['articleHeader'])} />;
+};
+const ArticleBody = (props: ArticleBodyProps) => {
+  return <div {...props} {...stylex.props(styles['articleBody'])} />;
+};
+const ArticleHeaderTitle = (props: ArticleHeaderTitleProps) => {
+  return <span {...props} {...stylex.props(styles['articleHeaderTitle'])} />;
+};
 const Panel = (props: BoxProps) => {
   const { theme, children, title, ...rest } = props;
   return (
@@ -50,24 +62,28 @@ const Panel = (props: BoxProps) => {
   );
 };
 
+const PanelHeader = (props: PanelHeaderProps) => {
+  return <div {...props} {...stylex.props(styles['panelHeader'])} />;
+};
+
 const PanelTitle = (props: PanelTitleProps) => {
-  return <h3 {...props} {...stylex.props(styles.panelTitle)} />;
+  return <h3 {...props} {...stylex.props(styles['panelTitle'])} />;
 };
 type PanelBodyProps = React.ComponentProps<'div'>;
 type PanelBottomProps = React.ComponentProps<'div'>;
 
 const PanelBody = (props: PanelBodyProps) => {
-  return <div {...props} {...stylex.props(styles.panelBody)} />;
+  return <div {...props} {...stylex.props(styles['panelBody'])} />;
 };
 
 const PanelBottom = (props: PanelBottomProps) => {
-  return <div {...props} {...stylex.props(styles.panelBottom)} />;
+  return <div {...props} {...stylex.props(styles['panelBottom'])} />;
 };
 
 const IconWithText = (props: IconWithTextProps) => {
   const { children, colorProps, ...rest } = props;
   return (
-    <p {...rest} {...stylex.props(styles.iconWithText)}>
+    <p {...rest} {...stylex.props(styles['iconWithText'])}>
       <Icons src="IconTime" width={20} />
       <Text fontSize="xsmall" {...colorProps}>
         {children}
@@ -77,7 +93,7 @@ const IconWithText = (props: IconWithTextProps) => {
 };
 
 const Paragraph = (props: ParagraphProps) => {
-  return <p {...props} {...stylex.props(styles.paragraph)} />;
+  return <p {...props} {...stylex.props(styles['paragraph'])} />;
 };
 
 const Text = (props: TextProps) => {
@@ -98,13 +114,17 @@ const Text = (props: TextProps) => {
 export const Dashboard = {
   Container,
   Article,
+  ArticleBody,
   Panel,
+  PanelHeader,
   PanelTitle,
   PanelBody,
   PanelBottom,
   IconWithText,
   Paragraph,
   Text,
+  ArticleHeader,
+  ArticleHeaderTitle,
 };
 
 const styles = stylex.create({
@@ -118,6 +138,18 @@ const styles = stylex.create({
     overflowY: 'scroll',
   },
   article: {
+    width: '100%',
+    height: 'fit-content',
+  },
+  articleHeader: {
+    display: 'flex',
+    gap: '1rem',
+    alignItems: 'center',
+    width: '100%',
+    height: '5rem',
+    paddingBlock: '1rem',
+  },
+  articleBody: {
     display: 'flex',
     flexWrap: 'wrap',
     gap: '1.3rem',
@@ -184,9 +216,14 @@ const styles = stylex.create({
     fontSize: fontSizing['small'],
     fontWeight: fontWeight['bold'],
   },
-  panelTitle: {
+  panelHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1rem',
     width: '60%',
     height: '30px',
+  },
+  panelTitle: {
     fontSize: fontSizing['large'],
   },
   panelBody: {
@@ -214,6 +251,10 @@ const styles = stylex.create({
     alignItems: 'center',
     gap: '8px',
   },
+  articleHeaderTitle: {
+    fontSize: fontSizing['xlarge'],
+    fontWeight: fontWeight['bold'],
+  },
 });
 
 const DEFAULT_WIDTH = '23rem';
@@ -235,12 +276,11 @@ const themes = stylex.create({
     maxHeight: '12rem',
   },
   graph: {
-    width: '71.5rem', //'calc(DEFAULT_WIDTH * 4)',
+    width: '71.5rem',
     minWidth: '71.5rem',
     maxWidth: '71.5rem',
     height: DEFAULT_WIDTH,
     minHeight: DEFAULT_WIDTH,
     maxHeight: DEFAULT_WIDTH,
-    // aspectRatio: 3 / 1,
   },
 });
