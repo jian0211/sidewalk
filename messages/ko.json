@@ -86,5 +86,14 @@
             "fsc": "대형 항공사",
             "hsc": "하이브리드 항공사"
         }
+    },
+    "dashboard": {
+        "exchangeRate": {
+            "mainTitle": "환율정보",
+            "currentCurreny": {
+                "title": "현재의 환율",
+                "updatedTime": "갱신시간"
+            }
+        }
     }
 }
