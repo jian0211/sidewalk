@@ -86,5 +86,14 @@
             "fsc": "大手航空会社",
             "hsc": "ハイブリッド航空会社"
         }
+    },
+    "dashboard": {
+        "exchangeRate": {
+            "mainTitle": "為替情報",
+            "currentCurreny": {
+                "title": "現在の為替",
+                "updatedTime": "更新時間"
+            }
+        }
     }
 }
