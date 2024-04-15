@@ -1,263 +1,70 @@
-import { Icons } from '@/components/atoms/Icon';
-import { ResponsiveLine, Serie } from '@nivo/line';
-import * as stylex from '@stylexjs/stylex';
+'use client';
 
-type GraphNavProps = React.ComponentProps<'div'>;
-type GraphProps = { graphData?: Serie[] } & React.ComponentProps<'div'>;
-type VerticalRotationIconProps = React.ComponentProps<'span'>;
+import { useTranslatedWord } from '@/hooks/useTranslatedWord';
+import { Dashboard } from '../components';
+import { Suspense } from 'react';
+import {
+  CurrentCurreny,
+  CurrentCurrenyFallback,
+} from './currentCurreny/CurrenyCurreny';
+import { Locales } from '@/types/locale';
+import { ExchangeRate } from './components';
+import { CurrentCurrenyResponse } from '@/app/api/dashboard/exchangeRate/route';
 
-const VerticalRotationIcon = (props: VerticalRotationIconProps) => {
-  const { children, ...rest } = props;
+type ExchangeRatePartsProps = {
+  locale: Locales;
+  currentCurrenyDatas: CurrentCurrenyResponse;
+};
+export const ExchangeRateOfCurrentCurreny = async (
+  props: ExchangeRatePartsProps,
+) => {
+  const { locale, currentCurrenyDatas } = props;
+  const t = useTranslatedWord('dashboard.exchangeRate');
   return (
-    <span {...rest} {...stylex.props(styles['verticalRotationIcon'])}>
-      <Icons
-        src="IconCurrencyKrw"
-        width={50}
-        style={styles['FrontIconAnimation']}
-      />
-      <Icons
-        customPostition={{
-          left: 0,
-        }}
-        src="IconCurrencyJpy"
-        width={50}
-        style={styles['BackIconAnimation']}
-      />
-    </span>
+    <Dashboard.Article>
+      <Dashboard.ArticleHeader>
+        <ExchangeRate.VerticalRotationIcon />
+        <Dashboard.ArticleHeaderTitle>
+          {t('mainTitle')}
+        </Dashboard.ArticleHeaderTitle>
+      </Dashboard.ArticleHeader>
+      <Dashboard.ArticleBody>
+        <Suspense fallback={<CurrentCurrenyFallback />}>
+          <CurrentCurreny
+            currenyType="krw"
+            currentCurrenyData={currentCurrenyDatas.krwCurrency}
+            locale={locale}
+          />
+        </Suspense>
+        <Suspense fallback={<CurrentCurrenyFallback />}>
+          <CurrentCurreny
+            currenyType="jpy"
+            currentCurrenyData={currentCurrenyDatas.jpyCurrency}
+            locale={locale}
+          />
+        </Suspense>
+        <Dashboard.Panel theme="rectangle" title="oneTiotle">
+          <h3>three</h3>
+        </Dashboard.Panel>
+        <Dashboard.Panel theme="rectangle" title="oneTiotle">
+          <h3>four</h3>
+        </Dashboard.Panel>
+        <Dashboard.Panel theme="square" title="oneTiotle" />
+        <Dashboard.Panel theme="graph" title="為替レートグラフ">
+          <ExchangeRate.GraphNav>
+            <div>
+              <span>색 일본</span>
+              <span>색 한국</span>
+            </div>
+            <div>
+              <span>年</span>
+              <span>月</span>
+              <span>日</span>
+            </div>
+          </ExchangeRate.GraphNav>
+          <ExchangeRate.Graph />
+        </Dashboard.Panel>
+      </Dashboard.ArticleBody>
+    </Dashboard.Article>
   );
 };
-
-const GraphNav = (props: GraphNavProps) => {
-  return <div {...props} {...stylex.props(styles['graphNav'])} />;
-};
-
-const Graph = (props: GraphProps) => {
-  const { graphData = dummyData, ...rest } = props;
-  return (
-    <div {...rest} {...stylex.props(styles['graphBox'])}>
-      <ResponsiveLine
-        data={graphData}
-        margin={{ top: 10, right: 10, bottom: 30, left: 30 }}
-        xScale={{ type: 'point' }}
-        yScale={{
-          type: 'linear',
-          min: 'auto',
-          max: 'auto',
-          stacked: true,
-          reverse: false,
-        }}
-        yFormat=" >-.2f"
-        curve="monotoneX"
-        axisBottom={{
-          tickSize: 10,
-          tickPadding: 0,
-          tickRotation: 0,
-          truncateTickAt: 0,
-        }}
-        axisLeft={{
-          tickSize: 10,
-          tickPadding: 0,
-          tickRotation: 0,
-          truncateTickAt: 0,
-        }}
-        lineWidth={5}
-        pointSize={15}
-        enablePointLabel
-        pointLabel="y"
-        pointLabelYOffset={-12}
-        enableArea
-        areaBlendMode="hard-light"
-        areaBaselineValue={100}
-        areaOpacity={0.5}
-        enableTouchCrosshair
-      />
-    </div>
-  );
-};
-
-export const ExchangeRate = {
-  VerticalRotationIcon,
-  GraphNav,
-  Graph,
-};
-const dummyData = [
-  {
-    id: 'japan',
-    color: 'hsl(332, 70%, 50%)',
-    data: [
-      {
-        x: '1',
-        y: 90,
-      },
-      {
-        x: '2',
-        y: 228,
-      },
-      {
-        x: '3',
-        y: 132,
-      },
-      {
-        x: '4',
-        y: 165,
-      },
-      {
-        x: 'subway',
-        y: 91,
-      },
-      {
-        x: 'bus',
-        y: 194,
-      },
-      {
-        x: 'car',
-        y: 247,
-      },
-      {
-        x: 'moto',
-        y: 108,
-      },
-      {
-        x: 'bicycle',
-        y: 111,
-      },
-      {
-        x: 'horse',
-        y: 244,
-      },
-      {
-        x: 'skateboard',
-        y: 298,
-      },
-      {
-        x: 'others',
-        y: 128,
-      },
-    ],
-  },
-  {
-    id: 'france',
-    color: 'hsl(167, 70%, 50%)',
-    data: [
-      {
-        x: '1',
-        y: 218,
-      },
-      {
-        x: '2',
-        y: 234,
-      },
-      {
-        x: '3',
-        y: 29,
-      },
-      {
-        x: '4',
-        y: 294,
-      },
-      {
-        x: 'subway',
-        y: 229,
-      },
-      {
-        x: 'bus',
-        y: 121,
-      },
-      {
-        x: 'car',
-        y: 160,
-      },
-      {
-        x: 'moto',
-        y: 85,
-      },
-      {
-        x: 'bicycle',
-        y: 171,
-      },
-      {
-        x: 'horse',
-        y: 264,
-      },
-      {
-        x: 'skateboard',
-        y: 170,
-      },
-      {
-        x: 'others',
-        y: 229,
-      },
-    ],
-  },
-];
-
-const verticalRotationAnimationFront = stylex.keyframes({
-  '0%': {
-    opacity: 0,
-  },
-  '48%': {
-    opacity: 0,
-  },
-  '50%': {
-    transform: 'rotateY(-90deg)',
-    animationTimingFunction: 'cubic-bezier(0.5, 0, 1, 0.5)',
-    opacity: 1,
-  },
-  '75%': {
-    transform: 'rotateY(180deg)',
-    animationTimingFunction: 'cubic-bezier(0, 0.5, 0.5, 1)',
-  },
-  '100%': {
-    transform: 'rotateY(270deg)',
-    animationTimingFunction: 'cubic-bezier(0.5, 0, 1, 0.5)',
-  },
-});
-
-const verticalRotationAnimationBack = stylex.keyframes({
-  '0%': {
-    transform: 'rotateY(-90deg)',
-    animationTimingFunction: 'cubic-bezier(0.5, 0, 1, 0.5)',
-  },
-  '25%': {
-    transform: 'rotateY(180deg)',
-    animationTimingFunction: 'cubic-bezier(0, 0.5, 0.5, 1)',
-  },
-  '49%': {
-    opacity: 1,
-    transform: 'rotateY(270deg)',
-    animationTimingFunction: 'cubic-bezier(0.5, 0, 1, 0.5)',
-  },
-  '50%': {
-    opacity: 0,
-  },
-  '100%': {
-    opacity: 0,
-  },
-});
-
-const styles = stylex.create({
-  graphNav: {
-    width: '59%',
-    height: '3rem',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  graphBox: {
-    marginTop: '1rem',
-    position: 'relative',
-    width: '100%',
-    height: '18rem',
-  },
-  FrontIconAnimation: {
-    animationName: verticalRotationAnimationFront,
-    animationDuration: '5s',
-    animationIterationCount: 'infinite',
-  },
-  BackIconAnimation: {
-    animationName: verticalRotationAnimationBack,
-    animationDuration: '5s',
-    animationIterationCount: 'infinite',
-  },
-  verticalRotationIcon: { position: 'relative' },
-});
