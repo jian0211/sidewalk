@@ -93,6 +93,13 @@
             "currentCurreny": {
                 "title": "現在の為替",
                 "updatedTime": "更新時間"
+            },
+            "calulator": {
+                "title": "為替計算機",
+                "comment": {
+                    "jpy": "日本の円",
+                    "krw": "韓国の₩"
+                }
             }
         }
     }

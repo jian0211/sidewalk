@@ -93,6 +93,13 @@
             "currentCurreny": {
                 "title": "현재의 환율",
                 "updatedTime": "갱신시간"
+            },
+            "calulator": {
+                "title": "환율계산기"
+            },
+            "comment": {
+                "jpy": "일본의 엔",
+                "krw": "한국의 원"
             }
         }
     }
