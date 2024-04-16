@@ -2,14 +2,11 @@
 
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { Dashboard } from '../components';
-import { Suspense } from 'react';
-import {
-  CurrentCurreny,
-  CurrentCurrenyFallback,
-} from './currentCurreny/CurrenyCurreny';
+import { CurrentCurreny } from './currentCurreny/CurrenyCurreny';
 import { Locales } from '@/types/locale';
 import { ExchangeRate } from './components';
 import { CurrentCurrenyResponse } from '@/app/api/dashboard/exchangeRate/route';
+import { ExchangeRateCalculator } from './calculator/ExchangeRateCalculator';
 
 type ExchangeRatePartsProps = {
   locale: Locales;
@@ -29,27 +26,28 @@ export const ExchangeRateOfCurrentCurreny = async (
         </Dashboard.ArticleHeaderTitle>
       </Dashboard.ArticleHeader>
       <Dashboard.ArticleBody>
-        <Suspense fallback={<CurrentCurrenyFallback />}>
-          <CurrentCurreny
-            currenyType="krw"
-            currentCurrenyData={currentCurrenyDatas.krwCurrency}
-            locale={locale}
-          />
-        </Suspense>
-        <Suspense fallback={<CurrentCurrenyFallback />}>
-          <CurrentCurreny
-            currenyType="jpy"
-            currentCurrenyData={currentCurrenyDatas.jpyCurrency}
-            locale={locale}
-          />
-        </Suspense>
+        <CurrentCurreny
+          currenyType="krw"
+          currentCurrenyData={currentCurrenyDatas.krwCurrency}
+          locale={locale}
+        />
+        <CurrentCurreny
+          currenyType="jpy"
+          currentCurrenyData={currentCurrenyDatas.jpyCurrency}
+          locale={locale}
+        />
         <Dashboard.Panel theme="rectangle" title="oneTiotle">
           <h3>three</h3>
         </Dashboard.Panel>
         <Dashboard.Panel theme="rectangle" title="oneTiotle">
           <h3>four</h3>
         </Dashboard.Panel>
-        <Dashboard.Panel theme="square" title="oneTiotle" />
+        <ExchangeRateCalculator
+          curreny={{
+            krw: currentCurrenyDatas.krwCurrency.quote,
+            jpy: currentCurrenyDatas.jpyCurrency.quote,
+          }}
+        />
         <Dashboard.Panel theme="graph" title="為替レートグラフ">
           <ExchangeRate.GraphNav>
             <div>

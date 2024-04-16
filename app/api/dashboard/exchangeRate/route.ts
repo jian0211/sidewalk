@@ -49,7 +49,11 @@ const getExchangeRateData = async () => {
   const url = `${endPoint}live?access_key=${accessKey}&source=${source}&currencies=${currencies}`;
 
   try {
-    const liveExchangeRateData = dummyData ?? (await fetch(url)).json();
+    const liveExchangeRateData = dummyData;
+    // const liveExchangeRateData: ExchangeRateLiveResponse = await (
+    //   await fetch(url)
+    // ).json();
+    console.log('liveExchangeRateData', liveExchangeRateData);
     return { liveExchangeRateData };
   } catch (error) {
     console.log('Failed to get current exchange rate : ', error);
@@ -111,6 +115,7 @@ export async function GET(req: Request & NextApiRequest) {
         rateOfChange: rateOfChange.krw,
       },
     };
+    console.log('returnData', returnData);
     return Response.json(returnData);
   } catch (err) {
     console.log('err', err);
