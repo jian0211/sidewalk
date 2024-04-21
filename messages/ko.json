@@ -95,11 +95,18 @@
                 "updatedTime": "갱신시간"
             },
             "calulator": {
-                "title": "환율계산기"
+                "title": "환율계산기",
+                "comment": {
+                    "jpy": "일본의 엔",
+                    "krw": "한국의 원"
+                }
             },
-            "comment": {
-                "jpy": "일본의 엔",
-                "krw": "한국의 원"
+            "graph": {
+                "japan": "일본",
+                "korea": "한국",
+                "year": "년",
+                "month": "월",
+                "day": "일"
             }
         }
     }
