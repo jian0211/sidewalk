@@ -33,6 +33,7 @@ type ColorProps = {
 };
 type ArticleHeaderProps = React.ComponentProps<'div'>;
 type ArticleHeaderTitleProps = React.ComponentProps<'span'>;
+type VerticalRotationIconProps = React.ComponentProps<'span'>;
 
 const Container = (props: ContainerProps) => {
   return <section {...props} {...stylex.props(styles['container'])} />;
@@ -111,6 +112,27 @@ const Text = (props: TextProps) => {
   );
 };
 
+const VerticalRotationIcon = (props: VerticalRotationIconProps) => {
+  const { children, ...rest } = props;
+  return (
+    <span {...rest} {...stylex.props(animations['verticalRotationIcon'])}>
+      <Icons
+        src="IconCurrencyKrw"
+        width={50}
+        style={animations['frontIconAnimation']}
+      />
+      <Icons
+        customPostition={{
+          left: 0,
+        }}
+        src="IconCurrencyJpy"
+        width={50}
+        style={animations['backIconAnimation']}
+      />
+    </span>
+  );
+};
+
 export const Dashboard = {
   Container,
   Article,
@@ -125,7 +147,52 @@ export const Dashboard = {
   Text,
   ArticleHeader,
   ArticleHeaderTitle,
+  VerticalRotationIcon,
 };
+
+const verticalRotationAnimationFront = stylex.keyframes({
+  '0%': {
+    opacity: 0,
+  },
+  '48%': {
+    opacity: 0,
+  },
+  '50%': {
+    transform: 'rotateY(-90deg)',
+    animationTimingFunction: 'cubic-bezier(0.5, 0, 1, 0.5)',
+    opacity: 1,
+  },
+  '75%': {
+    transform: 'rotateY(180deg)',
+    animationTimingFunction: 'cubic-bezier(0, 0.5, 0.5, 1)',
+  },
+  '100%': {
+    transform: 'rotateY(270deg)',
+    animationTimingFunction: 'cubic-bezier(0.5, 0, 1, 0.5)',
+  },
+});
+
+const verticalRotationAnimationBack = stylex.keyframes({
+  '0%': {
+    transform: 'rotateY(-90deg)',
+    animationTimingFunction: 'cubic-bezier(0.5, 0, 1, 0.5)',
+  },
+  '25%': {
+    transform: 'rotateY(180deg)',
+    animationTimingFunction: 'cubic-bezier(0, 0.5, 0.5, 1)',
+  },
+  '49%': {
+    opacity: 1,
+    transform: 'rotateY(270deg)',
+    animationTimingFunction: 'cubic-bezier(0.5, 0, 1, 0.5)',
+  },
+  '50%': {
+    opacity: 0,
+  },
+  '100%': {
+    opacity: 0,
+  },
+});
 
 const styles = stylex.create({
   container: {
@@ -283,4 +350,18 @@ const themes = stylex.create({
     minHeight: DEFAULT_WIDTH,
     maxHeight: DEFAULT_WIDTH,
   },
+});
+
+const animations = stylex.create({
+  frontIconAnimation: {
+    animationName: verticalRotationAnimationFront,
+    animationDuration: '5s',
+    animationIterationCount: 'infinite',
+  },
+  backIconAnimation: {
+    animationName: verticalRotationAnimationBack,
+    animationDuration: '5s',
+    animationIterationCount: 'infinite',
+  },
+  verticalRotationIcon: { position: 'relative' },
 });

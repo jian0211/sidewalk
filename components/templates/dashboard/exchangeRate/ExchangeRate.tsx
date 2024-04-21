@@ -4,9 +4,9 @@ import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { Dashboard } from '../components';
 import { CurrentCurreny } from './currentCurreny/CurrenyCurreny';
 import { Locales } from '@/types/locale';
-import { ExchangeRate } from './components';
 import { CurrentCurrenyResponse } from '@/app/api/dashboard/exchangeRate/route';
 import { ExchangeRateCalculator } from './calculator/ExchangeRateCalculator';
+import { ExchangeRateGraph } from './graph/ExchangeRateGraph';
 
 type ExchangeRatePartsProps = {
   locale: Locales;
@@ -20,7 +20,7 @@ export const ExchangeRateOfCurrentCurreny = async (
   return (
     <Dashboard.Article>
       <Dashboard.ArticleHeader>
-        <ExchangeRate.VerticalRotationIcon />
+        <Dashboard.VerticalRotationIcon />
         <Dashboard.ArticleHeaderTitle>
           {t('mainTitle')}
         </Dashboard.ArticleHeaderTitle>
@@ -37,10 +37,10 @@ export const ExchangeRateOfCurrentCurreny = async (
           locale={locale}
         />
         <Dashboard.Panel theme="rectangle" title="oneTiotle">
-          <h3>three</h3>
+          <h3>Some Content</h3>
         </Dashboard.Panel>
         <Dashboard.Panel theme="rectangle" title="oneTiotle">
-          <h3>four</h3>
+          <h3>Some Content</h3>
         </Dashboard.Panel>
         <ExchangeRateCalculator
           curreny={{
@@ -48,20 +48,7 @@ export const ExchangeRateOfCurrentCurreny = async (
             jpy: currentCurrenyDatas.jpyCurrency.quote,
           }}
         />
-        <Dashboard.Panel theme="graph" title="為替レートグラフ">
-          <ExchangeRate.GraphNav>
-            <div>
-              <span>색 일본</span>
-              <span>색 한국</span>
-            </div>
-            <div>
-              <span>年</span>
-              <span>月</span>
-              <span>日</span>
-            </div>
-          </ExchangeRate.GraphNav>
-          <ExchangeRate.Graph />
-        </Dashboard.Panel>
+        <ExchangeRateGraph graphData={currentCurrenyDatas.currenyGraphData} />
       </Dashboard.ArticleBody>
     </Dashboard.Article>
   );

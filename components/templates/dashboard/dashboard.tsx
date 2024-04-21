@@ -24,5 +24,6 @@ const getExchangeRateData = async () => {
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/exchangeRate`;
   const exchangeData = await fetch(url);
   const data: CurrentCurrenyResponse = await exchangeData.json();
+
   return data;
 };

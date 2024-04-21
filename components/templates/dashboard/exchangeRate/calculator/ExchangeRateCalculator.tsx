@@ -22,10 +22,6 @@ export const ExchangeRateCalculator = (props: ExchangeRateCalculatorProps) => {
   const { curreny, ...rest } = props;
   const { states, actions } = useCalculator({ curreny });
   const t = useTranslatedWord('dashboard.exchangeRate.calulator');
-  // const comment = {
-  //   JPY: t('jpy.comment') + '',
-  //   KRW: t('krw.comment') + '',
-  // };
   return (
     <Dashboard.Panel {...rest} theme="square" title={t('title') + ''}>
       <Dashboard.PanelHeader>
@@ -39,8 +35,8 @@ export const ExchangeRateCalculator = (props: ExchangeRateCalculatorProps) => {
             icon={states.from.flagIcon}
             text={
               states.from.curreny === 'JPY'
-                ? t('comment.jpy')
-                : t('comment.krw')
+                ? t('comment.jpy') + ''
+                : t('comment.krw') + ''
             }
           />
           <InputContainer>
@@ -60,7 +56,9 @@ export const ExchangeRateCalculator = (props: ExchangeRateCalculatorProps) => {
           <IconWithText
             icon={states.to.flagIcon}
             text={
-              states.to.curreny === 'JPY' ? t('comment.jpy') : t('comment.krw')
+              states.to.curreny === 'JPY'
+                ? t('comment.jpy') + ''
+                : t('comment.krw') + ''
             }
           />
           <InputContainer>
