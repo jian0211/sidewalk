@@ -2,7 +2,7 @@ import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 import * as stylex from '@stylexjs/stylex';
 import { DesignProps, designStyles } from '../styles';
 
-type FlexProps = {
+export type FlexProps = {
   flexProps?: DesignProps['flex']; //FlexVars;
   sizeProps?: DesignProps['size'];
   bgColorProps?: DesignProps['bgColor'];

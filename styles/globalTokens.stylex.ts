@@ -33,6 +33,9 @@ const paletteProperties = {
   transparent: 'transparent',
   default: 'currentcolor',
   inherit: 'inherit',
+  japanRed: '#BC002D',
+  koreaBlue: '#003478',
+  baseGray: '#cdcdcd',
 } as const;
 
 export type PaletteVars = keyof typeof paletteProperties;
@@ -152,4 +155,12 @@ export const sizing: stylex.VarGroup<SizeVars> = stylex.defineVars({
 });
 
 type NumberTable = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
-type Gaps = `${0 | 1 | 2 | 3}.${NumberTable}${'px' | 'rem'}`;
+
+export const countryColor = stylex.defineVars({
+  none: 'none',
+  basic:
+    'rgba(42, 131, 255, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
+  dug: 'rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset',
+  swell:
+    'rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px',
+});

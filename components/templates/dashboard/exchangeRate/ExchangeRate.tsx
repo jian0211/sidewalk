@@ -2,14 +2,11 @@
 
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { Dashboard } from '../components';
-import { Suspense } from 'react';
-import {
-  CurrentCurreny,
-  CurrentCurrenyFallback,
-} from './currentCurreny/CurrenyCurreny';
+import { CurrentCurreny } from './currentCurreny/CurrenyCurreny';
 import { Locales } from '@/types/locale';
-import { ExchangeRate } from './components';
 import { CurrentCurrenyResponse } from '@/app/api/dashboard/exchangeRate/route';
+import { ExchangeRateCalculator } from './calculator/ExchangeRateCalculator';
+import { ExchangeRateGraph } from './graph/ExchangeRateGraph';
 
 type ExchangeRatePartsProps = {
   locale: Locales;
@@ -23,47 +20,35 @@ export const ExchangeRateOfCurrentCurreny = async (
   return (
     <Dashboard.Article>
       <Dashboard.ArticleHeader>
-        <ExchangeRate.VerticalRotationIcon />
+        <Dashboard.VerticalRotationIcon />
         <Dashboard.ArticleHeaderTitle>
           {t('mainTitle')}
         </Dashboard.ArticleHeaderTitle>
       </Dashboard.ArticleHeader>
       <Dashboard.ArticleBody>
-        <Suspense fallback={<CurrentCurrenyFallback />}>
-          <CurrentCurreny
-            currenyType="krw"
-            currentCurrenyData={currentCurrenyDatas.krwCurrency}
-            locale={locale}
-          />
-        </Suspense>
-        <Suspense fallback={<CurrentCurrenyFallback />}>
-          <CurrentCurreny
-            currenyType="jpy"
-            currentCurrenyData={currentCurrenyDatas.jpyCurrency}
-            locale={locale}
-          />
-        </Suspense>
+        <CurrentCurreny
+          currenyType="krw"
+          currentCurrenyData={currentCurrenyDatas.krwCurrency}
+          locale={locale}
+        />
+        <CurrentCurreny
+          currenyType="jpy"
+          currentCurrenyData={currentCurrenyDatas.jpyCurrency}
+          locale={locale}
+        />
         <Dashboard.Panel theme="rectangle" title="oneTiotle">
-          <h3>three</h3>
+          <h3>Some Content</h3>
         </Dashboard.Panel>
         <Dashboard.Panel theme="rectangle" title="oneTiotle">
-          <h3>four</h3>
+          <h3>Some Content</h3>
         </Dashboard.Panel>
-        <Dashboard.Panel theme="square" title="oneTiotle" />
-        <Dashboard.Panel theme="graph" title="為替レートグラフ">
-          <ExchangeRate.GraphNav>
-            <div>
-              <span>색 일본</span>
-              <span>색 한국</span>
-            </div>
-            <div>
-              <span>年</span>
-              <span>月</span>
-              <span>日</span>
-            </div>
-          </ExchangeRate.GraphNav>
-          <ExchangeRate.Graph />
-        </Dashboard.Panel>
+        <ExchangeRateCalculator
+          curreny={{
+            krw: currentCurrenyDatas.krwCurrency.quote,
+            jpy: currentCurrenyDatas.jpyCurrency.quote,
+          }}
+        />
+        <ExchangeRateGraph graphData={currentCurrenyDatas.currenyGraphData} />
       </Dashboard.ArticleBody>
     </Dashboard.Article>
   );

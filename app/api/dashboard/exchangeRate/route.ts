@@ -1,6 +1,7 @@
 import { NextApiRequest } from 'next';
+import { dummyData } from './dummy';
 
-type ExchangeRateLiveResponse = {
+export type ExchangeRateLiveResponse = {
   success: boolean;
   terms: string;
   privacy: string;
@@ -17,15 +18,7 @@ export type CurrenyType = {
 export type CurrentCurrenyResponse = {
   jpyCurrency: CurrenyType;
   krwCurrency: CurrenyType;
-};
-
-const dummyData: ExchangeRateLiveResponse = {
-  success: true,
-  terms: 'https://currencylayer.com/terms',
-  privacy: 'https://currencylayer.com/privacy',
-  timestamp: 1713002764,
-  source: 'USD',
-  quotes: { USDJPY: 153.27504, USDKRW: 1380.603789 },
+  currenyGraphData: typeof dummyData.currenyForCurreny;
 };
 
 const throwNotFoundCurrencyLayerData = (message: string) => {
@@ -49,7 +42,11 @@ const getExchangeRateData = async () => {
   const url = `${endPoint}live?access_key=${accessKey}&source=${source}&currencies=${currencies}`;
 
   try {
-    const liveExchangeRateData = dummyData ?? (await fetch(url)).json();
+    const liveExchangeRateData = dummyData.exchangeRateLiveResponse;
+    // const liveExchangeRateData: ExchangeRateLiveResponse = await (
+    //   await fetch(url)
+    // ).json();
+    console.log('liveExchangeRateData', liveExchangeRateData);
     return { liveExchangeRateData };
   } catch (error) {
     console.log('Failed to get current exchange rate : ', error);
@@ -97,6 +94,8 @@ export async function GET(req: Request & NextApiRequest) {
       yesterdayCurreny,
       liveExchangeRateData.quotes,
     );
+    const currenyGraphData = dummyData.currenyForCurreny;
+
     const returnData: CurrentCurrenyResponse = {
       jpyCurrency: {
         standardCurrency: liveExchangeRateData.source,
@@ -110,7 +109,9 @@ export async function GET(req: Request & NextApiRequest) {
         quote: liveExchangeRateData.quotes.USDKRW,
         rateOfChange: rateOfChange.krw,
       },
+      currenyGraphData,
     };
+    console.log('returnData', returnData);
     return Response.json(returnData);
   } catch (err) {
     console.log('err', err);

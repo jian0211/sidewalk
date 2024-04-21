@@ -21,6 +21,8 @@ import IconUrlLink from './url_link.svg';
 import IconTime from './time.svg';
 import IconCurrencyJpy from './currency-jpy.svg';
 import IconCurrencyKrw from './currency-krw.svg';
+import IconExchange from './exchange.svg';
+import IconArrowRight from './arrow-narrow-right.svg';
 
 export {
   IconJapanFlag,
@@ -45,4 +47,6 @@ export {
   IconTime,
   IconCurrencyJpy,
   IconCurrencyKrw,
+  IconExchange,
+  IconArrowRight,
 };
