@@ -4,7 +4,7 @@ type ExchangeRateexchangeRateDateRageAtom = 'year' | 'month' | 'day';
 
 const exchangeRateexchangeRateDateRageAtom =
   atom<ExchangeRateexchangeRateDateRageAtom>({
-    key: 'globalEditAtom',
+    key: 'exchangeRateexchangeRateDateRageAtom',
     default: 'year',
   });
 
