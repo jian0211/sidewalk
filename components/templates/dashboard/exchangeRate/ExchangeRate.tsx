@@ -48,7 +48,9 @@ export const ExchangeRateOfCurrentCurreny = async (
             jpy: currentCurrenyDatas.jpyCurrency.quote,
           }}
         />
-        <ExchangeRateGraph graphData={currentCurrenyDatas.currenyGraphData} />
+        <ExchangeRateGraph
+          currenyGraphData={currentCurrenyDatas.currenyGraphData}
+        />
       </Dashboard.ArticleBody>
     </Dashboard.Article>
   );

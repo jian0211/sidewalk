@@ -11,17 +11,19 @@ import { Dashboard } from '../../components';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { useExchangeRateCountry } from '@/store/exchangeRateCountry';
 import { useExchangeRateDateRage } from '@/store/exchangeRateDateRange';
+import { useExchangeRateGroph } from './useExchangeRateGraph';
+import { CurrentCurrenyResponse } from '@/app/api/dashboard/exchangeRate/route';
 
-type ExchangeRateGraphProps = BodyProps & React.ComponentProps<'div'>;
+type ExchangeRateGraphProps = {
+  currenyGraphData: CurrentCurrenyResponse['currenyGraphData'];
+} & React.ComponentProps<'div'>;
 type NavProps = React.ComponentProps<'div'>;
 type BodyProps = {
-  graphData: {
-    jpy: { x: string; y: number }[];
-    krw: { x: string; y: number }[];
-  };
+  graphData: Serie[];
 } & React.ComponentProps<'div'>;
 type RadioGroupProps = InputProps & {
   items: InputItemProps[];
+  groupName: string;
   handleChange: (value: string) => void;
 };
 type RadioInputProps = {
@@ -30,16 +32,17 @@ type RadioInputProps = {
   React.ComponentProps<'input'>;
 type InputItemProps = { value: string; label: string };
 type InputProps = {
-  groupName: string;
   currentValue: string;
   theme?: 'borderRadius';
 };
 
 export const ExchangeRateGraph = (props: ExchangeRateGraphProps) => {
-  const { graphData, ...rest } = props;
+  const { currenyGraphData, ...rest } = props;
+  const { filterdGraphData } = useExchangeRateGroph({ currenyGraphData });
   const t = useTranslatedWord('dashboard.exchangeRate.graph');
   const { country, setCountry } = useExchangeRateCountry();
   const { dateRage, setDateRage } = useExchangeRateDateRage();
+
   return (
     <Dashboard.Panel {...rest} theme="graph" title="為替レートグラフ">
       <Nav>
@@ -65,7 +68,7 @@ export const ExchangeRateGraph = (props: ExchangeRateGraphProps) => {
           currentValue={dateRage}
         />
       </Nav>
-      <Body graphData={graphData} />
+      <Body graphData={filterdGraphData} />
     </Dashboard.Panel>
   );
 };
@@ -76,33 +79,12 @@ const Nav = (props: NavProps) => {
 
 const Body = (props: BodyProps) => {
   const { graphData, ...rest } = props;
-  const currenyDatas: Serie[] = [
-    {
-      id: 'japan',
-      color: 'hsl(353, 100%, 24%)',
-      data: graphData.jpy.map((data) => {
-        return {
-          x: data.x,
-          y: data.y.toFixed(2),
-        };
-      }),
-    },
-    {
-      id: 'korea',
-      color: 'hsl(209, 100%, 23%)',
-      data: graphData.krw.map((data) => {
-        return {
-          x: data.x,
-          y: (data.y / 10).toFixed(2),
-        };
-      }),
-    },
-  ];
   return (
     <div {...rest} {...stylex.props(styles['body'])}>
       <ResponsiveLine
-        data={currenyDatas}
-        margin={{ top: 10, right: 10, bottom: 30, left: 30 }}
+        animate
+        data={graphData}
+        margin={{ top: 10, right: 20, bottom: 30, left: 40 }}
         xScale={{ type: 'point' }}
         yScale={{
           type: 'linear',
@@ -122,7 +104,7 @@ const Body = (props: BodyProps) => {
           truncateTickAt: 0,
         }}
         axisLeft={{
-          tickSize: 10,
+          tickSize: 20,
           tickPadding: 0,
           tickRotation: 0,
           truncateTickAt: 0,
@@ -146,23 +128,23 @@ const Body = (props: BodyProps) => {
 const RadioGroup = (props: RadioGroupProps) => {
   const { items, groupName, handleChange, currentValue, ...rest } = props;
   return (
-    <fieldset {...stylex.props(styles['radioGroup'])}>
+    <div {...stylex.props(styles['radioGroup'])}>
       {items.map((item) => (
         <RadioInput
           {...rest}
           key={item.value}
-          groupName={groupName}
+          name={groupName}
           item={item}
           currentValue={currentValue}
           onChange={(value) => handleChange(value.currentTarget.value as any)}
         />
       ))}
-    </fieldset>
+    </div>
   );
 };
 
 const RadioInput = (props: RadioInputProps) => {
-  const { groupName, item, currentValue, theme, ...rest } = props;
+  const { item, currentValue, theme, ...rest } = props;
   const isChecked = currentValue === item.value;
   return (
     <span key={item.value}>
@@ -170,7 +152,6 @@ const RadioInput = (props: RadioInputProps) => {
         {...rest}
         {...stylex.props(styles['radioInput'], theme && styles[theme])}
         type="radio"
-        name={groupName}
         value={item.value}
         id={item.value}
         defaultChecked={isChecked}
@@ -196,11 +177,13 @@ const styles = stylex.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingRight: '1rem',
   },
   body: {
     marginTop: '1rem',
     position: 'relative',
     width: '100%',
+    padding: '1rem',
     height: '18rem',
   },
   countryColor: (props: Extract<PaletteVars, 'japanRed' | 'koreaBlue'>) => ({
