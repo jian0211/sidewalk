@@ -3,7 +3,7 @@ import { atom, useRecoilState } from 'recoil';
 type ExchangeRateCountryAtom = 'japan' | 'korea';
 
 const exchangeRateCountryAtom = atom<ExchangeRateCountryAtom>({
-  key: 'globalEditAtom',
+  key: 'exchangeRateCountryAtom',
   default: 'japan',
 });
 

@@ -20,7 +20,7 @@ type PanelTitleProps = React.ComponentProps<'h3'>;
 type IconWithTextProps = {
   colorProps?: Partial<ColorProps>;
 } & React.ComponentProps<'p'>;
-type ParagraphProps = React.ComponentProps<'p'>;
+type PProps = React.ComponentProps<'p'>;
 type TextProps = Partial<FontProps> &
   Partial<ColorProps> &
   React.ComponentProps<'span'>;
@@ -34,11 +34,13 @@ type ColorProps = {
 type ArticleHeaderProps = React.ComponentProps<'div'>;
 type ArticleHeaderTitleProps = React.ComponentProps<'span'>;
 type VerticalRotationIconProps = React.ComponentProps<'span'>;
+type LabelProps = React.ComponentProps<'label'>;
+type PanelBodyProps = React.ComponentProps<'div'>;
+type PanelBottomProps = React.ComponentProps<'div'>;
 
 const Container = (props: ContainerProps) => {
   return <section {...props} {...stylex.props(styles['container'])} />;
 };
-
 const Article = (props: ArticleProps) => {
   return <article {...props} {...stylex.props(styles['article'])} />;
 };
@@ -62,25 +64,18 @@ const Panel = (props: BoxProps) => {
     </div>
   );
 };
-
 const PanelHeader = (props: PanelHeaderProps) => {
   return <div {...props} {...stylex.props(styles['panelHeader'])} />;
 };
-
 const PanelTitle = (props: PanelTitleProps) => {
   return <h3 {...props} {...stylex.props(styles['panelTitle'])} />;
 };
-type PanelBodyProps = React.ComponentProps<'div'>;
-type PanelBottomProps = React.ComponentProps<'div'>;
-
 const PanelBody = (props: PanelBodyProps) => {
   return <div {...props} {...stylex.props(styles['panelBody'])} />;
 };
-
 const PanelBottom = (props: PanelBottomProps) => {
   return <div {...props} {...stylex.props(styles['panelBottom'])} />;
 };
-
 const IconWithText = (props: IconWithTextProps) => {
   const { children, colorProps, ...rest } = props;
   return (
@@ -92,11 +87,9 @@ const IconWithText = (props: IconWithTextProps) => {
     </p>
   );
 };
-
-const Paragraph = (props: ParagraphProps) => {
-  return <p {...props} {...stylex.props(styles['paragraph'])} />;
+const P = (props: PProps) => {
+  return <p {...props} {...stylex.props(styles['p'])} />;
 };
-
 const Text = (props: TextProps) => {
   const {
     fontSize = 'small',
@@ -133,6 +126,10 @@ const VerticalRotationIcon = (props: VerticalRotationIconProps) => {
   );
 };
 
+const Label = (props: LabelProps) => {
+  return <label {...props} {...stylex.props(styles['label'])} />;
+};
+
 export const Dashboard = {
   Container,
   Article,
@@ -143,8 +140,9 @@ export const Dashboard = {
   PanelBody,
   PanelBottom,
   IconWithText,
-  Paragraph,
+  P,
   Text,
+  Label,
   ArticleHeader,
   ArticleHeaderTitle,
   VerticalRotationIcon,
@@ -313,7 +311,7 @@ const styles = stylex.create({
     alignItems: 'center',
     gap: '8px',
   },
-  paragraph: {
+  p: {
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
@@ -321,6 +319,10 @@ const styles = stylex.create({
   articleHeaderTitle: {
     fontSize: fontSizing['xlarge'],
     fontWeight: fontWeight['bold'],
+  },
+  label: {
+    fontSize: fontSizing['medium'],
+    fontWeight: fontWeight['medium'],
   },
 });
 

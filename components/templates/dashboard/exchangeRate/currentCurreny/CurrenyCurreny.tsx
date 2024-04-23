@@ -33,7 +33,7 @@ export const CurrentCurreny = (props: CurrentCurrenyProps) => {
         </Dashboard.Text>
       </Dashboard.PanelHeader>
       <Dashboard.PanelBody>
-        <Dashboard.Paragraph>
+        <Dashboard.P>
           <Dashboard.Text fontSize="large" fontWeight="bold">
             {currentCurrenyData.quote.toFixed(2)}
           </Dashboard.Text>
@@ -46,7 +46,7 @@ export const CurrentCurreny = (props: CurrentCurrenyProps) => {
           >
             {currentCurrenyData.rateOfChange}
           </Dashboard.Text>
-        </Dashboard.Paragraph>
+        </Dashboard.P>
       </Dashboard.PanelBody>
       <Dashboard.PanelBottom>
         <Dashboard.IconWithText colorProps={{ color: 'brightOrange' }}>
