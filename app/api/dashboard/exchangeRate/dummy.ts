@@ -111,8 +111,21 @@ const exchangeRateLiveResponse: ExchangeRateLiveResponse = {
   source: 'USD',
   quotes: { USDJPY: 153.27504, USDKRW: 1380.603789 },
 };
+const krwRates = [
+  1306.25, 1316.151, 1289.4, 1318.45, 1360.065, 1335.115, 1298.3335, 1294.5,
+  1329.29, 1331.1, 1351.2, 1374.495,
+];
+
+const jpyRates = [
+  139.9058, 144.3042, 143.3223, 146.0924, 148.445, 149.8575, 146.812, 141.1315,
+  148.375, 150.095, 151.543, 154.625,
+];
 
 export const dummyData = {
   currenyForCurreny,
   exchangeRateLiveResponse,
+  exchangeRate: {
+    krwRates,
+    jpyRates,
+  },
 };
