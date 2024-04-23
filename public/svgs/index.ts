@@ -23,6 +23,8 @@ import IconCurrencyJpy from './currency-jpy.svg';
 import IconCurrencyKrw from './currency-krw.svg';
 import IconExchange from './exchange.svg';
 import IconArrowRight from './arrow-narrow-right.svg';
+import IconFlightLanding from './flight-landing.svg';
+import IconFlightTakeoff from './flight-takeoff.svg';
 
 export {
   IconJapanFlag,
@@ -49,4 +51,6 @@ export {
   IconCurrencyKrw,
   IconExchange,
   IconArrowRight,
+  IconFlightLanding,
+  IconFlightTakeoff,
 };
