@@ -14,6 +14,10 @@ export type CurrenyType = {
   timestamp: number;
   quote: number;
   rateOfChange: string;
+  exchangeRate: {
+    min: string;
+    max: string;
+  };
 };
 export type CurrentCurrenyResponse = {
   jpyCurrency: CurrenyType;
@@ -73,13 +77,38 @@ const getYesterdayCurreny = () => {
 /**
  * 以前、現在のCurrenyの差を計算して渡す
  */
-const getRateOfChage = (
+const getRateOfChange = (
   beforeData: { jpy: number; krw: number },
-  currentData: { USDJPY: number; USDKRW: number },
+  currentData: ExchangeRateLiveResponse['quotes'],
 ) => {
   return {
     jpy: (beforeData.jpy - currentData.USDJPY).toFixed(2),
     krw: (beforeData.krw - currentData.USDKRW).toFixed(2),
+  };
+};
+
+/**
+ * 各国の為替の高、安時の値を渡す
+ */
+const getExchangeRateMinMax = (exchangeRates: {
+  krwRates: number[];
+  jpyRates: number[];
+}) => {
+  const jpyMax = Math.max(...exchangeRates.jpyRates).toFixed(2);
+  const jpyMin = Math.min(...exchangeRates.jpyRates).toFixed(2);
+  const krwMax = Math.max(...exchangeRates.krwRates).toFixed(2);
+  const krwMin = Math.min(...exchangeRates.krwRates).toFixed(2);
+  return {
+    exchangeRate: {
+      jpy: {
+        max: jpyMax,
+        min: jpyMin,
+      },
+      krw: {
+        max: krwMax,
+        min: krwMin,
+      },
+    },
   };
 };
 
@@ -90,11 +119,13 @@ export async function GET(req: Request & NextApiRequest) {
   try {
     const { liveExchangeRateData } = await getExchangeRateData();
     const yesterdayCurreny = getYesterdayCurreny();
-    const rateOfChange = getRateOfChage(
+    const rateOfChange = getRateOfChange(
       yesterdayCurreny,
       liveExchangeRateData.quotes,
     );
     const currenyGraphData = dummyData.currenyForCurreny;
+
+    const { exchangeRate } = getExchangeRateMinMax(dummyData.exchangeRate);
 
     const returnData: CurrentCurrenyResponse = {
       jpyCurrency: {
@@ -102,12 +133,20 @@ export async function GET(req: Request & NextApiRequest) {
         timestamp: liveExchangeRateData.timestamp * 1000,
         quote: liveExchangeRateData.quotes.USDJPY,
         rateOfChange: rateOfChange.jpy,
+        exchangeRate: {
+          min: exchangeRate.jpy.min,
+          max: exchangeRate.jpy.max,
+        },
       },
       krwCurrency: {
         standardCurrency: liveExchangeRateData.source,
         timestamp: liveExchangeRateData.timestamp * 1000,
         quote: liveExchangeRateData.quotes.USDKRW,
         rateOfChange: rateOfChange.krw,
+        exchangeRate: {
+          min: exchangeRate.krw.min,
+          max: exchangeRate.krw.max,
+        },
       },
       currenyGraphData,
     };
