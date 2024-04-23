@@ -7,6 +7,7 @@ import { Locales } from '@/types/locale';
 import { CurrentCurrenyResponse } from '@/app/api/dashboard/exchangeRate/route';
 import { ExchangeRateCalculator } from './calculator/ExchangeRateCalculator';
 import { ExchangeRateGraph } from './graph/ExchangeRateGraph';
+import { ExchangeRateMinMax } from './minMaxRate/ExchangeRateMinMax';
 
 type ExchangeRatePartsProps = {
   locale: Locales;
@@ -36,12 +37,32 @@ export const ExchangeRateOfCurrentCurreny = async (
           currentCurrenyData={currentCurrenyDatas.jpyCurrency}
           locale={locale}
         />
-        <Dashboard.Panel theme="rectangle" title="oneTiotle">
-          <h3>Some Content</h3>
-        </Dashboard.Panel>
-        <Dashboard.Panel theme="rectangle" title="oneTiotle">
-          <h3>Some Content</h3>
-        </Dashboard.Panel>
+        <ExchangeRateMinMax
+          panleLabel={t('minMax.label')}
+          panelTitle={t('minMax.jpyTitle')}
+          panelBottomInfoText={t('minMax.message')}
+          max={{
+            label: t('minMax.max'),
+            value: currentCurrenyDatas['jpyCurrency']['exchangeRate']['min'],
+          }}
+          min={{
+            label: t('minMax.min'),
+            value: currentCurrenyDatas['jpyCurrency']['exchangeRate']['max'],
+          }}
+        />
+        <ExchangeRateMinMax
+          panleLabel={t('minMax.label')}
+          panelTitle={t('minMax.krwTitle')}
+          panelBottomInfoText={t('minMax.message')}
+          max={{
+            label: t('minMax.max'),
+            value: currentCurrenyDatas['krwCurrency']['exchangeRate']['min'],
+          }}
+          min={{
+            label: t('minMax.min'),
+            value: currentCurrenyDatas['krwCurrency']['exchangeRate']['max'],
+          }}
+        />
         <ExchangeRateCalculator
           curreny={{
             krw: currentCurrenyDatas.krwCurrency.quote,
