@@ -2,6 +2,7 @@ import { Dashboard } from './components';
 import { PageProps } from '@/app/[locale]/(dashboard)/dashboard/page';
 import { ExchangeRateOfCurrentCurreny } from './exchangeRate/ExchangeRate';
 import { CurrentCurrenyResponse } from '@/app/api/dashboard/exchangeRate/route';
+import { FlightBoard } from './flightBoard/FlightBoard';
 
 export const DashboardPage = async (props: PageProps) => {
   const {
@@ -11,6 +12,8 @@ export const DashboardPage = async (props: PageProps) => {
 
   return (
     <Dashboard.Container>
+      {/* Flight 部分 */}
+      <FlightBoard locale={locale} />
       {/* 為替レート 部分 */}
       <ExchangeRateOfCurrentCurreny
         locale={locale}

@@ -1,8 +1,6 @@
 import {
   PaletteVars,
-  fontWeight,
   palette,
-  spacing,
 } from '../../../../../styles/globalTokens.stylex';
 import { ResponsiveLine, Serie } from '@nivo/line';
 import * as stylex from '@stylexjs/stylex';
@@ -21,20 +19,6 @@ type NavProps = React.ComponentProps<'div'>;
 type BodyProps = {
   graphData: Serie[];
 } & React.ComponentProps<'div'>;
-type RadioGroupProps = InputProps & {
-  items: InputItemProps[];
-  groupName: string;
-  handleChange: (value: string) => void;
-};
-type RadioInputProps = {
-  item: InputItemProps;
-} & InputProps &
-  React.ComponentProps<'input'>;
-type InputItemProps = { value: string; label: string };
-type InputProps = {
-  currentValue: string;
-  theme?: 'borderRadius';
-};
 
 export const ExchangeRateGraph = (props: ExchangeRateGraphProps) => {
   const { currenyGraphData, ...rest } = props;
@@ -46,7 +30,7 @@ export const ExchangeRateGraph = (props: ExchangeRateGraphProps) => {
   return (
     <Dashboard.Panel {...rest} theme="graph" title="為替レートグラフ">
       <Nav>
-        <RadioGroup
+        <Dashboard.RadioGroup
           groupName="countryRadio"
           items={[
             { value: 'japan', label: t('japan') },
@@ -56,7 +40,7 @@ export const ExchangeRateGraph = (props: ExchangeRateGraphProps) => {
           currentValue={country}
         />
 
-        <RadioGroup
+        <Dashboard.RadioGroup
           theme="borderRadius"
           groupName="dateRadio"
           items={[
@@ -125,51 +109,6 @@ const Body = (props: BodyProps) => {
   );
 };
 
-const RadioGroup = (props: RadioGroupProps) => {
-  const { items, groupName, handleChange, currentValue, ...rest } = props;
-  return (
-    <div {...stylex.props(styles['radioGroup'])}>
-      {items.map((item) => (
-        <RadioInput
-          {...rest}
-          key={item.value}
-          name={groupName}
-          item={item}
-          currentValue={currentValue}
-          onChange={(value) => handleChange(value.currentTarget.value as any)}
-        />
-      ))}
-    </div>
-  );
-};
-
-const RadioInput = (props: RadioInputProps) => {
-  const { item, currentValue, theme, ...rest } = props;
-  const isChecked = currentValue === item.value;
-  return (
-    <span key={item.value}>
-      <input
-        {...rest}
-        {...stylex.props(styles['radioInput'], theme && styles[theme])}
-        type="radio"
-        value={item.value}
-        id={item.value}
-        defaultChecked={isChecked}
-        checked={isChecked}
-      />
-      <label
-        {...stylex.props(
-          styles['radioLabel'],
-          isChecked && styles['radioLabelChecked'],
-        )}
-        htmlFor={item.value}
-      >
-        {item.label}
-      </label>
-    </span>
-  );
-};
-
 const styles = stylex.create({
   nav: {
     width: '59%',
@@ -192,25 +131,4 @@ const styles = stylex.create({
     borderRadius: '50%',
     backgroundColor: palette[props],
   }),
-  radioGroup: {
-    display: 'flex',
-    gap: '1rem',
-  },
-  radioInput: {
-    display: 'none',
-  },
-  radioLabelChecked: {
-    color: palette['darkGray'],
-  },
-  radioLabel: {
-    fontWeight: fontWeight['bold'],
-    color: palette['baseGray'],
-    cursor: 'pointer',
-  },
-  borderRadius: {
-    borderWidth: spacing['xxsmall'],
-    borderRadius: spacing['xxsmall'],
-    borderColor: palette['baseGray'],
-    borderStyle: 'solid',
-  },
 });
