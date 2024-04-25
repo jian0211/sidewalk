@@ -144,6 +144,12 @@
                 "sat": "토요일",
                 "sun": "일요일"
             }
+        },
+        "cheapestTicketTomorrow": {
+            "label": "내일의 항공권",
+            "toKorea": "한국행",
+            "toJapan": "일본행",
+            "title": "저렴"
         }
     }
 }
