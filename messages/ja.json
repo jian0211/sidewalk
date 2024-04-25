@@ -145,6 +145,12 @@
                     "sat": "土曜日",
                     "sun": "日曜日"
                 }
+            },
+            "cheapestTicketTomorrow": {
+                "label": "明日の航空券",
+                "toKorea": "韓国行",
+                "toJapan": "日本行",
+                "title": "安"
             }
         }
     }
