@@ -2,15 +2,16 @@ import { useState } from 'react';
 
 export type PriceRange = 'expensive' | 'cheap';
 
-export const usePriceRange = () => {
-  const [priceRange, setPriceRange] = useState<PriceRange>('cheap');
+export const usePriceRangeSelecter = () => {
+  const [priceRangeSelecter, setPriceRangeSelecter] =
+    useState<PriceRange>('cheap');
 
   return {
     states: {
-      priceRange,
+      priceRangeSelecter,
     },
     actions: {
-      setPriceRange,
+      setPriceRangeSelecter,
     },
   };
 };
