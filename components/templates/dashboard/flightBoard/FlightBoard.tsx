@@ -4,6 +4,7 @@ import { Locales } from '@/types/locale';
 import { Dashboard } from '../components';
 import { AveragePriceOfFlightTicket } from './averagePriceOfFlightTicket/AveragePriceOfFlightTicket';
 import { DayOfTheWeekOfCheapTicket } from './dayOfTheWeekOfCheapTicket/DayOfTheWeekOfCheapTicket';
+import { CheapestTicketTomorrow } from './cheapestTicketTomorrow/CheapestTicketTomorrow';
 
 type FlightBoardProps = {
   locale: Locales;
@@ -33,8 +34,11 @@ export const FlightBoard = async (props: FlightBoardProps) => {
           locale={locale}
           averagePriceOfFlight={averagePriceOfFlight}
         />
-        <DayOfTheWeekOfCheapTicket cheapDay="fri" expensiveDay="mon" />
-        {/* <AveragePriceOfFlightTicket /> */}
+        <DayOfTheWeekOfCheapTicket
+          cheapDay={{ toJapan: 'mon', toKorea: 'sat' }}
+          expensiveDay={{ toJapan: 'sun', toKorea: 'tue' }}
+        />
+        <CheapestTicketTomorrow />
         {/* <AveragePriceOfFlightTicket /> */}
         {/* 
     

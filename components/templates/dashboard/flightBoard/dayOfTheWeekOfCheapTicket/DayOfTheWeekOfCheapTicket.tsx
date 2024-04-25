@@ -1,26 +1,27 @@
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { Dashboard } from '../../components';
-import { PriceRange, usePriceRange } from './usePriceRange';
+import { PriceRange, usePriceRangeSelecter } from './usePriceRange';
 
+export type Destination = 'toKorea' | 'toJapan';
 type Days = 'mon' | 'tue' | 'wen' | 'thr' | 'fri' | 'sat' | 'sun';
 type DayOfTheWeekOfCheapTicketProps = {
-  cheapDay: {
-    toKorea: Days;
-    toJapan: Days;
-  };
-  expensiveDay: {
-    toKorea: Days;
-    toJapan: Days;
-  };
+  [k in 'cheapDay' | 'expensiveDay']: { [k in Destination]: Days };
 } & React.ComponentProps<'div'>;
 
 export const DayOfTheWeekOfCheapTicket = (
   props: DayOfTheWeekOfCheapTicketProps,
 ) => {
   const { cheapDay, expensiveDay, ...rest } = props;
-  const { states, actions } = usePriceRange();
+  const {
+    states: { priceRangeSelecter },
+    actions: { setPriceRangeSelecter },
+  } = usePriceRangeSelecter();
   const t = useTranslatedWord('dashboard.flight.cheapTicket');
-  const t_WEEK = {
+
+  /**
+   * 曜日により、翻訳されたメッセージを取得
+   */
+  const t_WEEK: Record<Days, string> = {
     mon: t(`week.mon`),
     tue: t(`week.tue`),
     wen: t(`week.wen`),
@@ -29,11 +30,13 @@ export const DayOfTheWeekOfCheapTicket = (
     sat: t(`week.sat`),
     sun: t(`week.mon`),
   };
-  const t_RANGE_COMMENT = {
+
+  const t_RANGE_COMMENT: Record<PriceRange, string> = {
     cheap: t('cheapComment'),
     expensive: t('expensiveComment'),
   };
-  const priceRangeDay = (destination: 'toKorea' | 'toJapan') => ({
+
+  const priceRangeDay = (destination: Destination) => ({
     cheap: cheapDay[destination],
     expensive: expensiveDay[destination],
   });
@@ -44,10 +47,8 @@ export const DayOfTheWeekOfCheapTicket = (
         <Dashboard.RadioGroup
           groupName="priceOrder"
           theme="borderRadius"
-          currentValue={states['priceRange']}
-          handleChange={(value) =>
-            actions['setPriceRange'](value as PriceRange)
-          }
+          currentValue={priceRangeSelecter}
+          handleChange={(value) => setPriceRangeSelecter(value as PriceRange)}
           items={[
             { label: t('cheap'), value: 'cheap' },
             { label: t('expensive'), value: 'expensive' },
@@ -62,22 +63,19 @@ export const DayOfTheWeekOfCheapTicket = (
             {t('toKorea')}
           </Dashboard.Text>
           <Dashboard.Text color="brightGreen" fontWeight="bold">
-            {t_WEEK[priceRangeDay[states['priceRange']]]}
+            {t_WEEK[priceRangeDay('toKorea')[priceRangeSelecter]]}
           </Dashboard.Text>
-          <Dashboard.Text>
-            {t_RANGE_COMMENT[states['priceRange']]}
-          </Dashboard.Text>
+          <Dashboard.Text>{t_RANGE_COMMENT[priceRangeSelecter]}</Dashboard.Text>
         </Dashboard.P>
+
         <Dashboard.P>
           <Dashboard.Text fontSize="medium" fontWeight="bold">
             {t('toJapan')}
           </Dashboard.Text>
           <Dashboard.Text fontWeight="bold" color="brightGreen">
-            {t_WEEK[priceRangeDay[states['priceRange']]]}
+            {t_WEEK[priceRangeDay('toJapan')[priceRangeSelecter]]}
           </Dashboard.Text>
-          <Dashboard.Text>
-            {t_RANGE_COMMENT[states['priceRange']]}
-          </Dashboard.Text>
+          <Dashboard.Text>{t_RANGE_COMMENT[priceRangeSelecter]}</Dashboard.Text>
         </Dashboard.P>
       </Dashboard.PanelBody>
 
