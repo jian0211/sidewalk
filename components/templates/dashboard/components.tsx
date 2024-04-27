@@ -1,6 +1,8 @@
 import { Icons } from '@/components/atoms/Icon';
 import {
+  MarginProps,
   PaletteVars,
+  Range,
   fontProperties,
   fontSizing,
   fontWeight,
@@ -24,19 +26,18 @@ type IconWithTextProps = {
 type PProps = React.ComponentProps<'p'>;
 type TextProps = Partial<FontProps> &
   Partial<ColorProps> &
+  MarginProps &
   React.ComponentProps<'span'>;
 type FontProps = {
   fontSize: keyof (typeof fontProperties)['size'];
   fontWeight: keyof (typeof fontProperties)['weight'];
 };
-type ColorProps = {
-  color: PaletteVars;
-};
+type ColorProps = { color: PaletteVars };
 type ArticleHeaderProps = React.ComponentProps<'div'>;
 type ArticleHeaderTitleProps = React.ComponentProps<'span'>;
 type VerticalRotationIconProps = React.ComponentProps<'span'>;
 type LabelProps = React.ComponentProps<'label'>;
-type PanelBodyProps = React.ComponentProps<'div'>;
+type PanelBodyProps = panelBodyStyleProps & React.ComponentProps<'div'>;
 type PanelBottomProps = React.ComponentProps<'div'>;
 type FlightAnimationIconProps = React.ComponentProps<'div'>;
 type RadioGroupProps = InputProps & {
@@ -44,15 +45,11 @@ type RadioGroupProps = InputProps & {
   groupName: string;
   handleChange: (value: string) => void;
 };
-type RadioInputProps = {
-  item: InputItemProps;
-} & InputProps &
+type RadioInputProps = { item: InputItemProps } & InputProps &
   React.ComponentProps<'input'>;
 type InputItemProps = { value: string; label: string };
-type InputProps = {
-  currentValue: string;
-  theme?: 'borderRadius';
-};
+type InputProps = { currentValue: string; theme?: 'borderRadius' };
+type panelBodyStyleProps = { gap?: Range };
 
 const Container = (props: ContainerProps) => {
   return <section {...props} {...stylex.props(styles['container'])} />;
@@ -86,8 +83,8 @@ const PanelHeader = (props: PanelHeaderProps) => {
 const PanelTitle = (props: PanelTitleProps) => {
   return <h3 {...props} {...stylex.props(styles['panelTitle'])} />;
 };
-const PanelBody = (props: PanelBodyProps) => {
-  return <div {...props} {...stylex.props(styles['panelBody'])} />;
+const PanelBody = ({ gap, ...props }: PanelBodyProps) => {
+  return <div {...props} {...stylex.props(styles['panelBody']({ gap }))} />;
 };
 const PanelBottom = (props: PanelBottomProps) => {
   return <div {...props} {...stylex.props(styles['panelBottom'])} />;
@@ -111,12 +108,16 @@ const Text = (props: TextProps) => {
     fontSize = 'small',
     fontWeight = 'normal',
     color = 'darkGray',
+    marginLeft = '0px',
+    marginRight = '0px',
     ...rest
   } = props;
   return (
     <span
       {...rest}
-      {...stylex.props(styles.text({ fontSize, fontWeight, color }))}
+      {...stylex.props(
+        styles.text({ fontSize, fontWeight, color, marginLeft, marginRight }),
+      )}
     />
   );
 };
@@ -404,20 +405,23 @@ const styles = stylex.create({
   panelTitle: {
     fontSize: fontSizing['large'],
   },
-  panelBody: {
+  panelBody: (props: panelBodyStyleProps) => ({
     flex: 'auto',
     paddingBlock: '8px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-  },
+    gap: props.gap ?? '0',
+  }),
   panelBottom: {
     marginTop: 'auto',
   },
-  text: (props: FontProps & ColorProps) => ({
+  text: (props: FontProps & ColorProps & MarginProps) => ({
     fontSize: fontSizing[props.fontSize],
     fontWeight: fontWeight[props.fontWeight],
     color: palette[props.color],
+    marginLeft: props.marginLeft,
+    marginRight: props.marginRight,
   }),
   iconWithText: {
     display: 'flex',
