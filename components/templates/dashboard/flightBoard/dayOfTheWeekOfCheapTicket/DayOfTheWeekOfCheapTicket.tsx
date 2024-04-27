@@ -4,14 +4,20 @@ import { PriceRange, usePriceRangeSelecter } from './usePriceRange';
 
 export type Destination = 'toKorea' | 'toJapan';
 type Days = 'mon' | 'tue' | 'wen' | 'thr' | 'fri' | 'sat' | 'sun';
-type DayOfTheWeekOfCheapTicketProps = {
+type PricingDays = {
   [k in 'cheapDay' | 'expensiveDay']: { [k in Destination]: Days };
+};
+type DayOfTheWeekOfCheapTicketProps = {
+  pricingDays: PricingDays;
 } & React.ComponentProps<'div'>;
 
 export const DayOfTheWeekOfCheapTicket = (
   props: DayOfTheWeekOfCheapTicketProps,
 ) => {
-  const { cheapDay, expensiveDay, ...rest } = props;
+  const {
+    pricingDays: { cheapDay, expensiveDay },
+    ...rest
+  } = props;
   const {
     states: { priceRangeSelecter },
     actions: { setPriceRangeSelecter },
