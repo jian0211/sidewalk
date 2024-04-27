@@ -40,7 +40,7 @@ const paletteProperties = {
 
 export type PaletteVars = keyof typeof paletteProperties;
 export const palette = stylex.defineVars(paletteProperties);
-
+export type Range = `${number}${'px' | 'rem'}` | 'auto';
 export type PixelLevelOption =
   | `${
       | 0
