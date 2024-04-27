@@ -23,6 +23,34 @@ export const FlightBoard = async (props: FlightBoardProps) => {
       krw: 115000,
     },
   };
+  const cheapestTicketTomorrowDummy = {
+    toKorea: {
+      currency: 'jpy',
+      from: {
+        iata: 'NRT',
+        time: '09:15',
+      },
+      to: {
+        iata: 'INC',
+        time: '11:30',
+      },
+      imageTitle: '',
+      fee: 13000,
+    },
+    toJapan: {
+      currency: 'jpy',
+      from: {
+        iata: 'INC',
+        time: '10:30',
+      },
+      to: {
+        iata: 'NRT',
+        time: '12:45',
+      },
+      imageTitle: '',
+      fee: 90000,
+    },
+  };
   return (
     <Dashboard.Article>
       <Dashboard.ArticleHeader>
@@ -35,10 +63,14 @@ export const FlightBoard = async (props: FlightBoardProps) => {
           averagePriceOfFlight={averagePriceOfFlight}
         />
         <DayOfTheWeekOfCheapTicket
-          cheapDay={{ toJapan: 'mon', toKorea: 'sat' }}
-          expensiveDay={{ toJapan: 'sun', toKorea: 'tue' }}
+          pricingDays={{
+            cheapDay: { toJapan: 'mon', toKorea: 'sat' },
+            expensiveDay: { toJapan: 'sun', toKorea: 'tue' },
+          }}
         />
-        <CheapestTicketTomorrow />
+        <CheapestTicketTomorrow
+          cheapestTicketInfo={cheapestTicketTomorrowDummy}
+        />
         {/* <AveragePriceOfFlightTicket /> */}
         {/* 
     
