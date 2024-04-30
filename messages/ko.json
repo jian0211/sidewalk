@@ -113,8 +113,8 @@
                 "min": "저",
                 "max": "고",
                 "message": "환율은 이번 달 기준입니다.",
-                "jpyTitle": "円의 최고,최저 환율",
-                "krwTitle": "₩의 최고,최저 환율"
+                "jpyTitle": "円의 환율",
+                "krwTitle": "₩의 환율"
             }
         },
         "flight": {
@@ -125,31 +125,41 @@
                 "toKorea": "한국행",
                 "average": "평균",
                 "message": "2024년 기준입니다."
+            },
+            "cheapTicket": {
+                "label": "요일별고저",
+                "title": "요일",
+                "toJapan": "일본행",
+                "toKorea": "한국행",
+                "cheap": "싼",
+                "expensive": "비싼",
+                "cheapComment": "이 저렴합니다.",
+                "expensiveComment": "이 비쌉니다.",
+                "message": "데이터 기준은 이번주 또는 편도 기준입니다.",
+                "week": {
+                    "mon": "월요일",
+                    "tue": "화요일",
+                    "wen": "수요일",
+                    "thr": "목요일",
+                    "fri": "금요일",
+                    "sat": "토요일",
+                    "sun": "일요일"
+                }
+            },
+            "cheapestTicketTomorrow": {
+                "label": "내일의 항공권",
+                "toKorea": "한국행",
+                "toJapan": "일본행",
+                "title": "저렴"
+            },
+            "recommendedTrip": {
+                "label": "オススメ",
+                "title": "おすすめの旅行",
+                "message": "データ基準は今週と片道でございます。"
+            },
+            "cheapTicketInfo": {
+                "label": "オススメ"
             }
-        },
-        "cheapTicket": {
-            "label": "요일별고저",
-            "title": "요일",
-            "toJapan": "일본행",
-            "toKorea": "한국행",
-            "cheap": "싼",
-            "expensive": "비싼",
-            "message": "데이터 기준은 이번주 또는 편도 기준입니다.",
-            "week": {
-                "mon": "월요일",
-                "tue": "화요일",
-                "wen": "수요일",
-                "thr": "목요일",
-                "fri": "금요일",
-                "sat": "토요일",
-                "sun": "일요일"
-            }
-        },
-        "cheapestTicketTomorrow": {
-            "label": "내일의 항공권",
-            "toKorea": "한국행",
-            "toJapan": "일본행",
-            "title": "저렴"
         }
     }
 }

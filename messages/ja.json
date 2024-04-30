@@ -151,6 +151,17 @@
                 "toKorea": "韓国行",
                 "toJapan": "日本行",
                 "title": "安"
+            },
+            "recommendedTrip": {
+                "label": "オススメ",
+                "title": "おすすめの旅行",
+                "message": "データ基準は今週と片道でございます。"
+            },
+            "cheapTicketInfo": {
+                "label": "オススメ",
+                "go": "出発",
+                "roundTrip": "往復",
+                "oneWay": "片道"
             }
         }
     }
