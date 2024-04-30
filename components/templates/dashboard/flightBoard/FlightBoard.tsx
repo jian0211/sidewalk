@@ -5,52 +5,101 @@ import { Dashboard } from '../components';
 import { AveragePriceOfFlightTicket } from './averagePriceOfFlightTicket/AveragePriceOfFlightTicket';
 import { DayOfTheWeekOfCheapTicket } from './dayOfTheWeekOfCheapTicket/DayOfTheWeekOfCheapTicket';
 import { CheapestTicketTomorrow } from './cheapestTicketTomorrow/CheapestTicketTomorrow';
+import { RecommendedTrip } from './recommendedTrip/RecommendedTrip';
+import {
+  CheapestTicketInfo,
+  ResponseconstCheapestTicketInfoData,
+} from './cheapestTicketInfo/CheapestTicketInfo';
 
 type FlightBoardProps = {
   locale: Locales;
 };
 
+const averagePriceOfFlight = {
+  toKorea: {
+    jpy: 11245,
+    krw: 115045,
+  },
+  toJapan: {
+    jpy: 11200,
+    krw: 115000,
+  },
+};
+const cheapestTicketTomorrowDummy = {
+  toKorea: {
+    currency: 'jpy',
+    from: {
+      iata: 'NRT',
+      time: '09:15',
+    },
+    to: {
+      iata: 'INC',
+      time: '11:30',
+    },
+    imageTitle: '',
+    fee: 13000,
+  },
+  toJapan: {
+    currency: 'jpy',
+    from: {
+      iata: 'INC',
+      time: '10:30',
+    },
+    to: {
+      iata: 'NRT',
+      time: '12:45',
+    },
+    imageTitle: '',
+    fee: 90000,
+  },
+};
+const cheapestTicketInfoData: ResponseconstCheapestTicketInfoData = {
+  location: {
+    country: {
+      ko: '대한민국',
+      ja: '韓国',
+    },
+    location: {
+      ko: '제주',
+      ja: '済州',
+    },
+    imgSrc: 'jeju01',
+  },
+  tripType: 'roundTrip',
+  fee: {
+    krw: 30000,
+    jpy: 34000,
+  },
+  from: {
+    date: '5/12',
+    day: 'tru',
+    airline: {
+      title: {
+        ko: '제주항공',
+        ja: '済州航空',
+      },
+      lata: 'JEU',
+      imageSrc: 'Jeju_Air_Logo',
+    },
+    lata: 'NRT',
+  },
+  to: {
+    date: '5/15',
+    day: 'fri',
+    airline: {
+      title: {
+        ko: '제주항공',
+        ja: '済州航空',
+      },
+      lata: 'JEU',
+      imageSrc: 'Jeju_Air_Logo',
+    },
+    lata: 'JEU',
+  },
+};
 export const FlightBoard = async (props: FlightBoardProps) => {
   const { locale } = props;
 
-  const averagePriceOfFlight = {
-    toKorea: {
-      jpy: 11245,
-      krw: 115045,
-    },
-    toJapan: {
-      jpy: 11200,
-      krw: 115000,
-    },
-  };
-  const cheapestTicketTomorrowDummy = {
-    toKorea: {
-      currency: 'jpy',
-      from: {
-        iata: 'NRT',
-        time: '09:15',
-      },
-      to: {
-        iata: 'INC',
-        time: '11:30',
-      },
-      imageTitle: '',
-      fee: 13000,
-    },
-    toJapan: {
-      currency: 'jpy',
-      from: {
-        iata: 'INC',
-        time: '10:30',
-      },
-      to: {
-        iata: 'NRT',
-        time: '12:45',
-      },
-      imageTitle: '',
-      fee: 90000,
-    },
-  };
   return (
     <Dashboard.Article>
       <Dashboard.ArticleHeader>
@@ -71,7 +120,12 @@ export const FlightBoard = async (props: FlightBoardProps) => {
         <CheapestTicketTomorrow
           cheapestTicketInfo={cheapestTicketTomorrowDummy}
         />
-        {/* <AveragePriceOfFlightTicket /> */}
+        <RecommendedTrip />
+
+        <CheapestTicketInfo
+          locale={locale}
+          cheapestTicketInfoData={cheapestTicketInfoData}
+        />
         {/* 
     
       <ExchangeRateCalculator

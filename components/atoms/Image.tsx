@@ -6,7 +6,8 @@ import Image from 'next/image';
  * いつか タイプをちゃんとセットする
  */
 
-type ImagesProps = { imageTitle: string; width?: number };
+export type ImagesProps = { imageTitle: string; width?: number };
+
 export const Images = ({ imageTitle, width }: ImagesProps) => {
   const title = imageTitle.split('.')[0];
   const image = images.find((image) => image.src.includes(title));

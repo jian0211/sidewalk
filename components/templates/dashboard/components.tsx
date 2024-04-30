@@ -24,7 +24,7 @@ type IconWithTextProps = {
   colorProps?: Partial<ColorProps>;
 } & React.ComponentProps<'p'>;
 type PProps = React.ComponentProps<'p'>;
-type TextProps = Partial<FontProps> &
+type TextProps = { usePointer?: boolean } & Partial<FontProps> &
   Partial<ColorProps> &
   MarginProps &
   React.ComponentProps<'span'>;
@@ -110,6 +110,7 @@ const Text = (props: TextProps) => {
     color = 'darkGray',
     marginLeft = '0px',
     marginRight = '0px',
+    usePointer,
     ...rest
   } = props;
   return (
@@ -117,6 +118,7 @@ const Text = (props: TextProps) => {
       {...rest}
       {...stylex.props(
         styles.text({ fontSize, fontWeight, color, marginLeft, marginRight }),
+        usePointer && styles.pointer,
       )}
     />
   );
@@ -475,6 +477,9 @@ const styles = stylex.create({
     borderRadius: spacing['xxsmall'],
     borderColor: palette['baseGray'],
     borderStyle: 'solid',
+  },
+  pointer: {
+    cursor: 'pointer',
   },
 });
 
