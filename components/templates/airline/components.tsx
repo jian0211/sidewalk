@@ -1,4 +1,3 @@
-import Images from '@/public/images/index';
 import {
   PaletteVars,
   fontSizing,
@@ -7,10 +6,10 @@ import {
   shadowing,
 } from '../../../styles/globalTokens.stylex';
 import * as stylex from '@stylexjs/stylex';
-import Image from 'next/image';
 import { ComponentPropsWithoutRef } from 'react';
 import Link, { LinkProps } from 'next/link';
 import { Icons } from '@/components/atoms/Icon';
+import { Images } from '@/components/atoms/Image';
 
 type CategoryContainerProps = React.ComponentPropsWithoutRef<'div'>;
 type BodyProps = React.ComponentPropsWithoutRef<'div'>;
@@ -46,23 +45,7 @@ const Body = (props: BodyProps) => {
 };
 
 const CompanyImage = ({ imageTitle }: { imageTitle: string }) => {
-  const title = imageTitle.split('.')[0];
-  const image = Images.find((image) => image.src.includes(title));
-  const DEFAULT_DISPLAY_WIDTH = 250;
-  const displayHeight = image
-    ? (image.height / image.width) * DEFAULT_DISPLAY_WIDTH
-    : 100;
-  return (
-    <Image
-      src={image?.src ?? 'no image 追加'}
-      alt=""
-      width={DEFAULT_DISPLAY_WIDTH}
-      height={displayHeight}
-      style={{
-        pointerEvents: 'none',
-      }}
-    />
-  );
+  return <Images imageTitle={imageTitle} />;
 };
 
 const LinkIcon = (props: LinkIconProps) => {

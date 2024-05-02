@@ -116,6 +116,62 @@
                 "jpyTitle": "円の為替高安",
                 "krwTitle": "₩の為替高安"
             }
+        },
+        "flight": {
+            "title": "チケット情報",
+            "averagePrice": {
+                "label": "平均価格",
+                "title": "チケット価格",
+                "toJapan": "日行",
+                "toKorea": "韓行",
+                "average": "平均",
+                "message": "2024年の基準でございます。"
+            },
+            "cheapTicket": {
+                "label": "曜日別高安",
+                "title": "曜日",
+                "toJapan": "日行",
+                "toKorea": "韓行",
+                "cheap": "安",
+                "cheapComment": "が安いです。",
+                "expensive": "高",
+                "expensiveComment": "が高いです。",
+                "message": "データ基準は今週と片道でございます。",
+                "week": {
+                    "mon": "月曜日",
+                    "tue": "火曜日",
+                    "wen": "水曜日",
+                    "thr": "木曜日",
+                    "fri": "金曜日",
+                    "sat": "土曜日",
+                    "sun": "日曜日"
+                }
+            },
+            "cheapestTicketTomorrow": {
+                "label": "明日の航空券",
+                "toKorea": "韓国行",
+                "toJapan": "日本行",
+                "title": "安"
+            },
+            "recommendedTrip": {
+                "label": "オススメ",
+                "title": "おすすめの旅行",
+                "message": "データ基準は今週と片道でございます。"
+            },
+            "cheapTicketInfo": {
+                "label": "オススメ",
+                "go": "出発",
+                "roundTrip": "往復",
+                "oneWay": "片道"
+            },
+            "airPriceVariationGraph": {
+                "title": "チケットの平均値",
+                "label": "航空券変動グラフ",
+                "destination": {
+                    "japan": "日本行",
+                    "korea": "韓国行"
+                }
+            }
         }
     }
 }
