@@ -19,7 +19,7 @@ const Sidebar = () => {
           iconname="IconDashborad"
           title={t('home.title')}
           linkProps={{ href: `/${locale}/dashboard` }}
-          isCurrent={paths.isHomePath}
+          isCurrent={paths.isDashboardPath}
         />
         <SidebarMenu.TabMenu
           iconname="IconAirportList"
