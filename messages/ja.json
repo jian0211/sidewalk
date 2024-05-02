@@ -118,6 +118,7 @@
             }
         },
         "flight": {
+            "title": "チケット情報",
             "averagePrice": {
                 "label": "平均価格",
                 "title": "チケット価格",
@@ -162,6 +163,14 @@
                 "go": "出発",
                 "roundTrip": "往復",
                 "oneWay": "片道"
+            },
+            "airPriceVariationGraph": {
+                "title": "チケットの平均値",
+                "label": "航空券変動グラフ",
+                "destination": {
+                    "japan": "日本行",
+                    "korea": "韓国行"
+                }
             }
         }
     }

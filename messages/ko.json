@@ -118,6 +118,7 @@
             }
         },
         "flight": {
+            "title": "티켓 정보",
             "averagePrice": {
                 "label": "평균가격",
                 "title": "티켓 가격",
@@ -153,12 +154,23 @@
                 "title": "저렴"
             },
             "recommendedTrip": {
-                "label": "オススメ",
-                "title": "おすすめの旅行",
-                "message": "データ基準は今週と片道でございます。"
+                "label": "추천",
+                "title": "추천 여행",
+                "message": "데이터 기준은 이번 주 입니다."
             },
             "cheapTicketInfo": {
-                "label": "オススメ"
+                "label": "추천",
+                "go": "출발",
+                "roundTrip": "왕복",
+                "oneWay": "편도"
+            },
+            "airPriceVariationGraph": {
+                "title": "티켓 평균값",
+                "label": "티켓변동 그래프",
+                "destination": {
+                    "japan": "일본행",
+                    "korea": "한국행"
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 import { Icons } from '@/components/atoms/Icon';
 import {
+  FlexVars,
   MarginProps,
   PaletteVars,
   Range,
@@ -18,7 +19,9 @@ type BoxProps = {
   theme: 'graph' | 'square' | 'rectangle';
   title: string;
 } & React.ComponentProps<'div'>;
-type PanelHeaderProps = React.ComponentProps<'div'>;
+type PanelHeaderProps = {
+  justifyContent?: FlexVars['justifyContent'];
+} & React.ComponentProps<'div'>;
 type PanelTitleProps = React.ComponentProps<'h3'>;
 type IconWithTextProps = {
   colorProps?: Partial<ColorProps>;
@@ -40,11 +43,12 @@ type LabelProps = React.ComponentProps<'label'>;
 type PanelBodyProps = panelBodyStyleProps & React.ComponentProps<'div'>;
 type PanelBottomProps = React.ComponentProps<'div'>;
 type FlightAnimationIconProps = React.ComponentProps<'div'>;
-type RadioGroupProps = InputProps & {
-  items: InputItemProps[];
-  groupName: string;
-  handleChange: (value: string) => void;
-};
+type RadioGroupProps = InputProps &
+  MarginProps & {
+    items: InputItemProps[];
+    groupName: string;
+    handleChange: (value: string) => void;
+  };
 type RadioInputProps = { item: InputItemProps } & InputProps &
   React.ComponentProps<'input'>;
 type InputItemProps = { value: string; label: string };
@@ -78,7 +82,10 @@ const Panel = (props: BoxProps) => {
   );
 };
 const PanelHeader = (props: PanelHeaderProps) => {
-  return <div {...props} {...stylex.props(styles['panelHeader'])} />;
+  const { justifyContent = 'start', ...rest } = props;
+  return (
+    <div {...rest} {...stylex.props(styles['panelHeader'](justifyContent))} />
+  );
 };
 const PanelTitle = (props: PanelTitleProps) => {
   return <h3 {...props} {...stylex.props(styles['panelTitle'])} />;
@@ -155,17 +162,24 @@ const FlightAnimationIcon = (props: FlightAnimationIconProps) => {
       <Icons
         src="IconFlightTakeoff"
         width={50}
-        style={animations['flightAnimationFront']}
+        style={animations['flightAnimation']}
       />
-      {/* <Icons src="IconFlightLanding" width={50} /> */}
     </div>
   );
 };
 
 const RadioGroup = (props: RadioGroupProps) => {
-  const { items, groupName, handleChange, currentValue, ...rest } = props;
+  const {
+    items,
+    groupName,
+    handleChange,
+    currentValue,
+    marginLeft = '0px',
+    marginRight = '0px',
+    ...rest
+  } = props;
   return (
-    <div {...stylex.props(styles['radioGroup'])}>
+    <div {...stylex.props(styles['radioGroup']({ marginLeft, marginRight }))}>
       {items.map((item) => (
         <RadioInput
           {...rest}
@@ -271,40 +285,21 @@ const verticalRotationAnimationBack = stylex.keyframes({
   },
 });
 
-const flightAnimationFront = stylex.keyframes({
+const flightAnimation = stylex.keyframes({
   '0%': {
     transform: 'rotateZ(20deg)',
-    marginLeft: '0',
-  },
-  '25%': {
-    transform: 'rotateZ(20deg)',
-    marginLeft: '0',
     marginBottom: '0',
   },
-  '50%': {
-    marginLeft: '100%',
-    marginBottom: '100%',
+  '30%': {
     transform: 'rotateZ(0deg)',
-    opacity: 1,
   },
-  '51%': {},
-  '100%': {},
-
-  // '50%': {
-  //   transform: 'rotateY(-90deg)',
-  //   opacity: 1,
-  // },
-  // '75%': {
-  //   transform: 'rotateY(180deg)',
-  //   animationTimingFunction: 'cubic-bezier(0, 0.5, 0.5, 1)',
-  // },
-  // '100%': {
-  //   transform: 'rotateY(270deg)',
-  //   animationTimingFunction: 'cubic-bezier(0.5, 0, 1, 0.5)',
-  // },
+  '70%': {
+    transform: 'rotateZ(50deg)',
+  },
+  '100%': {
+    transform: 'rotateZ(20deg)',
+  },
 });
-
-const flightAnimationBack = stylex.keyframes({});
 
 const styles = stylex.create({
   container: {
@@ -397,13 +392,14 @@ const styles = stylex.create({
     fontSize: fontSizing['small'],
     fontWeight: fontWeight['bold'],
   },
-  panelHeader: {
+  panelHeader: (props: FlexVars['justifyContent']) => ({
     display: 'flex',
     alignItems: 'center',
+    justifyContent: props,
     gap: '1rem',
     width: '60%',
     height: '30px',
-  },
+  }),
   panelTitle: {
     fontSize: fontSizing['large'],
   },
@@ -444,23 +440,15 @@ const styles = stylex.create({
     fontWeight: fontWeight['medium'],
   },
   flightAnimation: {
-    position: 'absolute',
-    // display: 'block',
-    // padding: '1rem',
-    width: '10rem',
     height: '4rem',
-    maxWidth: '10rem',
     maxHeight: '4rem',
-    borderWidth: '4px',
-    borderStyle: 'solid',
-    borderColor: 'pink',
-    borderRadius: '4px',
-    overflow: 'hidden',
   },
-  radioGroup: {
+  radioGroup: (props: MarginProps) => ({
     display: 'flex',
     gap: '1rem',
-  },
+    marginLeft: props.marginLeft,
+    marginRight: props.marginRight,
+  }),
   radioInput: {
     display: 'none',
   },
@@ -523,8 +511,8 @@ const animations = stylex.create({
     animationIterationCount: 'infinite',
   },
   verticalRotationIcon: { position: 'relative' },
-  flightAnimationFront: {
-    animationName: flightAnimationFront,
+  flightAnimation: {
+    animationName: flightAnimation,
     animationDuration: '5s',
     animationIterationCount: 'infinite',
   },

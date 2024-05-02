@@ -1,14 +1,16 @@
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { Dashboard } from '../../components';
 import { PriceRange, usePriceRangeSelecter } from './usePriceRange';
+import {
+  Days,
+  Destination,
+  FlightBoardResponse,
+} from '@/app/api/dashboard/flightBoard/route';
 
-export type Destination = 'toKorea' | 'toJapan';
-type Days = 'mon' | 'tue' | 'wen' | 'thr' | 'fri' | 'sat' | 'sun';
-type PricingDays = {
-  [k in 'cheapDay' | 'expensiveDay']: { [k in Destination]: Days };
-};
+type DayOfTheWeekOfCheapTicket =
+  FlightBoardResponse['dayOfTheWeekOfCheapTicket'];
 type DayOfTheWeekOfCheapTicketProps = {
-  pricingDays: PricingDays;
+  pricingDays: DayOfTheWeekOfCheapTicket;
 } & React.ComponentProps<'div'>;
 
 export const DayOfTheWeekOfCheapTicket = (
@@ -46,6 +48,7 @@ export const DayOfTheWeekOfCheapTicket = (
     cheap: cheapDay[destination],
     expensive: expensiveDay[destination],
   });
+  const sss = priceRangeDay('toKorea')[priceRangeSelecter];
 
   return (
     <Dashboard.Panel {...rest} theme="rectangle" title={t('label')}>

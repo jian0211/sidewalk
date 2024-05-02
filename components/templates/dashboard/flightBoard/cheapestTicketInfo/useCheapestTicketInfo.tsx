@@ -1,15 +1,15 @@
+import { FlightBoardResponse } from '@/app/api/dashboard/flightBoard/route';
 import { Locales } from '@/types/locale';
-import { ResponseconstCheapestTicketInfoData } from './CheapestTicketInfo';
 
 export const useCheapestTicketInfo = (
-  data: ResponseconstCheapestTicketInfoData,
+  data: FlightBoardResponse['cheapestTicketInfoData'],
 ) => {
   const { location, fee, from, to, tripType } = data;
 
   const title = (locale: Locales) =>
     `${location['country'][locale]} ${location['location'][locale]}`;
 
-  const fromTo = `${from['lata']} - ${to['lata']}`;
+  const fromTo = `${from['iata']} - ${to['iata']}`;
 
   const convertCurrnecy: Record<Locales, 'krw' | 'jpy'> = {
     ko: 'krw',

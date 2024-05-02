@@ -1,5 +1,5 @@
+import { Destination } from '@/app/api/dashboard/flightBoard/route';
 import { useState } from 'react';
-import { Destination } from '../dayOfTheWeekOfCheapTicket/DayOfTheWeekOfCheapTicket';
 
 export const useCheapestTicketTommorrow = () => {
   const [destination, setDestination] = useState<Destination>('toJapan');
