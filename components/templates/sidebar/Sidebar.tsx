@@ -21,40 +21,18 @@ const Sidebar = () => {
           linkProps={{ href: `/${locale}/dashboard` }}
           isCurrent={paths.isHomePath}
         />
-        <SidebarMenu.Accordion
-          title={t('airports.title')}
-          isCurrent={paths.isCurrentPage('airports')}
-          iconname="IconAirport"
-        >
-          <SidebarMenu.TabMenu
-            iconname="IconAirportList"
-            title={t('airports.categories.airportsList')}
-            linkProps={{ href: `/${locale}/airports/jp` }}
-            isCurrent={paths.isAirportPath}
-          />
-          <SidebarMenu.TabMenu
-            iconname="IconAirportList"
-            title={t('airports.categories.airportsSchedule')}
-            linkProps={{ href: `/${locale}/airports/schedule` }}
-          />
-        </SidebarMenu.Accordion>
-        <SidebarMenu.Accordion
-          title={t('airlines.title')}
+        <SidebarMenu.TabMenu
+          iconname="IconAirportList"
+          title={t('airports.categories.airportsList')}
+          linkProps={{ href: `/${locale}/airports/jp` }}
+          isCurrent={paths.isAirportPath}
+        />
+        <SidebarMenu.TabMenu
+          iconname="IconPlaneList"
+          title={t('airlines.categories.airlinesList')}
+          linkProps={{ href: `/${locale}/airlines` }}
           isCurrent={paths.isAirlinePath}
-          iconname="IconPlane"
-        >
-          <SidebarMenu.TabMenu
-            iconname="IconPlaneList"
-            title={t('airlines.categories.airlinesList')}
-            linkProps={{ href: `/${locale}/airlines` }}
-            isCurrent={paths.isAirlinePath}
-          />
-          <SidebarMenu.TabMenu
-            iconname="IconPlaneList"
-            title={t('airlines.categories.airlinesSchedule')}
-            linkProps={{ href: `/${locale}/airlines/schedule` }}
-          />
-        </SidebarMenu.Accordion>
+        />
         <SidebarMenu.TabMenu
           iconname="IconFlight"
           title={t('flights.title')}
@@ -62,7 +40,7 @@ const Sidebar = () => {
           isCurrent={paths.isFligths}
         />
       </SidebarMenu.MenuContainer>
-      <SidebarMenu.BottomContainer>
+      {/* <SidebarMenu.BottomContainer>
         <SidebarMenu.TabMenu
           iconname="IconProfile"
           title={t('profile')}
@@ -79,7 +57,7 @@ const Sidebar = () => {
           }}
           isCurrent={paths.isLogin}
         />
-      </SidebarMenu.BottomContainer>
+      </SidebarMenu.BottomContainer> */}
       <SidebarMenu.Footer>
         <p>@2024</p>
       </SidebarMenu.Footer>
