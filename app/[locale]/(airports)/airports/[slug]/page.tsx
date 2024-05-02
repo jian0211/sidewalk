@@ -1,5 +1,4 @@
 import { Airports } from '@/components/templates/airport/Airport';
-import { AirportDetail } from '@/components/templates/airport/AirportDetail';
 import { Country } from '@/types/country';
 import { Locales } from '@/types/locale';
 
@@ -8,12 +7,10 @@ export type PageProps = {
   params: { locale: Locales; slug: Country | Iata };
 };
 const AirportsListOfCountryPage = async ({ params }: PageProps) => {
-  if (params.slug === 'jp' || params.slug === 'ko')
-    return (
-      <Airports params={{ locale: params.locale, country: params.slug }} />
-    );
   return (
-    <AirportDetail params={{ locale: params.locale, iata: params.slug }} />
+    <Airports
+      params={{ locale: params.locale, country: params.slug as Country }}
+    />
   );
 };
 export default AirportsListOfCountryPage;
