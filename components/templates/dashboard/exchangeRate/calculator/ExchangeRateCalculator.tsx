@@ -1,3 +1,5 @@
+'use client';
+
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { Dashboard } from '../../components';
 import { Flex, FlexProps } from '@/components/atoms/Flex';
