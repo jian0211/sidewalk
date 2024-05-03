@@ -40,6 +40,7 @@ type SizeProps = {
     | '100%'
     | '13rem'
     | '23rem'
+    | '34rem'
     | 'auto'
     | 'inherit'
     | '320px'
