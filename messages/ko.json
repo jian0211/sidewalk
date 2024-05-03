@@ -56,6 +56,9 @@
         "airlines": {
             "title": "일본과 한국을 왕래하는 항공사 정보"
         },
+        "flights": {
+            "title": "가까운 이웃, 새로운 설렘을 만나는 여행"
+        },
         "translate": {
             "japan": "일본어",
             "korea": "한국어"

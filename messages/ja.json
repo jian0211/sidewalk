@@ -56,6 +56,9 @@
         "airlines": {
             "title": "日本と韓国を行き来する航空会社の情報"
         },
+        "flights": {
+            "title": "近くの隣、新しいときめきに出会える旅"
+        },
         "translate": {
             "japan": "日本語",
             "korea": "韓国語"
