@@ -1,11 +1,24 @@
-import { carriersDummy } from '@/prisma/dummy/airlines';
 import { PrismaClient } from '@prisma/client';
 import type { NextApiRequest } from 'next';
 const prisma = new PrismaClient();
 
 export async function GET(req: Request & NextApiRequest) {
   try {
-    await prisma.airline.createMany({ data: carriersDummy });
+    // await prisma.airline.createMany({ data: carriersDummy });
+    const allAirline = await prisma.airline.findMany();
+    console.log('allAirline', allAirline.length);
+
+    const seen = new Set();
+    for (const airline of allAirline) {
+      if (seen.has(airline.iata)) {
+        await prisma.airline.delete({
+          where: { id: airline.id },
+        });
+      } else {
+        seen.add(airline.iata);
+      }
+    }
+
     return Response.json('dummy Ok');
   } catch (err) {
     console.log('err', err);

@@ -11,6 +11,8 @@ import React from 'react';
 import Link, { LinkProps } from 'next/link';
 import { Block } from '@/components/atoms/Block';
 import { designStyles } from '@/components/styles';
+import Image from 'next/image';
+import logo from '@/public/images/logo.png';
 
 type LogoProps = React.ComponentPropsWithoutRef<'div'>;
 type ContainerProps = React.ComponentPropsWithoutRef<'aside'>;
@@ -36,9 +38,14 @@ const Container = (props: ContainerProps) => (
 const Logo = (props: LogoProps) => {
   return (
     <div {...props} {...stylex.props(styles.logo)}>
-      <h1 {...stylex.props(designStyles['color']({ color: 'lightBlue' }))}>
-        WWWWWW
-      </h1>
+      <Image
+        src={logo}
+        alt="logo"
+        width={300}
+        style={{
+          background: 'none',
+        }}
+      />
     </div>
   );
 };
