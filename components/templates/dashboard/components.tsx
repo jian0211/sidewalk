@@ -8,7 +8,6 @@ import {
   fontSizing,
   fontWeight,
   palette,
-  spacing,
 } from '../../../styles/globalTokens.stylex';
 import * as stylex from '@stylexjs/stylex';
 
@@ -43,16 +42,6 @@ type LabelProps = React.ComponentProps<'label'>;
 type PanelBodyProps = panelBodyStyleProps & React.ComponentProps<'div'>;
 type PanelBottomProps = React.ComponentProps<'div'>;
 type FlightAnimationIconProps = React.ComponentProps<'div'>;
-type RadioGroupProps = InputProps &
-  MarginProps & {
-    items: InputItemProps[];
-    groupName: string;
-    handleChange: (value: string) => void;
-  };
-type RadioInputProps = { item: InputItemProps } & InputProps &
-  React.ComponentProps<'input'>;
-type InputItemProps = { value: string; label: string };
-type InputProps = { currentValue: string; theme?: 'borderRadius' };
 type panelBodyStyleProps = { gap?: Range };
 
 const Container = (props: ContainerProps) => {
@@ -168,59 +157,6 @@ const FlightAnimationIcon = (props: FlightAnimationIconProps) => {
   );
 };
 
-const RadioGroup = (props: RadioGroupProps) => {
-  const {
-    items,
-    groupName,
-    handleChange,
-    currentValue,
-    marginLeft = '0px',
-    marginRight = '0px',
-    ...rest
-  } = props;
-  return (
-    <div {...stylex.props(styles['radioGroup']({ marginLeft, marginRight }))}>
-      {items.map((item) => (
-        <RadioInput
-          {...rest}
-          key={item.value}
-          name={groupName}
-          item={item}
-          currentValue={currentValue}
-          onChange={(value) => handleChange(value.currentTarget.value as any)}
-        />
-      ))}
-    </div>
-  );
-};
-
-const RadioInput = (props: RadioInputProps) => {
-  const { item, currentValue, theme, ...rest } = props;
-  const isChecked = currentValue === item.value;
-  return (
-    <span key={item.value}>
-      <input
-        {...rest}
-        {...stylex.props(styles['radioInput'], theme && styles[theme])}
-        type="radio"
-        value={item.value}
-        id={item.value}
-        defaultChecked={isChecked}
-        checked={isChecked}
-      />
-      <label
-        {...stylex.props(
-          styles['radioLabel'],
-          isChecked && styles['radioLabelChecked'],
-        )}
-        htmlFor={item.value}
-      >
-        {item.label}
-      </label>
-    </span>
-  );
-};
-
 export const Dashboard = {
   Container,
   Article,
@@ -238,7 +174,6 @@ export const Dashboard = {
   ArticleHeaderTitle,
   VerticalRotationIcon,
   FlightAnimationIcon,
-  RadioGroup,
 };
 
 const verticalRotationAnimationFront = stylex.keyframes({
@@ -442,29 +377,6 @@ const styles = stylex.create({
   flightAnimation: {
     height: '4rem',
     maxHeight: '4rem',
-  },
-  radioGroup: (props: MarginProps) => ({
-    display: 'flex',
-    gap: '1rem',
-    marginLeft: props.marginLeft,
-    marginRight: props.marginRight,
-  }),
-  radioInput: {
-    display: 'none',
-  },
-  radioLabelChecked: {
-    color: palette['darkGray'],
-  },
-  radioLabel: {
-    fontWeight: fontWeight['bold'],
-    color: palette['baseGray'],
-    cursor: 'pointer',
-  },
-  borderRadius: {
-    borderWidth: spacing['xxsmall'],
-    borderRadius: spacing['xxsmall'],
-    borderColor: palette['baseGray'],
-    borderStyle: 'solid',
   },
   pointer: {
     cursor: 'pointer',

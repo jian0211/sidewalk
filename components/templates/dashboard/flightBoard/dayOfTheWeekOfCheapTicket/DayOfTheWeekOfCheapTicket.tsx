@@ -6,6 +6,7 @@ import {
   Destination,
   FlightBoardResponse,
 } from '@/app/api/dashboard/flightBoard/route';
+import { RadioGroup } from '@/components/molecules/radio/Radio';
 
 type DayOfTheWeekOfCheapTicket =
   FlightBoardResponse['dayOfTheWeekOfCheapTicket'];
@@ -48,12 +49,11 @@ export const DayOfTheWeekOfCheapTicket = (
     cheap: cheapDay[destination],
     expensive: expensiveDay[destination],
   });
-  const sss = priceRangeDay('toKorea')[priceRangeSelecter];
 
   return (
     <Dashboard.Panel {...rest} theme="rectangle" title={t('label')}>
       <Dashboard.PanelHeader>
-        <Dashboard.RadioGroup
+        <RadioGroup
           groupName="priceOrder"
           theme="borderRadius"
           currentValue={priceRangeSelecter}
