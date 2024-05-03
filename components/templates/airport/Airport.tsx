@@ -1,3 +1,5 @@
+'use client';
+
 import { Table } from '@/components/molecules/table/Table';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { Prisma } from '@prisma/client';
