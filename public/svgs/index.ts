@@ -26,6 +26,9 @@ import IconArrowRight from './arrow-narrow-right.svg';
 import IconFlightLanding from './flight-landing.svg';
 import IconFlightTakeoff from './flight-takeoff.svg';
 import IconRightCircle from './right-circle.svg';
+import IconArrowDownSquare from './arrow-down-square.svg';
+import IconArrowNext from './arrow-next.svg';
+import IconArrowPrev from './arrow-prev.svg';
 
 export {
   IconJapanFlag,
@@ -55,4 +58,7 @@ export {
   IconFlightLanding,
   IconFlightTakeoff,
   IconRightCircle,
+  IconArrowDownSquare,
+  IconArrowNext,
+  IconArrowPrev,
 };
