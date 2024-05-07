@@ -13,18 +13,12 @@ import { designStyles } from '@/components/styles';
 type NavProps = React.ComponentPropsWithoutRef<'nav'>;
 type AirportsLayoutContainerProps = ComponentPropsWithoutRef<'h1'>;
 type AirlinesLayoutContainerProps = ComponentPropsWithoutRef<'h1'>;
-type FlightsLayoutTitleProps = React.ComponentProps<'h1'>;
 type NavGlobalEditBoxProps = React.ComponentPropsWithoutRef<'div'>;
 type NotificationBoxProps = React.ComponentPropsWithoutRef<'div'>;
 
 export const Nav = (props: NavProps) => {
-  const {
-    isAirportPath,
-    isAirlinePath,
-    isFligths,
-    isHomePath,
-    isDashboardPath,
-  } = useCurrentPath();
+  const { isAirportPath, isAirlinePath, isFligths, isDashboardPath } =
+    useCurrentPath();
   return (
     <nav
       {...props}
@@ -41,14 +35,12 @@ export const Nav = (props: NavProps) => {
         }),
       )}
     >
-      {isDashboardPath ? (
+      {isDashboardPath || isFligths ? (
         <SearchForm />
       ) : isAirportPath ? (
         <AirportsLayoutContainer />
       ) : isAirlinePath ? (
         <AirlinesLayoutContainer />
-      ) : isFligths ? (
-        <FlightsLayoutTitle />
       ) : undefined}
       <LocaleSwitcher />
       <NavGlobalEditBox />
@@ -106,26 +98,6 @@ const NotificationBox = (props: NotificationBoxProps) => {
     <div {...props}>
       <Icons src="IconNotification" useOutline useCursor />
     </div>
-  );
-};
-
-const FlightsLayoutTitle = (props: FlightsLayoutTitleProps) => {
-  const t = useTranslatedWord('nav.flights');
-  return (
-    <h1
-      {...props}
-      {...stylex.props(
-        designStyles['flex']({ alignItems: 'center' }),
-        designStyles['size']({ width: '100%' }),
-        designStyles['font']({ fontSize: 'xlarge', fontWeight: 'medium' }),
-        designStyles['font']({
-          fontSize: 'xlarge',
-          fontWeight: 'medium',
-        }),
-      )}
-    >
-      {t('title')}
-    </h1>
   );
 };
 

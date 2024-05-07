@@ -8,7 +8,7 @@ import {
 
 type InputItemProps = { value: string; label: string };
 type InputProps = { currentValue: string; theme?: 'borderRadius' };
-type RadioGroupProps = {
+export type RadioGroupProps = {
   items: InputItemProps[];
   groupName: string;
   handleChange: (value: string) => void;
@@ -19,6 +19,7 @@ type RadioInputProps = { item: InputItemProps } & InputProps &
 
 export const RadioGroup = (props: RadioGroupProps) => {
   const {
+    theme,
     items,
     groupName,
     handleChange,
@@ -32,6 +33,7 @@ export const RadioGroup = (props: RadioGroupProps) => {
       {items.map((item) => (
         <RadioInput
           {...rest}
+          theme={theme}
           key={item.value}
           name={groupName}
           item={item}

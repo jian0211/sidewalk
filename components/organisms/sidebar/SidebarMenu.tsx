@@ -128,6 +128,7 @@ export const SidebarMenu = {
 
 const styles = stylex.create({
   container: {
+    zIndex: 10,
     width: '320px',
     maxWidth: '320px',
     minWidth: '320px',
