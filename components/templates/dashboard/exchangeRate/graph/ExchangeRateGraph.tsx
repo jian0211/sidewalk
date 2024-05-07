@@ -11,6 +11,7 @@ import { useExchangeRateCountry } from '@/store/exchangeRateCountry';
 import { useExchangeRateDateRage } from '@/store/exchangeRateDateRange';
 import { useExchangeRateGroph } from './useExchangeRateGraph';
 import { CurrentCurrenyResponse } from '@/app/api/dashboard/exchangeRate/route';
+import { RadioGroup } from '@/components/molecules/radio/Radio';
 
 type ExchangeRateGraphProps = {
   currenyGraphData: CurrentCurrenyResponse['currenyGraphData'];
@@ -30,7 +31,7 @@ export const ExchangeRateGraph = (props: ExchangeRateGraphProps) => {
   return (
     <Dashboard.Panel {...rest} theme="graph" title="為替レートグラフ">
       <Nav>
-        <Dashboard.RadioGroup
+        <RadioGroup
           groupName="countryRadio"
           items={[
             { value: 'japan', label: t('japan') },
@@ -40,7 +41,7 @@ export const ExchangeRateGraph = (props: ExchangeRateGraphProps) => {
           currentValue={country}
         />
 
-        <Dashboard.RadioGroup
+        <RadioGroup
           theme="borderRadius"
           groupName="dateRadio"
           items={[

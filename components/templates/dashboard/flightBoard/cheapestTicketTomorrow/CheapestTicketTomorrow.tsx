@@ -6,6 +6,7 @@ import { Icons } from '@/components/atoms/Icon';
 import { FlightBoardResponse } from '@/app/api/dashboard/flightBoard/route';
 import { Locales } from '@/types/locale';
 import { Flex } from '@/components/atoms/Flex';
+import { RadioGroup } from '@/components/molecules/radio/Radio';
 
 type CheapestTicketTomorrowProps = {
   cheapestTicketTomorrow: FlightBoardResponse['cheapestTicketTomorrow'];
@@ -34,7 +35,7 @@ export const CheapestTicketTomorrow = (props: CheapestTicketTomorrowProps) => {
     <Dashboard.Panel {...rest} theme="rectangle" title={t('label')}>
       <Dashboard.PanelHeader>
         <Dashboard.PanelTitle>{t('title')}</Dashboard.PanelTitle>
-        <Dashboard.RadioGroup
+        <RadioGroup
           groupName="destination"
           theme="borderRadius"
           currentValue={states.destination}

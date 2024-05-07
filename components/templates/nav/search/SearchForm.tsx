@@ -1,7 +1,7 @@
 'use client';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as stylex from '@stylexjs/stylex';
-import { useSearch } from './useSearh';
+import { useSearch } from '../../../../hooks/useSearh';
 import { Flights } from '@/store/fligths';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { IconButton } from '@/components/atoms/Button';
@@ -13,7 +13,7 @@ import {
 import { useDatePicker } from './useDatePicker';
 import { PriceRange } from '@/components/organisms/SearchBar/PriceRangeSlider/PriceRangeSlider';
 import { useAiportsList } from '@/store/airports';
-import { useBooking } from './useBooking';
+import { useBooking } from '../../../../hooks/useBooking';
 import { useLocale } from '@/hooks/useLocale';
 import { TripType } from '@/components/organisms/SearchBar/tripType/TripType';
 
