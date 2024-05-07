@@ -7,21 +7,13 @@ import { palette, spacing } from '../../../styles/globalTokens.stylex';
 import * as stylex from '@stylexjs/stylex';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 
-type SlidingBaseProps = {
+type SlidingProps = {
   xstyles?: StyleXArray<any>;
   isShow?: boolean;
 } & React.ComponentProps<'div'>;
 type HandleGripProps = React.ComponentProps<'span'>;
 
-export const SlidingPanel = (props: SlidingBaseProps) => {
-  return (
-    <SlidingPanelContextProvider>
-      <SlidingBase {...props} />
-    </SlidingPanelContextProvider>
-  );
-};
-
-const SlidingBase = (props: SlidingBaseProps) => {
+export const Sliding = (props: SlidingProps) => {
   const { xstyles, isShow, children, ...rest } = props;
   const { isSlidingShow, setSlidingIsShow } = useSliding();
   const slidingWidth = isSlidingShow ? 0 : -40;
@@ -50,14 +42,16 @@ const HandleGrip = (props: HandleGripProps) => {
     setSlidingIsShow((prev) => !prev);
   };
   return (
-    <Icons
+    <span
       {...rest}
+      {...stylex.props(styles['handleGrip'](isSlidingShow))}
       onClick={handleClick}
-      src={isSlidingShow ? 'IconArrowPrev' : 'IconArrowNext'}
-      width={15}
-      useCursor
-      style={styles['handleGrip']}
-    />
+    >
+      <Icons
+        src={isSlidingShow ? 'IconArrowPrev' : 'IconArrowNext'}
+        width={15}
+      />
+    </span>
   );
 };
 
@@ -86,10 +80,13 @@ const styles = stylex.create({
     alignItems: 'center',
     left: props.left,
   }),
-  handleGrip: {
+  handleGrip: (props) => ({
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: palette['softGray'],
+    backgroundColor: {
+      default: palette[props ? 'skyBlue' : 'softGray'],
+      ':hover': palette['skyBlue'],
+    },
     width: '1rem',
     height: '20rem',
     borderTopRightRadius: spacing['small'],
@@ -97,7 +94,7 @@ const styles = stylex.create({
     borderTopLeftRadius: spacing['none'],
     borderBottomLeftRadius: spacing['none'],
     cursor: 'pointer',
-  },
+  }),
   showSliding: {
     visibility: 'hidden',
   },
