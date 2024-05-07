@@ -3,7 +3,7 @@ import {
   SlidingPanelContextProvider,
   useSliding,
 } from '@/hooks/providers/SlidingPanelProvider';
-import { palette } from '../../../styles/globalTokens.stylex';
+import { palette, spacing } from '../../../styles/globalTokens.stylex';
 import * as stylex from '@stylexjs/stylex';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 
@@ -47,7 +47,6 @@ const HandleGrip = (props: HandleGripProps) => {
   const { ...rest } = props;
   const { isSlidingShow, setSlidingIsShow } = useSliding();
   const handleClick = () => {
-    console.log('dlcicke');
     setSlidingIsShow((prev) => !prev);
   };
   return (
@@ -93,10 +92,10 @@ const styles = stylex.create({
     backgroundColor: palette['softGray'],
     width: '1rem',
     height: '20rem',
-    borderTopRightRadius: '8px',
-    borderBottomRightRadius: '8px',
-    borderTopLeftRadius: '0px',
-    borderBottomLeftRadius: '0px',
+    borderTopRightRadius: spacing['small'],
+    borderBottomRightRadius: spacing['small'],
+    borderTopLeftRadius: spacing['none'],
+    borderBottomLeftRadius: spacing['none'],
     cursor: 'pointer',
   },
   showSliding: {
