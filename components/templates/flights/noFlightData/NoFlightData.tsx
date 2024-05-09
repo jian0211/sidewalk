@@ -22,7 +22,7 @@ export const NoFlightData = (props: NoFlightDataProps) => {
         style={{ borderRadius: '50%' }}
       />
       <B
-        font={{
+        fontProps={{
           fontSize: 'large',
           fontWeight: 'bold',
           textDecoration: 'none',
@@ -38,8 +38,6 @@ export const NoFlightData = (props: NoFlightDataProps) => {
 const styles = stylex.create({
   noData: {
     position: 'relative',
-    width: '40rem',
-    height: '815px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
