@@ -1,6 +1,6 @@
+import { FlightTicketResponseData } from '@/app/api/flights/offers/route';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { Locales } from '@/types/locale';
-import { FlightTicketResponseData } from './FlightTicket';
 
 type useConvertToFlightTicketProps = {
   resData: FlightTicketResponseData;
