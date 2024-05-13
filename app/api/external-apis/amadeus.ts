@@ -1,4 +1,13 @@
-import { RequestShoppingOffers, TokenResponse } from './type';
+import { TokenResponse } from './type';
+
+type RequestShoppingOffers = {
+  originLocationCode: string; // * IATA code
+  destinationLocationCode: string; // * IATA code
+  departureDate: string; // * 2017-12-25 の形式
+  returnDate?: string;
+  maxPrice: string;
+  nonStop: string;
+};
 
 const endPoints = {
   shopping: '/shopping/flight-offers',
@@ -18,10 +27,10 @@ export const createFlightOffersPath = (params: RequestShoppingOffers) => {
     departureDate,
     returnDate,
     maxPrice,
+    nonStop,
   } = params;
   const currencyCode = 'USD';
   const adults = '1';
-  const nonStop = 'false';
   const max = '20';
 
   const query = new URLSearchParams({

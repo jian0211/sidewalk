@@ -105,14 +105,6 @@ type Data = {
   }[];
 };
 
-export type RequestShoppingOffers = {
-  originLocationCode: string; // * IATA code
-  destinationLocationCode: string; // * IATA code
-  departureDate: string; // * 2017-12-25 の形式
-  returnDate?: string;
-  maxPrice: string;
-};
-
 export type TokenResponse = {
   type: string;
   username: string;

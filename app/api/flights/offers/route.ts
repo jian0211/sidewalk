@@ -5,6 +5,7 @@ import { ResponseShoppingOffers } from '../../external-apis/type';
 import { db } from '@/prisma/prisma';
 
 export type TripType = 'roundTrip' | 'oneWay';
+
 export type FlightTicketResponseData = {
   airline: {
     image: string;
@@ -53,6 +54,7 @@ export async function POST(req: Request & NextApiRequest) {
       maxPrice: flightInfoddReq.flightCost.max + '',
       departureDate: formatDate(departureDate),
       returnDate,
+      nonStop: flightInfoddReq.tripType === 'oneWay' ? 'true' : 'false',
     });
 
     // Get flightOffers Data from AMADEUS
