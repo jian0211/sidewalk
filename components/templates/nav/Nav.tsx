@@ -103,7 +103,7 @@ const NotificationBox = (props: NotificationBoxProps) => {
 
 const styles = stylex.create({
   nav: {
-    zIndex: 1,
+    zIndex: 30,
     borderBottomColor: palette.whiteSoftGray,
     borderBottomStyle: 'solid',
     borderBottomWidth: spacing.xxsmall,
