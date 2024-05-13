@@ -5,7 +5,6 @@ import { useLocale } from 'next-intl';
 export const useSearch = () => {
   const { flights, setFligths } = useFlights();
   const locale = useLocale();
-
   const handleClickSetFligths =
     <T extends FlightsKey>(tripType: T) =>
     (value: ValueOf<T>) =>
@@ -25,9 +24,17 @@ export const useSearch = () => {
     return _value.toLocaleString();
   };
 
+  const isSearched = () => {
+    if (flights.from === 'FROM') return false;
+    if (flights.to === 'TO') return false;
+    if (flights.dateType.departureDate === null) return false;
+    return true;
+  };
+
   return {
     states: {
       flights,
+      isSearched: isSearched(),
     },
     actions: {
       handleClickSetFligths,
