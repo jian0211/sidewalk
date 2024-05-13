@@ -24,7 +24,7 @@ export const useSearch = () => {
     return _value.toLocaleString();
   };
 
-  const isSearched = () => {
+  const isReadyToSearch = () => {
     if (flights.from === 'FROM') return false;
     if (flights.to === 'TO') return false;
     if (flights.dateType.departureDate === null) return false;
@@ -34,7 +34,7 @@ export const useSearch = () => {
   return {
     states: {
       flights,
-      isSearched: isSearched(),
+      isReadyToSearch: isReadyToSearch(),
     },
     actions: {
       handleClickSetFligths,
