@@ -2,57 +2,67 @@
 
 import { Flights } from './components';
 import { GlobeMap } from './countryMap/Map';
-import { useSearch } from '@/hooks/useSearh';
 import { Locales } from '@/types/locale';
 import { FlightTicket } from './flightTicket/FlightTicket';
-import { FlightTicketResponseData } from '@/app/api/flights/offers/route';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
-import { Flex } from '@/components/atoms/Flex';
 import { NoFlightData } from './noFlightData/NoFlightData';
+import { useSearch } from '@/hooks/useSearh';
+import { useRecoilValueLoadable } from 'recoil';
+import { Flights as FlightsType, fetchFlightOffers } from '@/store/fligths';
 
+type FlightListProps = {
+  locale: Locales;
+  flight: FlightsType;
+};
 type FlightsProps = {
   locale: Locales;
-  flightsOffers: FlightTicketResponseData[];
 };
 
-export const FlightsPage = ({ locale, flightsOffers }: FlightsProps) => {
+export const FlightsPage = ({ locale }: FlightsProps) => {
   const {
-    states: { flights, isSearched },
-    actions: { handleSubmitSetFligths, toLocaleString },
+    states: { flights, isReadyToSearch },
   } = useSearch();
-  const t = useTranslatedWord('flights');
 
   return (
     <Flights.Container>
       <Flights.SlidingPanelBox>
-        <Flex
-          bgColorProps={{ color: 'whiteSoftGray' }}
-          sizeProps={{ width: '100%' }}
-          paddingProps={{ paddingTop: '10px', paddingLeft: '10px' }}
-        >
-          {isSearched ? (
-            <>
-              <Flights.IconWithTitle>
-                {t('searchedTitle')}
-              </Flights.IconWithTitle>
-              <Flights.ListBox>
-                {flightsOffers.map((flightsOffer, i) => (
-                  <FlightTicket
-                    key={i}
-                    flightTicketData={flightsOffer}
-                    locale={locale}
-                  />
-                ))}
-              </Flights.ListBox>
-            </>
-          ) : (
-            <NoFlightData />
-          )}
-        </Flex>
+        {!isReadyToSearch ? (
+          <NoFlightData />
+        ) : (
+          <FlightList flight={flights} locale={locale} />
+        )}
       </Flights.SlidingPanelBox>
       <Flights.GlobeMapBox>
         <GlobeMap useGraticule />
       </Flights.GlobeMapBox>
     </Flights.Container>
   );
+};
+
+const FlightList = ({ flight, locale }: FlightListProps) => {
+  const t = useTranslatedWord('flights');
+  const flightLoadable = useRecoilValueLoadable(fetchFlightOffers(flight));
+  switch (flightLoadable.state) {
+    case 'hasValue':
+      return (
+        <Flights.Wrapper>
+          <Flights.IconWithTitle>{t('searchedTitle')}</Flights.IconWithTitle>
+          <Flights.ListBox>
+            {flightLoadable.contents.length > 0
+              ? flightLoadable.contents.map((flightsOffer, i) => (
+                  <FlightTicket
+                    key={i}
+                    flightTicketData={flightsOffer}
+                    locale={locale}
+                  />
+                ))
+              : 'no dasdfas'}
+          </Flights.ListBox>
+        </Flights.Wrapper>
+      );
+    case 'loading':
+      return <div>Loading...</div>;
+    case 'hasError':
+      throw new Error('Error acquiring flight Offers data');
+  }
 };

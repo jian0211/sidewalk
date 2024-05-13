@@ -27,6 +27,7 @@ type LabelAndTextProps = {
 } & React.ComponentProps<'div'>;
 type HrProps = React.ComponentProps<'div'>;
 type IconWithTitleProps = React.ComponentProps<'div'>;
+type WrapperProps = React.ComponentProps<'div'>;
 
 const Container = (props: ContainerProps) => {
   return <section {...props} {...stylex.props(styles['container'])} />;
@@ -109,6 +110,17 @@ const IconWithTitle = (props: IconWithTitleProps) => {
   );
 };
 
+const Wrapper = (props: WrapperProps) => {
+  return (
+    <Flex
+      {...props}
+      bgColorProps={{ color: 'whiteSoftGray' }}
+      sizeProps={{ width: '100%' }}
+      paddingProps={{ paddingTop: '10px', paddingLeft: '10px' }}
+    />
+  );
+};
+
 export const Flights = {
   Container,
   GlobeMapBox,
@@ -118,6 +130,7 @@ export const Flights = {
   LabelAndText,
   Hr,
   IconWithTitle,
+  Wrapper,
 };
 
 const styles = stylex.create({
