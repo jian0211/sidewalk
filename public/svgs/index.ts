@@ -29,6 +29,7 @@ import IconRightCircle from './right-circle.svg';
 import IconArrowDownSquare from './arrow-down-square.svg';
 import IconArrowNext from './arrow-next.svg';
 import IconArrowPrev from './arrow-prev.svg';
+import IconSearchList from './search-list.svg';
 
 export {
   IconJapanFlag,
@@ -61,4 +62,5 @@ export {
   IconArrowDownSquare,
   IconArrowNext,
   IconArrowPrev,
+  IconSearchList,
 };
