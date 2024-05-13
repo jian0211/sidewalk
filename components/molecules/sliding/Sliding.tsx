@@ -1,8 +1,5 @@
 import { Icons } from '@/components/atoms/Icon';
-import {
-  SlidingPanelContextProvider,
-  useSliding,
-} from '@/hooks/providers/SlidingPanelProvider';
+import { useSliding } from '@/hooks/providers/SlidingPanelProvider';
 import { palette, spacing } from '../../../styles/globalTokens.stylex';
 import * as stylex from '@stylexjs/stylex';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
@@ -16,7 +13,7 @@ type HandleGripProps = React.ComponentProps<'span'>;
 export const Sliding = (props: SlidingProps) => {
   const { xstyles, isShow, children, ...rest } = props;
   const { isSlidingShow, setSlidingIsShow } = useSliding();
-  const slidingWidth = isSlidingShow ? 0 : -40;
+  const slidingWidth = isShow ? 0 : isSlidingShow ? 0 : -40;
 
   if (isShow) setSlidingIsShow((prev) => (prev === true ? isShow : prev));
 
@@ -25,7 +22,8 @@ export const Sliding = (props: SlidingProps) => {
       {...rest}
       {...stylex.props(
         styles['slidingPanel']({ left: `${slidingWidth}rem` }),
-        styles[isSlidingShow ? 'openSlidingPanel' : 'closeSlidingPanel'],
+        styles['openSlidingPanel'],
+        // styles[isSlidingShow ? 'openSlidingPanel' : 'closeSlidingPanel'],
         xstyles,
       )}
     >

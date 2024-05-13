@@ -5,38 +5,12 @@ import { Flights } from '../components';
 import { Button } from '@/components/atoms/Button';
 import { Locales } from '@/types/locale';
 import { useConvertToFlightTicket } from './useConvertToFlightTicket';
+import { FlightTicketResponseData } from '@/app/api/flights/offers/route';
 
 type FlightTicketProps = {
   locale: Locales;
   flightTicketData: FlightTicketResponseData;
 } & React.ComponentProps<'li'>;
-export type FlightTicketResponseData = {
-  airline: {
-    image: string;
-    title: {
-      ko: string;
-      ja: string;
-    };
-    serviceType: string;
-  };
-  from: {
-    iata: string;
-    time: string;
-  };
-  to: {
-    iata: string;
-    time: string;
-  };
-  price: {
-    yen: number;
-    won: number;
-  };
-  flightTime: {
-    hour: number;
-    min: number;
-  };
-  tripType: string;
-};
 
 export const FlightTicket = (props: FlightTicketProps) => {
   const { locale, flightTicketData, ...rest } = props;

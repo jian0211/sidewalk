@@ -4,53 +4,51 @@ import { Flights } from './components';
 import { GlobeMap } from './countryMap/Map';
 import { useSearch } from '@/hooks/useSearh';
 import { Locales } from '@/types/locale';
-import { NoFlightData } from './noFlightData/NoFlightData';
 import { FlightTicket } from './flightTicket/FlightTicket';
+import { FlightTicketResponseData } from '@/app/api/flights/offers/route';
+import { useTranslatedWord } from '@/hooks/useTranslatedWord';
+import { Flex } from '@/components/atoms/Flex';
+import { NoFlightData } from './noFlightData/NoFlightData';
 
 type FlightsProps = {
   locale: Locales;
+  flightsOffers: FlightTicketResponseData[];
 };
 
-export const FlightsPage = ({ locale, ...props }: FlightsProps) => {
+export const FlightsPage = ({ locale, flightsOffers }: FlightsProps) => {
   const {
-    states: { flights },
+    states: { flights, isSearched },
     actions: { handleSubmitSetFligths, toLocaleString },
   } = useSearch();
+  const t = useTranslatedWord('flights');
 
-  const flightTicket = {
-    airline: {
-      image: '',
-      title: {
-        ko: '이스타항공',
-        ja: '이스타항공',
-      },
-      serviceType: '저비용 항공사',
-    },
-    from: {
-      iata: 'NRT',
-      time: '11:30',
-    },
-    to: {
-      iata: 'INC',
-      time: '14:30',
-    },
-    price: {
-      yen: 30000,
-      won: 260000,
-    },
-    flightTime: {
-      hour: 3,
-      min: 30,
-    },
-    tripType: 'roundTrip',
-  };
   return (
     <Flights.Container>
       <Flights.SlidingPanelBox>
-        <Flights.ListBox>
-          <FlightTicket flightTicketData={flightTicket} locale={locale} />
-          {/* <NoFlightData /> */}
-        </Flights.ListBox>
+        <Flex
+          bgColorProps={{ color: 'whiteSoftGray' }}
+          sizeProps={{ width: '100%' }}
+          paddingProps={{ paddingTop: '10px', paddingLeft: '10px' }}
+        >
+          {isSearched ? (
+            <>
+              <Flights.IconWithTitle>
+                {t('searchedTitle')}
+              </Flights.IconWithTitle>
+              <Flights.ListBox>
+                {flightsOffers.map((flightsOffer, i) => (
+                  <FlightTicket
+                    key={i}
+                    flightTicketData={flightsOffer}
+                    locale={locale}
+                  />
+                ))}
+              </Flights.ListBox>
+            </>
+          ) : (
+            <NoFlightData />
+          )}
+        </Flex>
       </Flights.SlidingPanelBox>
       <Flights.GlobeMapBox>
         <GlobeMap useGraticule />

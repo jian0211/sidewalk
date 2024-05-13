@@ -6,6 +6,7 @@ import { palette, spacing } from '../../../styles/globalTokens.stylex';
 import { Flex } from '@/components/atoms/Flex';
 import { Text } from '@/components/atoms/Text';
 import { DesignProps } from '@/components/styles';
+import { Icons } from '@/components/atoms/Icon';
 
 type ContainerProps = React.ComponentProps<'section'>;
 type GlobeMapBoxProps = React.ComponentProps<'div'>;
@@ -25,6 +26,7 @@ type LabelAndTextProps = {
   };
 } & React.ComponentProps<'div'>;
 type HrProps = React.ComponentProps<'div'>;
+type IconWithTitleProps = React.ComponentProps<'div'>;
 
 const Container = (props: ContainerProps) => {
   return <section {...props} {...stylex.props(styles['container'])} />;
@@ -36,11 +38,11 @@ const GlobeMapBox = (props: GlobeMapBoxProps) => {
 const SlidingPanelBox = (props: SlidingPanelProps) => {
   const { children, ...rest } = props;
   return (
-    <div {...rest} {...stylex.props(styles['slidingPanelBox'])}>
-      <SlidingPanelContextProvider>
+    <SlidingPanelContextProvider>
+      <div {...rest} {...stylex.props(styles['slidingPanelBox'])}>
         <Sliding isShow={true}>{children}</Sliding>
-      </SlidingPanelContextProvider>
-    </div>
+      </div>
+    </SlidingPanelContextProvider>
   );
 };
 
@@ -91,6 +93,22 @@ const Hr = (props: HrProps) => {
   );
 };
 
+const IconWithTitle = (props: IconWithTitleProps) => {
+  return (
+    <Flex
+      flexProps={{ flexDirection: 'row', gap: 'small', alignItems: 'center' }}
+      paddingProps={{ paddingBottom: '10px' }}
+    >
+      <Icons src="IconSearchList" width={40} />
+      <Text
+        {...props}
+        colorProps={{ color: 'darkGray' }}
+        fontProps={{ fontSize: 'large', fontWeight: 'bold' }}
+      />
+    </Flex>
+  );
+};
+
 export const Flights = {
   Container,
   GlobeMapBox,
@@ -99,6 +117,7 @@ export const Flights = {
   Li,
   LabelAndText,
   Hr,
+  IconWithTitle,
 };
 
 const styles = stylex.create({
@@ -117,13 +136,14 @@ const styles = stylex.create({
   },
   listBox: {
     backgroundColor: palette['whiteSoftGray'],
-    width: '40rem',
+    width: '45rem',
     height: '815px',
     padding: '1rem',
+    overflowY: 'scroll',
   },
   slidingPanelBox: {
     position: 'relative',
-    width: '40rem',
+    width: '45rem',
     height: '815px',
   },
   li: {
@@ -132,6 +152,7 @@ const styles = stylex.create({
     justifyContent: 'space-between',
     gap: '1rem',
     padding: '0 1rem',
+    margin: '1rem 0',
     height: '5rem',
     borderRadius: '8px',
     backgroundColor: palette['baseWhite'],
