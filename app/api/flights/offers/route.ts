@@ -36,25 +36,25 @@ export type FlightTicketResponseData = {
 
 export async function POST(req: Request & NextApiRequest) {
   try {
-    const flightInfoddReq: Flights = await req.json();
+    const flightInfoReq: Flights = await req.json();
     const token = (await getToken()) ?? throwError('there is not token');
     const currencyDummy = { kr: 1367, jp: 155 };
 
     const departureDate =
-      flightInfoddReq.dateType.departureDate ??
+      flightInfoReq.dateType.departureDate ??
       throwError('there is not departureDate value');
 
-    const returnDate = flightInfoddReq.dateType.returnDate
-      ? formatDate(flightInfoddReq.dateType.returnDate)
+    const returnDate = flightInfoReq.dateType.returnDate
+      ? formatDate(flightInfoReq.dateType.returnDate)
       : undefined;
 
     const endPoint = createFlightOffersPath({
-      destinationLocationCode: flightInfoddReq.from,
-      originLocationCode: flightInfoddReq.to,
-      maxPrice: flightInfoddReq.flightCost.max + '',
+      destinationLocationCode: flightInfoReq.from,
+      originLocationCode: flightInfoReq.to,
+      maxPrice: flightInfoReq.flightCost.max + '',
       departureDate: formatDate(departureDate),
       returnDate,
-      nonStop: flightInfoddReq.tripType === 'oneWay' ? 'true' : 'false',
+      nonStop: flightInfoReq.tripType === 'oneWay' ? 'true' : 'false',
     });
 
     // Get flightOffers Data from AMADEUS
@@ -80,9 +80,7 @@ export async function POST(req: Request & NextApiRequest) {
 
     const flightOffers = shoppingOffers.data.flatMap<FlightTicketResponseData>(
       (shoppingOffer) => {
-        const { oneWay, price, itineraries } = shoppingOffer;
-
-        const tripType: TripType = oneWay ? 'oneWay' : 'roundTrip';
+        const { price, itineraries } = shoppingOffer;
         const won = Math.floor(Number(price.total) * currencyDummy.kr);
         const yen = Math.floor(Number(price.total) * currencyDummy.jp);
 
@@ -116,7 +114,7 @@ export async function POST(req: Request & NextApiRequest) {
               iata: arrival.iataCode,
               time: extractTime(arrival.at),
             },
-            tripType,
+            tripType: flightInfoReq.tripType,
           };
         });
       },
