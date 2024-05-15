@@ -110,7 +110,7 @@ export type DesignProps = {
   };
   margin?: MarginProps;
 };
-type PositionProps = 'relative';
+type PositionProps = 'relative' | 'absolute';
 type ColorProps = {
   color: PaletteVars;
   hoverColor?: PaletteVars;
