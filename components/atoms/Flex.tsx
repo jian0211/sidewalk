@@ -5,6 +5,7 @@ import { DesignProps, designStyles } from '../styles';
 export type FlexProps = {
   flexProps?: DesignProps['flex']; //FlexVars;
   sizeProps?: DesignProps['size'];
+  positionProps?: DesignProps['position'];
   bgColorProps?: DesignProps['bgColor'];
   colorProps?: DesignProps['color'];
   radiusProps?: DesignProps['radius'];
@@ -20,6 +21,7 @@ export const Flex = (props: FlexProps) => {
     flexProps,
     sizeProps,
     bgColorProps,
+    positionProps,
     radiusProps,
     paddingProps,
     marginProps,
@@ -33,6 +35,7 @@ export const Flex = (props: FlexProps) => {
     <div
       {...rest}
       {...stylex.props(
+        positionProps && designStyles['position'](positionProps),
         flexProps && designStyles['flex'](flexProps),
         sizeProps && designStyles['size'](sizeProps),
         bgColorProps && designStyles['bgColor'](bgColorProps),
