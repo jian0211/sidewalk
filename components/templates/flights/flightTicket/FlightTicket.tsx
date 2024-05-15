@@ -6,6 +6,8 @@ import { Button } from '@/components/atoms/Button';
 import { Locales } from '@/types/locale';
 import { useConvertToFlightTicket } from './useConvertToFlightTicket';
 import { FlightTicketResponseData } from '@/app/api/flights/offers/route';
+import noImage from '@/public/images/no-image.png';
+import Image from 'next/image';
 
 type FlightTicketProps = {
   locale: Locales;
@@ -22,15 +24,25 @@ export const FlightTicket = (props: FlightTicketProps) => {
       <Flex
         flexProps={{
           flexDirection: 'row',
-          gap: 'medium',
+          gap: 'large',
           alignItems: 'center',
           flex: '1',
         }}
       >
-        <Images imageTitle={airline.image} width={80} />
+        {airline.image.length === 0 ? (
+          <Image src={noImage} alt="noImage" width={40} />
+        ) : (
+          <Images imageTitle={airline.image} width={70} />
+        )}
         <Flights.LabelAndText
-          labelProps={{ msg: airline.title }}
-          textProps={{ msg: airline.serviceType }}
+          labelProps={{
+            msg: airline.title,
+            fontProps: { fontSize: 'xsmall' },
+          }}
+          textProps={{
+            msg: airline.serviceType,
+            fontProps: { fontSize: 'xxsmall' },
+          }}
         />
       </Flex>
 
