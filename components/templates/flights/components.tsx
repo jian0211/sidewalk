@@ -1,5 +1,4 @@
 import { Sliding } from '@/components/molecules/sliding/Sliding';
-import { SlidingPanelContextProvider } from '@/hooks/providers/SlidingPanelProvider';
 import * as stylex from '@stylexjs/stylex';
 import React from 'react';
 import { palette, spacing } from '../../../styles/globalTokens.stylex';
@@ -7,11 +6,12 @@ import { Flex } from '@/components/atoms/Flex';
 import { Text } from '@/components/atoms/Text';
 import { DesignProps } from '@/components/styles';
 import { Icons } from '@/components/atoms/Icon';
+import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
 
 type ContainerProps = React.ComponentProps<'section'>;
 type GlobeMapBoxProps = React.ComponentProps<'div'>;
 type ListBoxProps = React.ComponentProps<'ul'>;
-type SlidingPanelProps = React.ComponentProps<'div'>;
+type SlidingPanelProps = { isShow?: boolean } & React.ComponentProps<'div'>;
 type LiProps = React.ComponentProps<'li'>;
 type LabelAndTextProps = {
   labelProps: {
@@ -27,7 +27,7 @@ type LabelAndTextProps = {
 } & React.ComponentProps<'div'>;
 type HrProps = React.ComponentProps<'div'>;
 type IconWithTitleProps = React.ComponentProps<'div'>;
-type WrapperProps = React.ComponentProps<'div'>;
+type WrapperProps = { xstyle?: StyleXArray<any> } & React.ComponentProps<'div'>;
 
 const Container = (props: ContainerProps) => {
   return <section {...props} {...stylex.props(styles['container'])} />;
@@ -36,16 +36,23 @@ const GlobeMapBox = (props: GlobeMapBoxProps) => {
   return <div {...props} {...stylex.props(styles['GlobeMapBox'])} />;
 };
 
-const SlidingPanelBox = (props: SlidingPanelProps) => {
-  const { children, ...rest } = props;
-  return (
-    <SlidingPanelContextProvider>
-      <div {...rest} {...stylex.props(styles['slidingPanelBox'])}>
-        <Sliding isShow={true}>{children}</Sliding>
+const SlidingPanelBox = React.forwardRef<HTMLDivElement, SlidingPanelProps>(
+  (props, ref) => {
+    const { children, isShow = false, ...rest } = props;
+    return (
+      <div ref={ref}>
+        <Sliding
+          {...rest}
+          isShow={isShow}
+          bgColorProps={{ color: 'whiteSoftGray' }}
+        >
+          {children}
+        </Sliding>
       </div>
-    </SlidingPanelContextProvider>
-  );
-};
+    );
+  },
+);
+SlidingPanelBox.displayName = 'SlidingPanelBox';
 
 const ListBox = (props: ListBoxProps) => {
   return <ul {...props} {...stylex.props(styles['listBox'])} />;
@@ -100,7 +107,7 @@ const IconWithTitle = (props: IconWithTitleProps) => {
       flexProps={{ flexDirection: 'row', gap: 'small', alignItems: 'center' }}
       paddingProps={{ paddingBottom: '10px' }}
     >
-      <Icons src="IconSearchList" width={40} />
+      <Icons src="IconSearchList" width={30} />
       <Text
         {...props}
         colorProps={{ color: 'darkGray' }}
@@ -114,6 +121,8 @@ const Wrapper = (props: WrapperProps) => {
   return (
     <Flex
       {...props}
+      positionProps="absolute"
+      xstyle={[props.xstyle, styles['wrapper']]}
       bgColorProps={{ color: 'whiteSoftGray' }}
       sizeProps={{ width: '100%' }}
       paddingProps={{ paddingTop: '10px', paddingLeft: '10px' }}
@@ -142,16 +151,17 @@ const styles = stylex.create({
   },
   GlobeMapBox: {
     position: 'absolute',
+    top: 0,
     width: 'inherit',
-    height: 'inherit',
-    maxHeight: 'inherit',
+    height: '100%',
+    maxHeight: '815px',
     overflow: 'hidden',
   },
   listBox: {
     backgroundColor: palette['whiteSoftGray'],
-    width: '45rem',
-    height: '815px',
-    padding: '1rem',
+    width: '44.5rem',
+    height: 'calc(815px - 60px - 1rem)',
+    padding: '0 1rem',
     overflowY: 'scroll',
   },
   slidingPanelBox: {
@@ -180,5 +190,9 @@ const styles = stylex.create({
     height: '2px',
     width: '100%',
     backgroundColor: palette['softGray'],
+  },
+  wrapper: {
+    top: 0,
+    height: 'inherit',
   },
 });
