@@ -15,25 +15,23 @@ type NoFlightDataProps = React.ComponentProps<'div'>;
 export const NoFlightData = (props: NoFlightDataProps) => {
   const t = useTranslatedWord('flights.nodata');
   return (
-    <Flights.Wrapper>
-      <div {...props} {...stylex.props(styles['noData'])}>
-        <Image
-          src={worriedPlaneImage}
-          alt="worriedPlane"
-          width={400}
-          style={{ borderRadius: '50%' }}
-        />
-        <B
-          fontProps={{
-            fontSize: 'large',
-            fontWeight: 'bold',
-            textDecoration: 'none',
-          }}
-        >
-          {t('message')}
-        </B>
-        <p {...stylex.props(styles['helpMessage'])}>{t('helpMessage')}</p>
-      </div>
+    <Flights.Wrapper {...props} xstyle={styles['noData']}>
+      <Image
+        src={worriedPlaneImage}
+        alt="worriedPlane"
+        width={400}
+        style={{ borderRadius: '50%' }}
+      />
+      <B
+        fontProps={{
+          fontSize: 'large',
+          fontWeight: 'bold',
+          textDecoration: 'none',
+        }}
+      >
+        {t('message')}
+      </B>
+      <p {...stylex.props(styles['helpMessage'])}>{t('helpMessage')}</p>
     </Flights.Wrapper>
   );
 };
