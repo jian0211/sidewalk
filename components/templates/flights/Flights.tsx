@@ -9,6 +9,10 @@ import { NoFlightData } from './noFlightData/NoFlightData';
 import { useSearch } from '@/hooks/useSearh';
 import { useRecoilValueLoadable } from 'recoil';
 import { Flights as FlightsType, fetchFlightOffers } from '@/store/fligths';
+import { EllipsisLoading } from '@/components/molecules/loading/EllipsisLoading';
+import { Flex } from '@/components/atoms/Flex';
+import { useOutsideClick } from '@/hooks/useOutsideClick';
+import { useSliding } from '@/store/sliding';
 
 type FlightListProps = {
   locale: Locales;
@@ -22,10 +26,15 @@ export const FlightsPage = ({ locale }: FlightsProps) => {
   const {
     states: { flights, isReadyToSearch },
   } = useSearch();
+  const { setIsSliding } = useSliding();
+
+  const ref = useOutsideClick<HTMLDivElement>(() => {
+    setIsSliding(false);
+  });
 
   return (
     <Flights.Container>
-      <Flights.SlidingPanelBox>
+      <Flights.SlidingPanelBox ref={ref}>
         {!isReadyToSearch ? (
           <NoFlightData />
         ) : (
@@ -33,7 +42,7 @@ export const FlightsPage = ({ locale }: FlightsProps) => {
         )}
       </Flights.SlidingPanelBox>
       <Flights.GlobeMapBox>
-        <GlobeMap useGraticule />
+        <GlobeMap />
       </Flights.GlobeMapBox>
     </Flights.Container>
   );
@@ -61,8 +70,23 @@ const FlightList = ({ flight, locale }: FlightListProps) => {
         </Flights.Wrapper>
       );
     case 'loading':
-      return <div>Loading...</div>;
+      return <SearchingFlights />;
     case 'hasError':
-      throw new Error('Error acquiring flight Offers data');
+      return <div>error</div>;
   }
+};
+
+const SearchingFlights: React.FC = () => {
+  const t = useTranslatedWord('flights.loading');
+  return (
+    <Flights.Wrapper>
+      <Flights.IconWithTitle>{t('title')}</Flights.IconWithTitle>
+      <Flex
+        flexProps={{ alignItems: 'center', justifyContent: 'center' }}
+        sizeProps={{ height: '100%' }}
+      >
+        <EllipsisLoading sizeProps={{ width: '10px', height: '10px' }} />
+      </Flex>
+    </Flights.Wrapper>
+  );
 };
