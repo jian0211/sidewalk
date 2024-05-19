@@ -12,6 +12,7 @@
     "migrate:deploy": "prisma migrate deploy",
     "studio": "prisma studio",
     "generate": "prisma generate",
+    "local:dump": "pg_dump -U jian -h localhost -d mydb > backup.sql",
     "fix:eslint": "eslint . --fix",
     "fix:prettier": "prettier --write ."
   },
