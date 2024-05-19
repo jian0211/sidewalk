@@ -94,6 +94,22 @@ export const spacing = stylex.defineVars<Record<SizeOption, PixelLevelOption>>({
   fitContent: 'fit-content',
 });
 
+export const flexItem = stylex.defineVars({
+  start: 'start',
+  center: 'center',
+  end: 'end',
+  'space-evenly': 'space-evenly',
+  'space-around': 'space-around',
+  'space-between': 'space-between',
+  stretch: 'stretch',
+  'flex-start': 'flex-start',
+});
+
+export const flexDirection = stylex.defineVars({
+  row: 'row',
+  column: 'column',
+});
+
 export const fontProperties = {
   size: {
     xxsmall: '0.75rem',
