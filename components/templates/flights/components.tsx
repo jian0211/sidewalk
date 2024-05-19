@@ -28,6 +28,7 @@ type LabelAndTextProps = {
 type HrProps = React.ComponentProps<'div'>;
 type IconWithTitleProps = React.ComponentProps<'div'>;
 type WrapperProps = { xstyle?: StyleXArray<any> } & React.ComponentProps<'div'>;
+type ListHeaderProps = React.ComponentProps<'div'>;
 
 const Container = (props: ContainerProps) => {
   return <section {...props} {...stylex.props(styles['container'])} />;
@@ -130,6 +131,10 @@ const Wrapper = (props: WrapperProps) => {
   );
 };
 
+const ListHeader = (props: ListHeaderProps) => {
+  return <div {...props} {...stylex.props(styles['listHeader'])} />;
+};
+
 export const Flights = {
   Container,
   GlobeMapBox,
@@ -140,6 +145,7 @@ export const Flights = {
   Hr,
   IconWithTitle,
   Wrapper,
+  ListHeader,
 };
 
 const styles = stylex.create({
@@ -194,5 +200,9 @@ const styles = stylex.create({
   wrapper: {
     top: 0,
     height: 'inherit',
+  },
+  listHeader: {
+    display: 'flex',
+    alignItems: 'center',
   },
 });

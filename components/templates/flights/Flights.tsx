@@ -13,6 +13,8 @@ import { EllipsisLoading } from '@/components/molecules/loading/EllipsisLoading'
 import { Flex } from '@/components/atoms/Flex';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 import { useSliding } from '@/store/sliding';
+import { NoAnyFlightTicket } from './flightTicket/NoAnyFlightTicket';
+import { AirportsForMarker } from '@/app/[locale]/(flights)/flights/page';
 
 type FlightListProps = {
   locale: Locales;
@@ -20,9 +22,10 @@ type FlightListProps = {
 };
 type FlightsProps = {
   locale: Locales;
+  airportsForMarker: AirportsForMarker[];
 };
 
-export const FlightsPage = ({ locale }: FlightsProps) => {
+export const FlightsPage = ({ locale, airportsForMarker }: FlightsProps) => {
   const {
     states: { flights, isReadyToSearch },
   } = useSearch();
@@ -42,7 +45,7 @@ export const FlightsPage = ({ locale }: FlightsProps) => {
         )}
       </Flights.SlidingPanelBox>
       <Flights.GlobeMapBox>
-        <GlobeMap />
+        <GlobeMap airportsForMarker={airportsForMarker} locale={locale} />
       </Flights.GlobeMapBox>
     </Flights.Container>
   );
@@ -57,15 +60,17 @@ const FlightList = ({ flight, locale }: FlightListProps) => {
         <Flights.Wrapper>
           <Flights.IconWithTitle>{t('searchedTitle')}</Flights.IconWithTitle>
           <Flights.ListBox>
-            {flightLoadable.contents.length > 0
-              ? flightLoadable.contents.map((flightsOffer, i) => (
-                  <FlightTicket
-                    key={i}
-                    flightTicketData={flightsOffer}
-                    locale={locale}
-                  />
-                ))
-              : 'no dasdfas'}
+            {flightLoadable.contents.length > 0 ? (
+              flightLoadable.contents.map((flightsOffer, i) => (
+                <FlightTicket
+                  key={i}
+                  flightTicketData={flightsOffer}
+                  locale={locale}
+                />
+              ))
+            ) : (
+              <NoAnyFlightTicket />
+            )}
           </Flights.ListBox>
         </Flights.Wrapper>
       );
