@@ -18,7 +18,7 @@ const Page = async ({ params }: PageProps) => {
 export default Page;
 
 const getAirportsForMarker = async () => {
-  const url = `${process.env.JIAN_BASE_URL}/airports`;
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/airports`;
   const airports: Prisma.AirportCreateInput[] = await (await fetch(url)).json();
   const airportsForMarker: AirportsForMarker[] = airports.map(
     ({ titleJa, titleKo, latitude, longitude }) => ({
