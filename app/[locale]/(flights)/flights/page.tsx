@@ -2,7 +2,6 @@ import { FlightTicketResponseData } from '@/app/api/flights/offers/route';
 import { FlightsPage } from '@/components/templates/flights/Flights';
 import { Flights } from '@/store/fligths';
 import { Locales } from '@/types/locale';
-import { getAirports } from '../../(airports)/airports/[slug]/page';
 import { Prisma } from '@prisma/client';
 
 type PageProps = { params: { locale: Locales } };
@@ -41,7 +40,8 @@ export const getFlightsOffers = async (
 };
 
 const getAirportsForMarker = async () => {
-  const airports: Prisma.AirportCreateInput[] = await getAirports();
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/airports`;
+  const airports: Prisma.AirportCreateInput[] = await (await fetch(url)).json();
   const airportsForMarker: AirportsForMarker[] = airports.map(
     ({ titleJa, titleKo, latitude, longitude }) => ({
       titleJa,
