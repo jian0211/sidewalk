@@ -1,8 +1,14 @@
 import { PrismaClient } from '@prisma/client';
 
 const prismaClientSingleton = () => {
-  console.log('Database URL:', process.env.POSTGRES_PRISMA_URL);
-  return new PrismaClient();
+  console.log('Database URL:', process.env.POSTGRES_JI_PRISMA_URL);
+  return new PrismaClient({
+    datasources: {
+      db: {
+        url: process.env.POSTGRES_JI_PRISMA_URL,
+      },
+    },
+  });
 };
 declare global {
   /* eslint-disable-next-line no-var */
