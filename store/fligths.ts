@@ -68,7 +68,7 @@ export const getFlightsOffers = async (
     method: 'POST',
     body: JSON.stringify(flight),
     headers: {
-      'content-type': 'application/json',
+      'Content-Type': 'application/json',
       Pragma: 'no-cache',
       Expires: '0',
       CacheControl: 'no-cache',

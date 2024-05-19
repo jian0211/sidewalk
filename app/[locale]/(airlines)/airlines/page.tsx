@@ -13,6 +13,11 @@ export default AirlinesPage;
 
 const getAirlines = async (): Promise<Prisma.AirlineCreateInput[]> => {
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/airlines`;
-  const airlines = await fetch(url);
+  const airlines = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
   return airlines.json();
 };
