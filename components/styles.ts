@@ -11,7 +11,11 @@ import {
   fontWeight,
   MarginProps,
   SizeOption,
+  flexing,
+  flexItem,
+  flexDirection,
 } from '../styles/globalTokens.stylex';
+import { StyleXVar } from '@stylexjs/stylex/lib/StyleXTypes';
 
 export type FlexProps = {
   display?: 'flex';
@@ -134,9 +138,9 @@ export const designStyles = stylex.create({
   }),
   flex: (props: FlexProps) => ({
     display: 'flex',
-    flexDirection: props.flexDirection ?? 'row',
-    alignItems: props.alignItems ?? 'stretch',
-    justifyContent: props.justifyContent ?? 'flex-start',
+    flexDirection: flexDirection[props.flexDirection ?? 'row'],
+    alignItems: flexItem[props.alignItems ?? 'stretch'],
+    justifyContent: flexItem[props.justifyContent ?? 'flex-start'],
     gap: spacing[props.gap ?? 'none'],
   }),
   border: (props: BorderProps) => ({
