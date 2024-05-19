@@ -1,4 +1,4 @@
-import { getFlightsOffers } from '@/app/[locale]/(flights)/flights/page';
+import { FlightTicketResponseData } from '@/app/api/flights/offers/route';
 import { AirportsIata } from '@/types/airport';
 import { atom, selectorFamily, useRecoilState } from 'recoil';
 
@@ -57,3 +57,23 @@ export const fetchFlightOffers = selectorFamily({
     }
   },
 });
+
+export const getFlightsOffers = async (
+  flight: Flights,
+): Promise<{
+  responseData: FlightTicketResponseData[];
+}> => {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/flights/offers`;
+  const flightsOffers = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(flight),
+    headers: {
+      'content-type': 'application/json',
+      Pragma: 'no-cache',
+      Expires: '0',
+      CacheControl: 'no-cache',
+    },
+  });
+
+  return flightsOffers.json();
+};
