@@ -14,3 +14,10 @@ const AirportsListOfCountryPage = async ({ params }: PageProps) => {
   );
 };
 export default AirportsListOfCountryPage;
+
+export const getAirports = async () => {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/airports`;
+  const airports = await fetch(url);
+  const _airports = await airports.json();
+  return _airports.airportsData;
+};

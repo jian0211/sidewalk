@@ -47,7 +47,7 @@ input[type='range']::-webkit-slider-thumb {
 input[type='range']::-webkit-slider-runnable-track {
   width: 100%;
   height: 5px;
-  background: #e8e8e8;
+  background: inherit;
   border-radius: 3px;
   border: none;
 }
@@ -57,7 +57,7 @@ input[type='range']::-webkit-slider-runnable-track {
 }
 
 *::-webkit-scrollbar-track {
-  background: #fafbfb; /* color of the tracking area */
+  background: inherit;
 }
 
 *::-webkit-scrollbar-thumb {

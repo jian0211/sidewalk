@@ -178,9 +178,36 @@
         }
     },
     "flights": {
+        "searchedTitle": "フライト検索結果",
         "nodata": {
             "message": "旅の目的地を教えてください。",
             "helpMessage": "上段にあるナビゲーションを使用してください。"
+        },
+        "ticket": {
+            "airline": {
+                "type": {
+                    "lcc": "ローコスト",
+                    "fsc": "フル",
+                    "hsc": "ハイブリッド",
+                    "else": "その他"
+                }
+            },
+            "flightTime": {
+                "hour": "時間",
+                "min": "分"
+            },
+            "tripType": {
+                "roundTrip": "往復",
+                "oneWay": "片道"
+            },
+            "priceUnit": "円",
+            "select": "選択"
+        },
+        "loading": {
+            "title": "旅行先を検索中です"
+        },
+        "notFound": {
+            "ticket": "条件に当たるチケットがないです。"
         }
     }
 }

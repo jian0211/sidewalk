@@ -178,9 +178,36 @@
         }
     },
     "flights": {
+        "searchedTitle": "비행검색 결과",
         "nodata": {
             "message": "어디로 여행을 떠나실지 알려주세요.",
             "helpMessage": "상단에 있는 네비게이션을 이용해주세요."
+        },
+        "ticket": {
+            "airline": {
+                "type": {
+                    "lcc": "저비용",
+                    "fsc": "풀 서비스 ",
+                    "hsc": "하이브리드",
+                    "else": "그 외"
+                }
+            },
+            "flightTime": {
+                "hour": "시간",
+                "min": "분"
+            },
+            "tripType": {
+                "roundTrip": "왕복",
+                "oneWay": "편도"
+            },
+            "priceUnit": "원",
+            "select": "선택"
+        },
+        "loading": {
+            "title": "여행지를 검색 중 입니다."
+        },
+        "notFound": {
+            "ticket": "조건에 해당하는 티켓이 없습니다."
         }
     }
 }

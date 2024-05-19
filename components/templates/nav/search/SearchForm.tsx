@@ -59,14 +59,11 @@ export const SearchForm = (props: SearchFormProps) => {
   const onSubmit: SubmitHandler<Flights> = (data, event) => {
     event?.preventDefault();
     handleSubmitSetFligths(data);
-    console.log(data);
   };
 
   if (dirtyFields.tripType) {
     setValue('dateType.returnDate', null);
   }
-  // [TODO]: Error の場合
-  // SearchButton 押す時、データが全部入っているか
   return (
     <form
       {...props}

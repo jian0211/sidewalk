@@ -1,5 +1,6 @@
+import { getFlightsOffers } from '@/app/[locale]/(flights)/flights/page';
 import { AirportsIata } from '@/types/airport';
-import { atom, useRecoilState } from 'recoil';
+import { atom, selectorFamily, useRecoilState } from 'recoil';
 
 export type AirportsIataWithDefault = AirportsIata | 'FROM' | 'TO';
 export type TripType = 'roundTrip' | 'oneWay';
@@ -44,3 +45,15 @@ export const useFlights = () => {
     setFligths,
   };
 };
+
+export const fetchFlightOffers = selectorFamily({
+  key: 'fetchUserData',
+  get: (flights: Flights) => async () => {
+    try {
+      const responseData = await getFlightsOffers(flights);
+      return responseData.responseData;
+    } catch (error) {
+      throw new Error('flight API error');
+    }
+  },
+});

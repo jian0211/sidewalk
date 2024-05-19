@@ -27,9 +27,9 @@ export const ExchangeRateCalculator = (props: ExchangeRateCalculatorProps) => {
   return (
     <Dashboard.Panel {...rest} theme="square" title={t('title') + ''}>
       <Dashboard.PanelHeader>
-        <Text font={{ fontWeight: 'bold' }}>{states.from.curreny}</Text>
+        <Text fontProps={{ fontWeight: 'bold' }}>{states.from.curreny}</Text>
         <Icons src="IconArrowRight" />
-        <Text font={{ fontWeight: 'bold' }}>{states.to.curreny}</Text>
+        <Text fontProps={{ fontWeight: 'bold' }}>{states.to.curreny}</Text>
       </Dashboard.PanelHeader>
       <Dashboard.PanelBody>
         <Content>

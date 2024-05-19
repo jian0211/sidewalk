@@ -8,13 +8,14 @@ import {
   fontWeight,
   palette,
 } from '../../../../styles/globalTokens.stylex';
+import { Flights } from '../components';
 
 type NoFlightDataProps = React.ComponentProps<'div'>;
 
 export const NoFlightData = (props: NoFlightDataProps) => {
   const t = useTranslatedWord('flights.nodata');
   return (
-    <div {...props} {...stylex.props(styles['noData'])}>
+    <Flights.Wrapper {...props} xstyle={styles['noData']}>
       <Image
         src={worriedPlaneImage}
         alt="worriedPlane"
@@ -22,7 +23,7 @@ export const NoFlightData = (props: NoFlightDataProps) => {
         style={{ borderRadius: '50%' }}
       />
       <B
-        font={{
+        fontProps={{
           fontSize: 'large',
           fontWeight: 'bold',
           textDecoration: 'none',
@@ -31,15 +32,13 @@ export const NoFlightData = (props: NoFlightDataProps) => {
         {t('message')}
       </B>
       <p {...stylex.props(styles['helpMessage'])}>{t('helpMessage')}</p>
-    </div>
+    </Flights.Wrapper>
   );
 };
 
 const styles = stylex.create({
   noData: {
     position: 'relative',
-    width: '40rem',
-    height: '815px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

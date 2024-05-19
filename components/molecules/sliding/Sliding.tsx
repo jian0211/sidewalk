@@ -1,31 +1,48 @@
 import { Icons } from '@/components/atoms/Icon';
-import {
-  SlidingPanelContextProvider,
-  useSliding,
-} from '@/hooks/providers/SlidingPanelProvider';
 import { palette, spacing } from '../../../styles/globalTokens.stylex';
 import * as stylex from '@stylexjs/stylex';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
+import { DesignProps, designStyles } from '@/components/styles';
+import { useSliding } from '@/store/sliding';
+import { useEffect } from 'react';
 
 type SlidingProps = {
   xstyles?: StyleXArray<any>;
   isShow?: boolean;
+  bgColorProps?: DesignProps['bgColor'];
 } & React.ComponentProps<'div'>;
 type HandleGripProps = React.ComponentProps<'span'>;
 
-export const Sliding = (props: SlidingProps) => {
-  const { xstyles, isShow, children, ...rest } = props;
-  const { isSlidingShow, setSlidingIsShow } = useSliding();
-  const slidingWidth = isSlidingShow ? 0 : -40;
+const SLIDING_WIDTH = 45;
 
-  if (isShow) setSlidingIsShow((prev) => (prev === true ? isShow : prev));
+export const Sliding = (props: SlidingProps) => {
+  const { xstyles, isShow, bgColorProps, children, ref, ...rest } = props;
+  const { isSliding, setIsSliding } = useSliding();
+
+  const openControlObj = {
+    isShow,
+    isSliding,
+  };
+
+  const isOpen = Object.values(openControlObj).some(Boolean);
+  if (isOpen) setIsSliding((prev) => (prev === true ? isOpen : prev));
+
+  const slidingWidth = isOpen ? 0 : -SLIDING_WIDTH;
+
+  useEffect(() => {
+    return () => {
+      setIsSliding(false);
+    };
+  }, [setIsSliding]);
 
   return (
     <div
       {...rest}
       {...stylex.props(
         styles['slidingPanel']({ left: `${slidingWidth}rem` }),
-        styles[isSlidingShow ? 'openSlidingPanel' : 'closeSlidingPanel'],
+        bgColorProps && designStyles['bgColor'](bgColorProps),
+        isOpen && styles['openSlidingPanel'],
+        // !isOpen && styles['closeSlidingPanel']({ left: `${slidingWidth}rem` }),
         xstyles,
       )}
     >
@@ -37,50 +54,43 @@ export const Sliding = (props: SlidingProps) => {
 
 const HandleGrip = (props: HandleGripProps) => {
   const { ...rest } = props;
-  const { isSlidingShow, setSlidingIsShow } = useSliding();
+  const { isSliding, setIsSliding } = useSliding();
   const handleClick = () => {
-    setSlidingIsShow((prev) => !prev);
+    setIsSliding((prev) => !prev);
   };
   return (
     <span
       {...rest}
-      {...stylex.props(styles['handleGrip'](isSlidingShow))}
+      {...stylex.props(styles['handleGrip'](isSliding))}
       onClick={handleClick}
     >
-      <Icons
-        src={isSlidingShow ? 'IconArrowPrev' : 'IconArrowNext'}
-        width={15}
-      />
+      <Icons src={isSliding ? 'IconArrowPrev' : 'IconArrowNext'} width={15} />
     </span>
   );
 };
 
 const openSliding = stylex.keyframes({
-  '0%': {
-    left: '-40rem',
-  },
-  '100%': {
-    left: 0,
-  },
+  '0%': { left: `-${SLIDING_WIDTH}rem` },
+  '100%': { left: 0 },
 });
 const closeSliding = stylex.keyframes({
-  '0%': {
-    left: 0,
-  },
-  '100%': {
-    left: '-40rem',
-  },
+  '0%': { left: `-${SLIDING_WIDTH}rem` },
+  '100%': { left: `-${SLIDING_WIDTH}rem` },
 });
 
 const styles = stylex.create({
   slidingPanel: (props) => ({
-    position: 'absolute',
+    position: 'relative',
     zIndex: '1',
     display: 'flex',
+    width: `${SLIDING_WIDTH}rem`,
+    height: '815px',
     alignItems: 'center',
     left: props.left,
   }),
   handleGrip: (props) => ({
+    position: 'absolute',
+    right: '-1rem',
     display: 'flex',
     alignItems: 'center',
     backgroundColor: {
@@ -98,10 +108,11 @@ const styles = stylex.create({
   showSliding: {
     visibility: 'hidden',
   },
-  closeSlidingPanel: {
+  closeSlidingPanel: (props) => ({
+    left: props.left,
     animationName: closeSliding,
     animationDuration: '1s',
-  },
+  }),
   openSlidingPanel: {
     animationName: openSliding,
     animationDuration: '1s',

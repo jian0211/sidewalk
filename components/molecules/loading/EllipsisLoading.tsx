@@ -1,14 +1,29 @@
+import { DesignProps } from '@/components/styles';
 import * as stylex from '@stylexjs/stylex';
 import { ComponentPropsWithoutRef } from 'react';
 
-type EllipsisLoadingProps = ComponentPropsWithoutRef<'div'>;
+type EllipsisLoadingProps = {
+  sizeProps?: DesignProps['size'];
+} & ComponentPropsWithoutRef<'div'>;
 
 export const EllipsisLoading = (props: EllipsisLoadingProps) => {
+  const { sizeProps, ...rest } = props;
+  const _sizeProps = {
+    width: sizeProps?.width ?? '6px',
+    height: sizeProps?.height ?? '6px',
+  };
+
   return (
-    <div {...props} {...stylex.props(styles.ellipsis)}>
-      <div {...stylex.props(styles.ellipsisChild, styles.firstChild)} />
-      <div {...stylex.props(styles.ellipsisChild, styles.secondChild)} />
-      <div {...stylex.props(styles.ellipsisChild, styles.thirdChild)} />
+    <div {...rest} {...stylex.props(styles.ellipsis)}>
+      <div
+        {...stylex.props(styles.ellipsisChild(_sizeProps), styles.firstChild)}
+      />
+      <div
+        {...stylex.props(styles.ellipsisChild(_sizeProps), styles.secondChild)}
+      />
+      <div
+        {...stylex.props(styles.ellipsisChild(_sizeProps), styles.thirdChild)}
+      />
     </div>
   );
 };
@@ -23,13 +38,13 @@ const styles = stylex.create({
     alignItems: 'center',
     gap: '0.3rem',
   },
-  ellipsisChild: {
-    width: '6px',
-    height: '6px',
+  ellipsisChild: (props) => ({
+    width: props.width,
+    height: props.height,
     borderRadius: '50%',
     backgroundColor: 'black',
     animationTimingFunction: 'cubic-bezier(.17,.67,.83,.67)',
-  },
+  }),
   firstChild: {
     animationName: ellipsisAnimation,
     animationDuration: '0.7s',

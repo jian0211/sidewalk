@@ -1,10 +1,14 @@
 import { Flights, FlightsKey, useFlights } from '@/store/fligths';
+import { useSliding } from '@/store/sliding';
 import { ValueOf } from '@/types/common';
 import { useLocale } from 'next-intl';
+import { redirect, useRouter } from 'next/navigation';
 
 export const useSearch = () => {
   const { flights, setFligths } = useFlights();
   const locale = useLocale();
+  const { setIsSliding } = useSliding();
+  const router = useRouter();
 
   const handleClickSetFligths =
     <T extends FlightsKey>(tripType: T) =>
@@ -18,6 +22,10 @@ export const useSearch = () => {
 
   const handleSubmitSetFligths = (fligths: Flights) => {
     setFligths(fligths);
+    if (isReadyToSearch(fligths)) {
+      setIsSliding(true);
+      router.push('/flights');
+    }
   };
 
   const toLocaleString = (value: number) => {
@@ -25,9 +33,23 @@ export const useSearch = () => {
     return _value.toLocaleString();
   };
 
+  const isReadyToSearch = (data?: Flights) => {
+    if (data) {
+      if (data.from === 'FROM') return false;
+      if (data.to === 'TO') return false;
+      if (data.dateType.departureDate === null) return false;
+    } else {
+      if (flights.from === 'FROM') return false;
+      if (flights.to === 'TO') return false;
+      if (flights.dateType.departureDate === null) return false;
+    }
+    return true;
+  };
+
   return {
     states: {
       flights,
+      isReadyToSearch: isReadyToSearch(),
     },
     actions: {
       handleClickSetFligths,
