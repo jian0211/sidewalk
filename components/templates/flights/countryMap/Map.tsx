@@ -1,49 +1,46 @@
 'use client';
 
 import React from 'react';
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  Graticule,
-  Line,
-  ZoomableGroup,
-} from 'react-simple-maps';
+import { ComposableMap, Graticule, ZoomableGroup } from 'react-simple-maps';
 import japanMap from '@/public/map/topology_japan_map.json';
 import koreaMap from '@/public/map/topology_korea_map.json';
+import { useMap } from './useMap';
+import { AirportsForMarker } from '@/app/[locale]/(flights)/flights/page';
+import { Locales } from '@/types/locale';
+import { Maps } from './components';
 
 const geoUrl = { japanMap, koreaMap };
 
 type GlobeMap = {
   useGraticule?: boolean;
 };
-type GlobeMapProps = GlobeMap;
+type GlobeMapProps = {
+  airportsForMarker: AirportsForMarker[];
+  locale: Locales;
+} & GlobeMap;
 
-export const GlobeMap = (props: GlobeMapProps) => {
-  const { useGraticule } = props;
+export const GlobeMap: React.FC<GlobeMapProps> = (props) => {
+  const { useGraticule, airportsForMarker, locale } = props;
+  const { actions } = useMap();
+  const markerDatas = actions.convertForMarkerUse(airportsForMarker, locale);
+
   return (
     <ComposableMap
       projection="geoOrthographic"
       projectionConfig={{
-        rotate: [234, -28, -20],
-        scale: 1200,
+        rotate: [225, -34, -10],
+        center: [0, 0],
+        scale: 2500,
       }}
     >
-      {useGraticule && <Graticule />}
-      <Geographies geography={geoUrl['japanMap']}>
-        {({ geographies }) =>
-          geographies.map((geo) => {
-            return <Geography key={geo.rsmKey} geography={geo} />;
-          })
-        }
-      </Geographies>
-      <Geographies geography={geoUrl['koreaMap']}>
-        {({ geographies }) =>
-          geographies.map((geo) => {
-            return <Geography key={geo.rsmKey} geography={geo} />;
-          })
-        }
-      </Geographies>
+      <ZoomableGroup zoom={1}>
+        {useGraticule && <Graticule />}
+        <Maps.Geographies mapData={geoUrl['japanMap']} />
+        <Maps.Geographies mapData={geoUrl['koreaMap']} />
+        {markerDatas.map(({ name, ...rest }) => (
+          <Maps.Marker key={name} id={name} title={name} {...rest} />
+        ))}
+      </ZoomableGroup>
     </ComposableMap>
   );
 };
