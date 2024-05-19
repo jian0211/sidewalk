@@ -22,7 +22,7 @@ export const useSearch = () => {
 
   const handleSubmitSetFligths = (fligths: Flights) => {
     setFligths(fligths);
-    if (isReadyToSearch()) {
+    if (isReadyToSearch(fligths)) {
       setIsSliding(true);
       router.push('/flights');
     }
@@ -33,10 +33,16 @@ export const useSearch = () => {
     return _value.toLocaleString();
   };
 
-  const isReadyToSearch = () => {
-    if (flights.from === 'FROM') return false;
-    if (flights.to === 'TO') return false;
-    if (flights.dateType.departureDate === null) return false;
+  const isReadyToSearch = (data?: Flights) => {
+    if (data) {
+      if (data.from === 'FROM') return false;
+      if (data.to === 'TO') return false;
+      if (data.dateType.departureDate === null) return false;
+    } else {
+      if (flights.from === 'FROM') return false;
+      if (flights.to === 'TO') return false;
+      if (flights.dateType.departureDate === null) return false;
+    }
     return true;
   };
 
