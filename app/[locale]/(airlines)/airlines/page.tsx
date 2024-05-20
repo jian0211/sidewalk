@@ -15,7 +15,7 @@ export default AirlinesPage;
 const getAirlines = async () => {
   try {
     const url = `${
-      process.env.NEXT_PUBLIC_BASE_URL ?? process.env.VERCEL_ENV
+      process.env.NEXT_PUBLIC_BASE_URL ?? process.env.VERCEL_URL
     }/airlines`;
     const responseAirlines = await fetch(url);
     if (!responseAirlines.ok) {
