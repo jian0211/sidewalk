@@ -7,6 +7,7 @@ export const useAirline = () => {
   return {
     actions: {
       filterAirlineType: (airlineList: Prisma.AirlineCreateInput[]) => {
+        if (airlineList.length === 0) return [];
         return airlineList.filter(({ seviceType }) => {
           if (airlineServiceCategory === 'all') return true;
           return seviceType === airlineServiceCategory;
