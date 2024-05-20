@@ -19,7 +19,7 @@ export default Page;
 
 const getAirportsForMarker = async () => {
   const url = `${
-    process.env.NEXT_PUBLIC_BASE_URL ?? process.env.NEXT_PUBLIC_VERCEL_URL
+    process.env.NEXT_PUBLIC_BASE_URL ?? process.env.VERCEL_URL
   }/airports`;
   const airports: Prisma.AirportCreateInput[] = await (await fetch(url)).json();
   const airportsForMarker: AirportsForMarker[] = airports.map(

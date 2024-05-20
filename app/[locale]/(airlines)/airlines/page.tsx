@@ -14,8 +14,7 @@ export default AirlinesPage;
 //: Promise<Prisma.AirlineCreateInput[]>
 const getAirlines = async () => {
   try {
-    const envValue =
-      process.env.NEXT_PUBLIC_BASE_URL ?? process.env.NEXT_PUBLIC_VERCEL_URL;
+    const envValue = process.env.NEXT_PUBLIC_BASE_URL ?? process.env.VERCEL_URL;
     if (envValue === undefined) {
       throw new Error('airline, env value is not exist');
     }
