@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 
 import { Prisma } from '@prisma/client';
 import { useAirline } from './useAirline';
@@ -10,8 +10,8 @@ type AirlineProps = {
 };
 
 export const Airline = ({ airlineList }: AirlineProps) => {
-  const { actions } = useAirline();
-  const airlines = actions.filterAirlineType(airlineList);
+  // const { actions } = useAirline();
+  // const airlines = actions.filterAirlineType(airlineList);
 
   return (
     <Airlines.Body>
