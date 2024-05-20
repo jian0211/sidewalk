@@ -34,7 +34,7 @@ export const getWeatherData = async ({
   lat,
   lon,
 }: WeatherIconProps): Promise<ResponseType> => {
-  const url = `${process.env.WEATHER_API_URL}?lat=${lat}&lon=${lon}&appid=${process.env.WEATHER_API_KEY}`;
+  const url = `${process.env.NEXT_PUBLIC_WEATHER_API_URL}?lat=${lat}&lon=${lon}&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`;
   const weatherData: ResponseWeatherProps = await (await fetch(url)).json();
   const weatherStatus: WeatherStatus['main'] =
     weatherData?.weather?.[0].main ?? 'Clear';
