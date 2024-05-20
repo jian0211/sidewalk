@@ -1,11 +1,11 @@
 import { Dashboard } from './components';
-import { PageProps } from '@/app/[locale]/(dashboard)/dashboard/page';
 import { ExchangeRateOfCurrentCurreny } from './exchangeRate/ExchangeRate';
 import { CurrentCurrenyResponse } from '@/app/api/dashboard/exchangeRate/route';
 import { FlightBoard } from './flightBoard/FlightBoard';
 import { FlightBoardResponse } from '@/app/api/dashboard/flightBoard/route';
+import { Locales } from '@/types/locale';
 
-export const DashboardPage = async (props: PageProps) => {
+export const DashboardPage = async (props: { params: { locale: Locales } }) => {
   const {
     params: { locale },
   } = props;

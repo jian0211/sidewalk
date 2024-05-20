@@ -3,7 +3,7 @@ import { Country } from '@/types/country';
 import { Locales } from '@/types/locale';
 
 type Iata = string;
-export type PageProps = {
+type PageProps = {
   params: { locale: Locales; slug: Country | Iata };
 };
 const AirportsListOfCountryPage = async ({ params }: PageProps) => {
