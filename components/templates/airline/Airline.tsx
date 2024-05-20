@@ -15,7 +15,7 @@ export const Airline = ({ airlineList }: AirlineProps) => {
 
   return (
     <Airlines.Body>
-      {airlines.map((airline, i) => (
+      {airlineList.map((airline, i) => (
         <Airlines.FeaturePanel key={i}>
           <Airlines.FeaturePanelInfo>
             <Flex
