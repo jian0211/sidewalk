@@ -6,9 +6,10 @@ export async function GET(req: Request & NextApiRequest) {
   console.log('Get airline Data');
   try {
     const airlines: Prisma.AirlineCreateInput[] = await db.airline.findMany();
-    return Response.json(airlines);
+    return Response.json({ responseData: airlines });
   } catch (err) {
     console.log('err', err);
+    Response.json(err);
   }
   console.log('Done airline Data');
 }
