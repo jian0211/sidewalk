@@ -15,6 +15,18 @@ export default async function middleware(request: NextRequest) {
   const response = handleI18nRouting(request);
   response.headers.set('x-your-custom-locale', defaultLocale);
 
+  // add the CORS headers to the response
+  response.headers.append('Access-Control-Allow-Credentials', 'true');
+  response.headers.append('Access-Control-Allow-Origin', '*'); // replace this your actual origin
+  response.headers.append(
+    'Access-Control-Allow-Methods',
+    'GET,DELETE,PATCH,POST,PUT',
+  );
+  response.headers.append(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
+  );
+
   if (isUrlAirports(request.nextUrl.pathname)) {
     return NextResponse.redirect(
       new URL(`${request.nextUrl.pathname}/jp`, request.url),
