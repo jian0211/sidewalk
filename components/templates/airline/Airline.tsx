@@ -10,14 +10,11 @@ type AirlineProps = {
 };
 
 export const Airline = ({ airlineList }: AirlineProps) => {
-  // const { actions } = useAirline();
-  // const airlines = actions.filterAirlineType(airlineList);
-  if (!airlineList || airlineList.length === 0) {
-    return <div>No airlines data available</div>;
-  }
+  const { actions } = useAirline();
+  const airlines = actions.filterAirlineType(airlineList);
   return (
     <Airlines.Body>
-      {airlineList.map((airline, i) => (
+      {airlines.map((airline, i) => (
         <Airlines.FeaturePanel key={i}>
           <Airlines.FeaturePanelInfo>
             <Flex
