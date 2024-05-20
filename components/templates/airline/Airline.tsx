@@ -1,4 +1,4 @@
-// 'use client';
+'use client';
 
 import { Prisma } from '@prisma/client';
 import { useAirline } from './useAirline';
