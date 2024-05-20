@@ -21,11 +21,11 @@ const getAirlines = async () => {
         `Failed to fetch: ${responseAirlines.status} ${responseAirlines.statusText}`,
       );
     }
-    const text = await responseAirlines.text();
-    const data = await JSON.parse(text);
-
+    const airlines = await responseAirlines.json();
+    const data = airlines.responseData; //_airlines.responseData;;
+    console.log('datadata,', data);
     // const _airlines = await responseAirlines.json();
-    return data.responseData; //_airlines.responseData;
+    return data;
   } catch (err: unknown) {
     console.log(err);
   }
