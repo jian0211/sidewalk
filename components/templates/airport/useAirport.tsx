@@ -6,7 +6,7 @@ export const useAirports = () => {
     country: Country,
   ): Promise<Prisma.AirportCreateInput[]> => {
     const url = `${
-      process.env.NEXT_PUBLIC_BASE_URL ?? process.env.VERCEL_URL
+      process.env.NEXT_PUBLIC_BASE_URL ?? process.env.VERCEL_API_BASE_URL
     }/airports/${country}`;
     const airportsOfCountry = await fetch(url);
     return airportsOfCountry.json();
