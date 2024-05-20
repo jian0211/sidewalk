@@ -22,8 +22,7 @@ const getAirlines = async () => {
       );
     }
     const text = await responseAirlines.text();
-
-    const data = JSON.parse(text);
+    const data = await JSON.parse(text);
 
     // const _airlines = await responseAirlines.json();
     return data.responseData; //_airlines.responseData;
