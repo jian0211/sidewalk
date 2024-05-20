@@ -14,7 +14,9 @@ export default AirlinesPage;
 //: Promise<Prisma.AirlineCreateInput[]>
 const getAirlines = async () => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/airlines`;
+    const url = `${
+      process.env.NEXT_PUBLIC_BASE_URL ?? process.env.VERCEL_ENV
+    }/airlines`;
     const responseAirlines = await fetch(url);
     if (!responseAirlines.ok) {
       throw new Error(

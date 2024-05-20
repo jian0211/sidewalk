@@ -63,7 +63,9 @@ export const getFlightsOffers = async (
 ): Promise<{
   responseData: FlightTicketResponseData[];
 }> => {
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/flights/offers`;
+  const url = `${
+    process.env.NEXT_PUBLIC_BASE_URL ?? process.env.VERCEL_ENV
+  }/flights/offers`;
   const flightsOffers = await fetch(url, {
     method: 'POST',
     body: JSON.stringify(flight),

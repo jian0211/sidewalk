@@ -29,7 +29,9 @@ export const DashboardPage = async (props: PageProps) => {
  * exchangeRateに関するデータ取得
  */
 const getExchangeRateData = async () => {
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/exchangeRate`;
+  const url = `${
+    process.env.NEXT_PUBLIC_BASE_URL ?? process.env.VERCEL_ENV
+  }/dashboard/exchangeRate`;
   const exchangeData = await fetch(url);
   const data: CurrentCurrenyResponse = await exchangeData.json();
   return data;
@@ -39,7 +41,9 @@ const getExchangeRateData = async () => {
  * flightBoardDataに関するデータ取得
  */
 const getFlightBoardData = async () => {
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/flightBoard`;
+  const url = `${
+    process.env.NEXT_PUBLIC_BASE_URL ?? process.env.VERCEL_ENV
+  }/dashboard/flightBoard`;
   const flightBoardData = await fetch(url);
   const data: FlightBoardResponse = await flightBoardData.json();
   return data;
