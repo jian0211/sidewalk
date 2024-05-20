@@ -32,7 +32,12 @@ const getExchangeRateData = async () => {
   const url = `${
     process.env.NEXT_PUBLIC_BASE_URL ?? process.env.VERCEL_URL
   }/dashboard/exchangeRate`;
-  const exchangeData = await fetch(url);
+  const exchangeData = await fetch(url, {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
+  });
   const data: CurrentCurrenyResponse = await exchangeData.json();
   return data;
 };
@@ -44,7 +49,12 @@ const getFlightBoardData = async () => {
   const url = `${
     process.env.NEXT_PUBLIC_BASE_URL ?? process.env.VERCEL_URL
   }/dashboard/flightBoard`;
-  const flightBoardData = await fetch(url);
+  const flightBoardData = await fetch(url, {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
+  });
   const data: FlightBoardResponse = await flightBoardData.json();
   return data;
 };

@@ -70,6 +70,7 @@ export const getFlightsOffers = async (
     method: 'POST',
     body: JSON.stringify(flight),
     headers: {
+      'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json',
       Pragma: 'no-cache',
       Expires: '0',

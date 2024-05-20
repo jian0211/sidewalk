@@ -20,7 +20,12 @@ const getAirlines = async () => {
     }
 
     const url = `${envValue}/airlines`;
-    const responseAirlines = await fetch(url);
+    const responseAirlines = await fetch(url, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      },
+    });
     if (!responseAirlines.ok) {
       throw new Error(
         `Failed to fetch: ${responseAirlines.status} ${responseAirlines.statusText}`,
