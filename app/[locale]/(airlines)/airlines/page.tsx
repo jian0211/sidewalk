@@ -11,9 +11,23 @@ const AirlinesPage = async ({ params }: PageProps) => {
 
 export default AirlinesPage;
 
-const getAirlines = async (): Promise<Prisma.AirlineCreateInput[]> => {
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/airlines`;
-  const airlines = await fetch(url);
-  const _airlines = await airlines.json();
-  return _airlines.responseData;
+//: Promise<Prisma.AirlineCreateInput[]>
+const getAirlines = async () => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/airlines`;
+    const responseAirlines = await fetch(url);
+    if (!responseAirlines.ok) {
+      throw new Error(
+        `Failed to fetch: ${responseAirlines.status} ${responseAirlines.statusText}`,
+      );
+    }
+    const text = await responseAirlines.text();
+
+    const data = JSON.parse(text);
+
+    // const _airlines = await responseAirlines.json();
+    return data.responseData; //_airlines.responseData;
+  } catch (err: unknown) {
+    console.log(err);
+  }
 };
