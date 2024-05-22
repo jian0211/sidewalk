@@ -45,6 +45,36 @@
 
 <img src="https://img.shields.io/badge/notion-000000?style=flat-square&logo=notion&logoColor=white">
 
+
+### 参考サイト
+
+---
+
+#### API
+
+- [Flights API](https://uat.developers.amadeus.com/)
+- [Weather API](https://openweathermap.org/)
+- [Currency API](https://currencylayer.com/)
+- [Curl to fetch](https://uat.developers.amadeus.com/)
+
+#### CSS
+
+- [Loading Animation](https://loading.io/css/)
+- [Animation cubic-bezier](https://cubic-bezier.com/#0,0,1,1)
+- [Box shadow](https://getcssscan.com/css-box-shadow-examples)
+
+#### Design
+
+- [design 1](https://www.behance.net/gallery/190465533/RadCare-Web-App?tracking_source=search_projects%7Cweb+design+panel&l=39)
+- [design 2](https://www.behance.net/gallery/168827057/Web-Service-For-Buying-Plane-Tickets?tracking_source=search_projects%7Cairport+web+design&l=43)
+- [design 3](https://www.behance.net/gallery/192951329/Salse-Management-Dashboard?tracking_source=search_projects%7Cweb+design+panel&l=38)
+
+#### Image
+
+- [Icons 1](https://www.svgrepo.com/svg/497141/global)
+- [Icons 2](https://icon666.com/)
+- [Icons 3](https://simpleicons.org/)
+
 ## Architecture
 
 ```plaintext
@@ -195,32 +225,3 @@
     - 日韓言語選択バトンタッチするとバトンの下に選択バトンが出てきて希望な言語選択する事ができる
 
 3.  ページによって代表タイトルを表示
-
-### 参考サイト
-
----
-
-#### API
-
-- [Flights API](https://uat.developers.amadeus.com/)
-- [Weather API](https://openweathermap.org/)
-- [Currency API](https://currencylayer.com/)
-- [Curl to fetch](https://uat.developers.amadeus.com/)
-
-#### CSS
-
-- [Loading Animation](https://loading.io/css/)
-- [Animation cubic-bezier](https://cubic-bezier.com/#0,0,1,1)
-- [Box shadow](https://getcssscan.com/css-box-shadow-examples)
-
-#### Design
-
-- [design 1](https://www.behance.net/gallery/190465533/RadCare-Web-App?tracking_source=search_projects%7Cweb+design+panel&l=39)
-- [design 2](https://www.behance.net/gallery/168827057/Web-Service-For-Buying-Plane-Tickets?tracking_source=search_projects%7Cairport+web+design&l=43)
-- [design 3](https://www.behance.net/gallery/192951329/Salse-Management-Dashboard?tracking_source=search_projects%7Cweb+design+panel&l=38)
-
-#### Image
-
-- [Icons 1](https://www.svgrepo.com/svg/497141/global)
-- [Icons 2](https://icon666.com/)
-- [Icons 3](https://simpleicons.org/)
