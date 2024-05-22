@@ -34,7 +34,7 @@
     <img src="https://img.shields.io/badge/recoil-3578E5?style=flat-square&logo=recoil&logoColor=white">
     <img src="https://img.shields.io/badge/prisma-2D3748?style=flat-square&logo=prisma&logoColor=white">
     <img src="https://img.shields.io/badge/postgreSQL-4169E1?style=flat-square&logo=postgreSQL&logoColor=white">
-    <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*2kz1h9OozlCgjx7krHurWw.png" height="27">
+    <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*2kz1h9OozlCgjx7krHurWw.png" height="24">
 </p>
 
 ### Deploy
