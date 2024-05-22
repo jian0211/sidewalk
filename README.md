@@ -13,12 +13,12 @@
 ## Tech Stack
 
 ### Environment
-
+<p>
 <img src="https://img.shields.io/badge/windows-0078D4?style=flat-square&logo=windows&logoColor=white">
-<img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat-squaree&logo=Visual Studio Code&logoColor=white">
-<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
-<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
-
+<img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat-square&logo=Visual Studio Code&logoColor=white">
+<img src="https://img.shields.io/badge/git-F05032?style=flat-square&logo=git&logoColor=white">
+<img src="https://img.shields.io/badge/github-181717?style=flat-square&logo=github&logoColor=white">
+</p>
 ### Config
 
 <img src="https://img.shields.io/badge/yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white">
