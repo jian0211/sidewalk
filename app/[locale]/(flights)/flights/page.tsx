@@ -21,7 +21,7 @@ const getAirportsForMarker = async () => {
   const url = `${
     process.env.NEXT_PUBLIC_BASE_URL ?? process.env.VERCEL_URL
   }/airports`;
-  const airports: Prisma.AirportCreateInput[] = await (
+  const airports: { airportsData: Prisma.AirportCreateInput[] } = await (
     await fetch(url, {
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -29,7 +29,7 @@ const getAirportsForMarker = async () => {
       },
     })
   ).json();
-  const airportsForMarker: AirportsForMarker[] = airports.map(
+  const airportsForMarker: AirportsForMarker[] = airports.airportsData.map(
     ({ titleJa, titleKo, latitude, longitude }) => ({
       titleJa,
       titleKo,
