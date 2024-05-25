@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import '../../styles/global.css';
+// import '../../styles/global.css';
 import * as stylex from '@stylexjs/stylex';
 import Sidebar from '@/components/templates/sidebar/Sidebar';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
