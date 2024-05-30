@@ -1,6 +1,7 @@
 # Sidewalk
 
 このプロジェクトは、日本と韓国の飛行に関する情報（航空券、空港、航空会社、為替など）を視覚化して提供するウェブサイトです。
+https://sidewalk-info.notion.site/Side-Walk-e1f6b29c0fbf498290ff94a16e6e989b?p=0ae3cde1e85e4f15b7b8eb4999591b01&pm=s
 
 ## 紹介
 
