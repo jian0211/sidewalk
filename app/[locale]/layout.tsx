@@ -7,7 +7,6 @@ import { Nav } from '@/components/templates/nav/Nav';
 import { RecoilProvider } from '@/hooks/providers/RecoilPropvider';
 import { Locales } from '@/types/locale';
 import { palette } from '../../styles/globalTokens.stylex';
-import { getLocale } from 'next-intl/server';
 
 export const metadata: Metadata = {
   title: 'Sidewalk with flying',
@@ -20,11 +19,10 @@ export type LayoutProps = {
   params: { locale: Locales };
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
-  // params: { locale },
+  params: { locale },
 }: LayoutProps) {
-  const locale = await getLocale();
   const messages = useMessages();
 
   return (
@@ -38,10 +36,10 @@ export default async function RootLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <RecoilProvider>
             <Sidebar />
-            {/* <main {...stylex.props(styles.main)}>
+            <main {...stylex.props(styles.main)}>
               <Nav />
               {children}
-            </main> */}
+            </main>
           </RecoilProvider>
         </NextIntlClientProvider>
       </body>
