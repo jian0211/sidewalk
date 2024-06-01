@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import '../../styles/global.css';
+import '../global.css';
 import * as stylex from '@stylexjs/stylex';
 import Sidebar from '@/components/templates/sidebar/Sidebar';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
@@ -7,6 +7,7 @@ import { Nav } from '@/components/templates/nav/Nav';
 import { RecoilProvider } from '@/hooks/providers/RecoilPropvider';
 import { Locales } from '@/types/locale';
 import { palette } from '../../styles/globalTokens.stylex';
+import { getLocale } from 'next-intl/server';
 
 export const metadata: Metadata = {
   title: 'Sidewalk with flying',
@@ -19,10 +20,11 @@ export type LayoutProps = {
   params: { locale: Locales };
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-  params: { locale },
+  // params: { locale },
 }: LayoutProps) {
+  const locale = await getLocale();
   const messages = useMessages();
 
   return (
