@@ -1,18 +1,22 @@
 'use client';
 
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
-import { SidebarMenu } from '../../organisms/sidebar/SidebarMenu';
+import {
+  ContainerProps,
+  SidebarMenu,
+} from '../../organisms/sidebar/SidebarMenu';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
-import { useLocale } from '@/hooks/useLocale';
+import { Locales } from '@/types/locale';
 
-const Sidebar = () => {
+type SidebarProps = { locale: Locales } & ContainerProps;
+
+const Sidebar = (props: SidebarProps) => {
+  const { locale, ...rest } = props;
   const t = useTranslatedWord('sidebar');
-  const {
-    states: { locale },
-  } = useLocale();
+
   const paths = useCurrentPath();
   return (
-    <SidebarMenu.Container>
+    <SidebarMenu.Container {...rest}>
       <SidebarMenu.Logo />
       <SidebarMenu.MenuContainer>
         <SidebarMenu.TabMenu

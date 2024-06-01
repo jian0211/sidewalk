@@ -35,9 +35,9 @@ export default function RootLayout({
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
           <RecoilProvider>
-            <Sidebar />
+            <Sidebar locale={locale} />
             <main {...stylex.props(styles.main)}>
-              <Nav />
+              <Nav locale={locale} />
               {children}
             </main>
           </RecoilProvider>
