@@ -9,19 +9,21 @@ import { useCurrentPath } from '@/hooks/useCurrentPath';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { palette, spacing } from '../../../styles/globalTokens.stylex';
 import { designStyles } from '@/components/styles';
+import { Locales } from '@/types/locale';
 
-type NavProps = React.ComponentPropsWithoutRef<'nav'>;
+type NavProps = { locale: Locales } & React.ComponentPropsWithoutRef<'nav'>;
 type AirportsLayoutContainerProps = ComponentPropsWithoutRef<'h1'>;
 type AirlinesLayoutContainerProps = ComponentPropsWithoutRef<'h1'>;
 type NavGlobalEditBoxProps = React.ComponentPropsWithoutRef<'div'>;
 type NotificationBoxProps = React.ComponentPropsWithoutRef<'div'>;
 
 export const Nav = (props: NavProps) => {
+  const { locale, ...rest } = props;
   const { isAirportPath, isAirlinePath, isFligths, isDashboardPath } =
     useCurrentPath();
   return (
     <nav
-      {...props}
+      {...rest}
       {...stylex.props(
         styles.nav,
         designStyles['size']({ width: '100%', height: '6rem' }),
@@ -36,13 +38,13 @@ export const Nav = (props: NavProps) => {
       )}
     >
       {isDashboardPath || isFligths ? (
-        <SearchForm />
+        <SearchForm locale={locale} />
       ) : isAirportPath ? (
         <AirportsLayoutContainer />
       ) : isAirlinePath ? (
         <AirlinesLayoutContainer />
       ) : undefined}
-      <LocaleSwitcher />
+      <LocaleSwitcher locale={locale} />
       <NavGlobalEditBox />
       <NotificationBox />
     </nav>

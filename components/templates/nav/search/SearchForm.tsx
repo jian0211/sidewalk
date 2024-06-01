@@ -14,12 +14,15 @@ import { useDatePicker } from './useDatePicker';
 import { PriceRange } from '@/components/organisms/SearchBar/PriceRangeSlider/PriceRangeSlider';
 import { useAiportsList } from '@/store/airports';
 import { useBooking } from '../../../../hooks/useBooking';
-import { useLocale } from '@/hooks/useLocale';
 import { TripType } from '@/components/organisms/SearchBar/tripType/TripType';
+import { Locales } from '@/types/locale';
 
-type SearchFormProps = React.ComponentPropsWithoutRef<'form'>;
+type SearchFormProps = {
+  locale: Locales;
+} & React.ComponentPropsWithoutRef<'form'>;
 
 export const SearchForm = (props: SearchFormProps) => {
+  const { locale, ...rest } = props;
   const t = useTranslatedWord('nav.search');
   const {
     states: { flights },
@@ -38,9 +41,6 @@ export const SearchForm = (props: SearchFormProps) => {
     mode: 'onChange',
     defaultValues: { ...flights },
   });
-  const {
-    states: { locale },
-  } = useLocale();
 
   const {
     states: { airportsList },
@@ -61,12 +61,20 @@ export const SearchForm = (props: SearchFormProps) => {
     handleSubmitSetFligths(data);
   };
 
+  const getLocalizedName = (
+    jaName: string,
+    koName: string,
+  ): Record<Locales, string> => ({
+    ja: jaName,
+    ko: koName,
+  });
+
   if (dirtyFields.tripType) {
     setValue('dateType.returnDate', null);
   }
   return (
     <form
-      {...props}
+      {...rest}
       {...stylex.props(styles.searchForm)}
       onSubmit={handleSubmit(onSubmit)}
     >
@@ -96,7 +104,7 @@ export const SearchForm = (props: SearchFormProps) => {
                       <Booking.FlightIconWithText
                         key={i}
                         iata={iata}
-                        name={locale === 'ja' ? ja_name : ko_name}
+                        name={getLocalizedName(ja_name, ko_name)[locale]}
                         onClick={() => {
                           setValue('from', iata as any);
                         }}
@@ -109,7 +117,7 @@ export const SearchForm = (props: SearchFormProps) => {
                       <Booking.FlightIconWithText
                         key={i}
                         iata={iata}
-                        name={locale === 'ja' ? ja_name : ko_name}
+                        name={getLocalizedName(ja_name, ko_name)[locale]}
                         onClick={() => {
                           setValue('from', iata as any);
                         }}
@@ -154,7 +162,7 @@ export const SearchForm = (props: SearchFormProps) => {
                       <Booking.FlightIconWithText
                         key={i}
                         iata={iata}
-                        name={locale === 'ja' ? ja_name : ko_name}
+                        name={getLocalizedName(ja_name, ko_name)[locale]}
                         onClick={() => {
                           setValue('to', iata as any);
                         }}
@@ -167,7 +175,7 @@ export const SearchForm = (props: SearchFormProps) => {
                       <Booking.FlightIconWithText
                         key={i}
                         iata={iata}
-                        name={locale === 'ja' ? ja_name : ko_name}
+                        name={getLocalizedName(ja_name, ko_name)[locale]}
                         onClick={() => {
                           setValue('to', iata as any);
                         }}

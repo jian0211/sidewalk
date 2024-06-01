@@ -9,13 +9,11 @@ import {
 import { IconNames, Icons } from '@/components/atoms/Icon';
 import React from 'react';
 import Link, { LinkProps } from 'next/link';
-import { Block } from '@/components/atoms/Block';
-import { designStyles } from '@/components/styles';
 import Image from 'next/image';
 import logo from '@/public/images/logo.png';
 
+export type ContainerProps = React.ComponentPropsWithoutRef<'aside'>;
 type LogoProps = React.ComponentPropsWithoutRef<'div'>;
-type ContainerProps = React.ComponentPropsWithoutRef<'aside'>;
 type MenuContainerProps = React.ComponentPropsWithoutRef<'div'>;
 type AccordionProps = React.ComponentPropsWithoutRef<'div'> & SidebarUsedTypes;
 type BottomContainerProps = React.ComponentPropsWithoutRef<'div'>;

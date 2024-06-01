@@ -1,6 +1,5 @@
 'use client';
 
-import { useLocale } from '@/hooks/useLocale';
 import { IconButton, IconButtonProps } from '@/components/atoms/Button';
 import * as stylex from '@stylexjs/stylex';
 import { useState } from 'react';
@@ -8,19 +7,29 @@ import { palette, spacing } from '../../../../styles/globalTokens.stylex';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { designStyles } from '@/components/styles';
+import { Locales } from '@/types/locale';
+import { usePathname, useRouter } from 'next/navigation';
 
-export const LocaleSwitcher = () => {
+type LocaleSwitcherProps = { locale: Locales } & React.ComponentProps<'div'>;
+export const LocaleSwitcher = (props: LocaleSwitcherProps) => {
+  const { locale, ...rest } = props;
+  const router = useRouter();
+  const pathname = usePathname();
   const t = useTranslatedWord('nav.translate');
-  const {
-    states: { locale },
-    actions: { handleChangeLocale },
-  } = useLocale();
+  const handleChangeLocale = (param: Locales) => {
+    router.push(pathname.replace(locale, param));
+  };
   const [toggle, setToggle] = useState(false);
   const ref = useOutsideClick<HTMLDivElement>(() => {
     setToggle(false);
   });
+
+  const isCurrentLocale = (targetLocale: Locales) => {
+    return locale === targetLocale;
+  };
   return (
     <div
+      {...rest}
       ref={ref}
       {...stylex.props(
         designStyles['position']('relative'),
@@ -59,14 +68,14 @@ export const LocaleSwitcher = () => {
           )}
         >
           <ToggleButton
-            isSelected={locale === 'ko'}
+            isSelected={isCurrentLocale('ko')}
             onClick={() => handleChangeLocale('ko')}
             iconProps={{ src: 'IconKoreaFlag' }}
           >
             <p>{t('korea')}</p>
           </ToggleButton>
           <ToggleButton
-            isSelected={locale === 'ja'}
+            isSelected={isCurrentLocale('ja')}
             onClick={() => handleChangeLocale('ja')}
             iconProps={{ src: 'IconJapanFlag' }}
           >
