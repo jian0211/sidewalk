@@ -36,10 +36,10 @@ export default function RootLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <RecoilProvider>
             <Sidebar />
-            <main {...stylex.props(styles.main)}>
+            {/* <main {...stylex.props(styles.main)}>
               <Nav />
               {children}
-            </main>
+            </main> */}
           </RecoilProvider>
         </NextIntlClientProvider>
       </body>
