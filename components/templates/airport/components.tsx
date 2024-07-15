@@ -1,4 +1,4 @@
-import { DesignProps, FlexProps, designStyles } from '@/components/styles';
+import { designStyles } from '@/components/styles';
 import {
   PaletteVars,
   PixelLevelOption,
