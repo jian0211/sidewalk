@@ -8,6 +8,8 @@ const [_name, options] = plugins.find(
   (plugin) => Array.isArray(plugin) && plugin[0] === '@stylexjs/babel-plugin',
 );
 const rootDir = options.unstable_moduleResolution.rootDir ?? __dirname;
+const aliases = options.aliases ?? undefined;
+const useCSSLayers = options.useCSSLayers ?? undefined;
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -43,10 +45,6 @@ const nextConfig = {
   },
 };
 
-module.exports = stylexPlugin({
-  aliases: {
-    '@/*': [path.join(__dirname, '*')],
-  },
-  rootDir,
-  useCSSLayers: true,
-})(withNextIntl(nextConfig));
+module.exports = stylexPlugin({ aliases, rootDir, useCSSLayers })(
+  withNextIntl(nextConfig),
+);
