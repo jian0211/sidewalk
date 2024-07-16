@@ -34,30 +34,15 @@ export type FlightTicketResponseData = {
   tripType: TripType;
 };
 
-export async function POST(req: Request & NextApiRequest) {
+const getShoppingOffers = async ({
+  convertedFlightData,
+  token,
+}: {
+  convertedFlightData: Parameters<typeof createFlightOffersPath>[0];
+  token: string;
+}) => {
   try {
-    const flightInfoReq: Flights = await req.json();
-    const token = (await getToken()) ?? throwError('there is not token');
-    const currencyDummy = { kr: 1367, jp: 155 };
-
-    const departureDate =
-      flightInfoReq.dateType.departureDate ??
-      throwError('there is not departureDate value');
-
-    const returnDate = flightInfoReq.dateType.returnDate
-      ? formatDate(flightInfoReq.dateType.returnDate)
-      : undefined;
-
-    const endPoint = createFlightOffersPath({
-      destinationLocationCode: flightInfoReq.from,
-      originLocationCode: flightInfoReq.to,
-      maxPrice: flightInfoReq.flightCost.max + '',
-      departureDate: formatDate(departureDate),
-      returnDate,
-      nonStop: flightInfoReq.tripType === 'oneWay' ? 'true' : 'false',
-    });
-
-    // Get flightOffers Data from AMADEUS
+    const endPoint = createFlightOffersPath(convertedFlightData);
     const responseShoppingOffers = await fetch(endPoint, {
       method: 'GET',
       headers: {
@@ -68,17 +53,61 @@ export async function POST(req: Request & NextApiRequest) {
         CacheControl: 'no-cache',
       },
     });
+
     const shoppingOffers: ResponseShoppingOffers =
       await responseShoppingOffers.json();
 
-    // flight offers  airline iata
-    const carrierCodes = Object.keys(shoppingOffers.dictionaries.carriers);
+    const isShoppingOfferEmpty = shoppingOffers.meta.count < 1;
+    const carriers = shoppingOffers.dictionaries.carriers;
+    const carrierCodes = Object.keys(carriers);
+
+    return {
+      shoppingOffers: shoppingOffers.data,
+      isShoppingOfferEmpty,
+      carriers,
+      carrierCodes,
+    };
+  } catch (error) {
+    throw new Error('Get Flight info in amadeus API : err');
+  }
+};
+
+export async function POST(req: Request & NextApiRequest) {
+  try {
+    const flightInfoReq: Flights = await req.json();
+    const token = (await getToken()) ?? throwError('there is not token');
+    const currencyDummy = { kr: 1367, jp: 155 }; /* Random values */
+
+    const departureDate =
+      flightInfoReq.dateType.departureDate ??
+      throwError('there is not departureDate value');
+
+    const returnDate = flightInfoReq.dateType.returnDate
+      ? formatDate(flightInfoReq.dateType.returnDate)
+      : undefined;
+
+    const [convertedFlightData]: Parameters<typeof createFlightOffersPath> = [
+      {
+        destinationLocationCode: flightInfoReq.from,
+        originLocationCode: flightInfoReq.to,
+        maxPrice: flightInfoReq.flightCost.max + '',
+        departureDate: formatDate(departureDate),
+        returnDate,
+        nonStop: flightInfoReq.tripType === 'oneWay' ? 'true' : 'false',
+      },
+    ];
+
+    // Get flightOffers Data from AMADEUS
+    const { shoppingOffers, isShoppingOfferEmpty, carriers, carrierCodes } =
+      await getShoppingOffers({ convertedFlightData, token });
+
+    if (isShoppingOfferEmpty) return Response.json({ responseData: [] });
 
     const airlines = await db.airline.findMany({
       where: { iata: { in: carrierCodes } },
     });
 
-    const flightOffers = shoppingOffers.data.flatMap<FlightTicketResponseData>(
+    const flightOffers = shoppingOffers.flatMap<FlightTicketResponseData>(
       (shoppingOffer) => {
         const { price, itineraries } = shoppingOffer;
         const won = Math.floor(Number(price.total) * currencyDummy.kr);
@@ -96,12 +125,8 @@ export async function POST(req: Request & NextApiRequest) {
               image: foundAirline?.imgTitle ?? '',
               serviceType: foundAirline?.seviceType ?? 'else',
               title: {
-                ja:
-                  foundAirline?.titleJa ??
-                  shoppingOffers.dictionaries.carriers[carrierCode],
-                ko:
-                  foundAirline?.titleKo ??
-                  shoppingOffers.dictionaries.carriers[carrierCode],
+                ja: foundAirline?.titleJa ?? carriers[carrierCode],
+                ko: foundAirline?.titleKo ?? carriers[carrierCode],
               },
             },
             flightTime,
