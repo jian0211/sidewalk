@@ -9,7 +9,7 @@ const AirlinesPage = async ({ params }: PageProps) => {
   const airlineList = await getAirlines();
   return (
     <Suspense fallback={` loading...`}>
-      <Airline airlineList={airlineList} />;
+      <Airline airlineList={airlineList} />
     </Suspense>
   );
 };
