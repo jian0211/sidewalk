@@ -8,15 +8,7 @@ module.exports = {
     es2021: true,
   },
   plugins: ['import', 'react', '@typescript-eslint', 'prettier', '@stylexjs'],
-  extends: [
-    'next/core-web-vitals',
-    'eslint:recommended',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'prettier',
-  ],
+  extends: ['next/core-web-vitals', 'eslint:recommended', 'plugin:import/recommended', 'plugin:import/typescript', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended', 'prettier', 'plugin:storybook/recommended'],
   rules: {
     'no-unused-vars': 'off',
     'react/react-in-jsx-scope': 'off',
