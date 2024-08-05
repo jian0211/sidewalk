@@ -4,7 +4,7 @@ import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 import { Dashboard } from '../../components';
 import { Flex, FlexProps } from '@/components/atoms/Flex';
 import { IconNames, Icons } from '@/components/atoms/Icon';
-import { B, Text } from '@/components/atoms/Text';
+import { B, Text } from '@/components/atoms/text/Text';
 import * as stylex from '@stylexjs/stylex';
 import { palette } from '../../../../../styles/globalTokens.stylex';
 import { useCalculator } from './useCalculator';

@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';
-import { DesignProps, designStyles } from '../styles';
-import { fontSizing, fontWeight } from '../../styles/globalTokens.stylex';
+import { DesignProps, designStyles } from '../../styles';
+import { fontSizing, fontWeight } from '../../../styles/globalTokens.stylex';
 
 type TextProps = {
   xstyle?: StyleXArray<any>;
