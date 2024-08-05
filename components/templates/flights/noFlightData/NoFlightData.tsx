@@ -1,4 +1,4 @@
-import { B } from '@/components/atoms/Text';
+import { B } from '@/components/atoms/text/Text';
 import Image from 'next/image';
 import * as stylex from '@stylexjs/stylex';
 import worriedPlaneImage from '@/public/images/worried-plane.png';

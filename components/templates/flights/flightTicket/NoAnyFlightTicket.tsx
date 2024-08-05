@@ -1,5 +1,5 @@
 import { Flex } from '@/components/atoms/Flex';
-import { Text } from '@/components/atoms/Text';
+import { Text } from '@/components/atoms/text/Text';
 import { useTranslatedWord } from '@/hooks/useTranslatedWord';
 
 type NoAnyFlightTicketProps = React.ComponentProps<'div'>;

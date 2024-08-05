@@ -3,7 +3,7 @@ import * as stylex from '@stylexjs/stylex';
 import React from 'react';
 import { palette, spacing } from '../../../styles/globalTokens.stylex';
 import { Flex } from '@/components/atoms/Flex';
-import { Text } from '@/components/atoms/Text';
+import { Text } from '@/components/atoms/text/Text';
 import { DesignProps } from '@/components/styles';
 import { Icons } from '@/components/atoms/Icon';
 import { StyleXArray } from '@stylexjs/stylex/lib/StyleXTypes';

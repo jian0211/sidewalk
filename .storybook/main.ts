@@ -1,9 +1,10 @@
 import type { StorybookConfig } from '@storybook/nextjs';
+const StylexPlugin = require('@stylexjs/babel-plugin');
 
 const config: StorybookConfig = {
   stories: [
-    '../components/**/*.mdx',
-    '../components/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+    '../components/**/**/*.mdx',
+    '../components/**/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
   addons: [
     '@storybook/addon-onboarding',
@@ -11,6 +12,7 @@ const config: StorybookConfig = {
     '@storybook/addon-essentials',
     '@chromatic-com/storybook',
     '@storybook/addon-interactions',
+    '@storybook/addon-webpack5-compiler-babel',
   ],
   framework: {
     name: '@storybook/nextjs',

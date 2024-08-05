@@ -7,6 +7,15 @@ import { Nav } from '@/components/templates/nav/Nav';
 import { RecoilProvider } from '@/hooks/providers/RecoilPropvider';
 import { Locales } from '@/types/locale';
 import { palette } from '../../styles/globalTokens.stylex';
+// import inject from '@stylexjs/dev-runtime';
+
+// inject({
+//   classNamePrefix: 'x',
+//   dev: true,
+//   test: false,
+//   styleResolution: 'application-order',
+//   useRemForFontSize: false,
+// });
 
 export const metadata: Metadata = {
   title: 'Sidewalk with flying',

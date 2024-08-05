@@ -1,6 +1,6 @@
 import { Flex } from '@/components/atoms/Flex';
 import { Images } from '@/components/atoms/Image';
-import { Text } from '@/components/atoms/Text';
+import { Text } from '@/components/atoms/text/Text';
 import { Flights } from '../components';
 import { Button } from '@/components/atoms/Button';
 import { Locales } from '@/types/locale';
